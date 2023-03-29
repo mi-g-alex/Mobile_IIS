@@ -26,9 +26,6 @@ class ProfileViewModel @Inject constructor(
         getProfileCV()
     }
 
-/*    suspend fun logOut(){
-    }*/
-
     private fun getProfileCV() {
         getProfileCVUseCase().onEach { result ->
             when (result) {
