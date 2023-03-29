@@ -2,20 +2,20 @@ package by.g_alex.mobile_iis.data.repository
 
 import by.g_alex.mobile_iis.data.local.UserDao
 import by.g_alex.mobile_iis.data.local.entity.CookieEntity
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 
 class UserDataBaseRepositoryImpl(
-    private val dao : UserDao
+    private val dao: UserDao
 ) : UserDataBaseRepository {
-
 
     override suspend fun getCookie(): String? {
         return dao.getCookie()?.cookie
     }
 
-    override suspend fun setCookie(cookie : String?) {
+    override suspend fun setCookie(cookie: String?) {
         dao.setCookie(CookieEntity(0, cookie))
     }
 
@@ -27,7 +27,7 @@ class UserDataBaseRepositoryImpl(
         return dao.getLoginAndPassword()
     }
 
-    override suspend fun setLoginAndPassword(username : String, password : String) {
+    override suspend fun setLoginAndPassword(username: String, password: String) {
         dao.setLoginAndPassword(LoginAndPasswordEntity(0, username, password))
     }
 
@@ -45,5 +45,13 @@ class UserDataBaseRepositoryImpl(
 
     override suspend fun deleteProfilePersonalCV() {
         dao.deleteProfilePersonalCV()
+    }
+
+    override suspend fun getSchedule(group: String): List<LessonModel> {
+        return dao.getSchedule(group);
+    }
+
+    override suspend fun insertSchedule(users: LessonModel) {
+        dao.insertSchedule(users)
     }
 }

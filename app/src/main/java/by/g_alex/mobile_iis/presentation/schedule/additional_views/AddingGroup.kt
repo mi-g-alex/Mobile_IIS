@@ -1,4 +1,4 @@
-package com.example.compose.presentation.list.component
+package by.g_alex.mobile_iis.presentation.schedule.additional_views
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,7 +27,7 @@ import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.lists_items.GroupItem
 
 @Composable
-fun adding_newGroup(viewModel: ScheduleViewModel, navController:NavController){
+fun AddingNewGroup(viewModel: ScheduleViewModel, navController:NavController){
     val searchtext = remember {
         mutableStateOf("")
     }

@@ -1,4 +1,4 @@
-package com.example.compose.presentation.list.component
+package by.g_alex.mobile_iis.presentation.schedule.additional_views
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,36 +23,36 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.lists_items.PrepItem
-import com.example.compose.domain.model.PrepodModel
+import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun addingPrepod(viewModel: ScheduleViewModel, navController: NavController){
-    val searchtext = remember {
+fun AddingEmployee(viewModel: ScheduleViewModel, navController: NavController){
+    val searchText = remember {
         mutableStateOf("")
     }
     val prList = remember {
-        mutableListOf<PrepodModel>()
+        mutableListOf<EmployeeModel>()
     }
     val coroutineScope = rememberCoroutineScope()
     Box(modifier = Modifier.fillMaxSize()) {
         val state = viewModel.prepState.value
         Column(modifier = Modifier.fillMaxSize()) {
             OutlinedTextField(
-                value = searchtext.value,
+                value = searchText.value,
                 shape = MaterialTheme.shapes.large,
                 onValueChange = { newText ->
                   coroutineScope.launch {
-                      searchtext.value = newText
-                      if (searchtext.value.length == 1) {
+                      searchText.value = newText
+                      if (searchText.value.length == 1) {
                           prList.clear()
                           for (n in state.preps ?: emptyList()) {
-                              if (n.fio.lowercase()[0] == searchtext.value[0]) {
+                              if (n.fio.lowercase()[0] == searchText.value[0]) {
                                   prList.add(n)
                               }
                           }
                       }
-                      else if(searchtext.value.isEmpty()){
+                      else if(searchText.value.isEmpty()){
                           prList.clear()
                           prList.addAll(state.preps?: emptyList())
                       }
@@ -75,14 +75,14 @@ fun addingPrepod(viewModel: ScheduleViewModel, navController: NavController){
             )
             if (state.preps?.isNotEmpty() == true) {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    if(searchtext.value.isEmpty() || prList.isEmpty())
+                    if(searchText.value.isEmpty() || prList.isEmpty())
                         prList.addAll(state.preps!!)
                     items(prList) { itm ->
-                       if(itm.lastName.lowercase().contains(searchtext.value.lowercase())) PrepItem(prep = itm, viewModel = viewModel, navController = navController)
+                       if(itm.lastName.lowercase().contains(searchText.value.lowercase())) PrepItem(prep = itm, viewModel = viewModel, navController = navController)
                     }
                 }
             } else
-                viewModel.getPrepod()
+                viewModel.getEmployee()
         }
         if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))

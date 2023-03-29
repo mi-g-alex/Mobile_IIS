@@ -1,6 +1,6 @@
 package com.example.compose.data.remote.dto.Schedule
 
-import com.example.compose.domain.model.LessonModel
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
 
 data class DayDto(
     val announcement: Boolean,

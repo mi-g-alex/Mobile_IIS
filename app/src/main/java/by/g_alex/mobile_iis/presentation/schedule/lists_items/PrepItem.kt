@@ -17,16 +17,16 @@ import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.navigation.Screen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.compose.domain.model.PrepodModel
+import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun PrepItem(prep: PrepodModel, viewModel: ScheduleViewModel, navController: NavController){
+fun PrepItem(prep: EmployeeModel, viewModel: ScheduleViewModel, navController: NavController){
     Column(modifier = Modifier.padding(vertical = 5.dp, horizontal = 20.dp).clickable {
-        viewModel.addPrepods(prep)
-        viewModel.headertext.value = prep.fio
-        viewModel.getPrepodScheadule(prep.urlId)
+        viewModel.addEmployees(prep)
+        viewModel.headerText.value = prep.fio
+        viewModel.getEmployeeSchedule(prep.urlId)
         navController.navigate(Screen.Home.route)
     }) {
         Row(modifier = Modifier.padding(bottom = 10.dp)) {

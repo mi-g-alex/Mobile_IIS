@@ -1,9 +1,9 @@
-package com.example.compose.data.remote.dto.prepodSchedule
+package by.g_alex.mobile_iis.data.remote.dto.prepodSchedule
 
 import androidx.compose.runtime.mutableStateOf
-import com.example.compose.domain.model.LessonModel
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
 
-data class PrepDayDto(
+data class ScheduleDayDto(
     val announcement: Boolean,
     val announcementEnd: Any,
     val announcementStart: Any,
@@ -18,18 +18,18 @@ data class PrepDayDto(
     val split: Boolean,
     val startLessonDate: String,
     val startLessonTime: String,
-    val studentGroups: List<StudentGroup>,
+    val studentGroupDtos: List<StudentGroupDto>,
     val subject: String,
     val subjectFullName: String,
     val weekNumber: List<Int>
 )
 
-fun PrepDayDto.toLessonModel(weekDay:String): LessonModel {
+fun ScheduleDayDto.toLessonModel(weekDay: String): LessonModel {
     val notation = mutableStateOf("")
-    for(n in studentGroups.indices){
-        notation.value+=studentGroups[n].name
-        if(n!=studentGroups.size-1)
-            notation.value+=", "
+    for (n in studentGroupDtos.indices) {
+        notation.value += studentGroupDtos[n].name
+        if (n != studentGroupDtos.size - 1)
+            notation.value += ", "
     }
     return LessonModel(
         id = "",

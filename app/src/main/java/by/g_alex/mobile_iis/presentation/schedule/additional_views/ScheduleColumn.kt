@@ -1,4 +1,4 @@
-package by.g_alex.mobile_iis.presentation.schedule
+package by.g_alex.mobile_iis.presentation.schedule.additional_views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,16 +11,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.compose.domain.model.LessonModel
-import com.example.compose.presentation.list.component.LessonItem
+import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
+import by.g_alex.mobile_iis.presentation.schedule.lists_items.LessonItem
 import java.time.LocalDate
 
 @Composable
 fun ScheduleColumn(viewModel: ScheduleViewModel){
     val state = viewModel.state.value
     val weekState = viewModel.weekState.value
-    val currentGroup = viewModel.headertext.value
-    val currentScheadule = viewModel.state.value.Days ?: emptyList()
+    val currentGroup = viewModel.headerText.value
+    val currentSchedule = viewModel.state.value.Days ?: emptyList()
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,7 +29,6 @@ fun ScheduleColumn(viewModel: ScheduleViewModel){
             .background(Color.Black)
 
     ) {
-        @Suppress("NAME_SHADOWING") val it = state.Days!!
         val date = mutableStateOf(LocalDate.now())
         date.value = LocalDate.now()
         var upcnt = 1
@@ -54,7 +54,7 @@ fun ScheduleColumn(viewModel: ScheduleViewModel){
             var firstStep = false
             var end = false
             txt = month + " " + date.value.dayOfMonth.toString() + ", " + dayOfweek + ", week " + cnt.toString()
-            for (n in currentScheadule) {
+            for (n in currentSchedule) {
                 if (n.weekDay == downDate.value.dayOfWeek.toString() && ((n.weekNumber?.contains(
                         cnt
                     ) == true)||(n.weekNumber==null))

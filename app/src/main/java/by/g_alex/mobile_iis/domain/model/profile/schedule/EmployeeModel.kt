@@ -1,6 +1,6 @@
-package com.example.compose.domain.model
+package by.g_alex.mobile_iis.domain.model.profile.schedule
 
-data class PrepodModel(
+data class EmployeeModel(
     val academicDepartment: List<String>,
     val degree: String,
     val fio: String,

@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.domain.repository
 
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 
@@ -25,4 +26,10 @@ interface UserDataBaseRepository {
     suspend fun setProfilePersonalCV(personalCV: PersonalCV)
 
     suspend fun deleteProfilePersonalCV()
+
+
+    // Schedule
+    suspend fun getSchedule(group: String): List<LessonModel>
+
+    suspend fun insertSchedule(users: LessonModel)
 }

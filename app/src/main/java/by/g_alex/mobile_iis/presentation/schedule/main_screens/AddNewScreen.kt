@@ -1,4 +1,4 @@
-package by.g_alex.mobile_iis.presentation.schedule
+package by.g_alex.mobile_iis.presentation.schedule.main_screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,18 +18,14 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.navigation.Screen
-import com.example.compose.presentation.list.component.addingPrepod
-import com.example.compose.presentation.list.component.adding_newGroup
+import by.g_alex.mobile_iis.presentation.schedule.additional_views.AddingEmployee
+import by.g_alex.mobile_iis.presentation.schedule.additional_views.AddingNewGroup
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 
-//import com.google.accompanist.pager.ExperimentalPagerApi
-//import com.google.accompanist.pager.HorizontalPager
-//import com.google.accompanist.pager.rememberPagerState
-
-//@OptIn(ExperimentalPagerApi::class)
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AddNewScreen(viewModel: ScheduleViewModel, navController: NavController) {
@@ -43,16 +39,7 @@ fun AddNewScreen(viewModel: ScheduleViewModel, navController: NavController) {
         pageCount = 2,
         initialPage = 0
     )
-//    LaunchedEffect(Unit){
-//        while (true){
-//            yield()
-//            delay(2000)
-//            pagerState.animateScrollToPage(
-//                page = 0,
-//                animationSpec = tween(800)
-//            )
-//        }
-//    }
+
     
     Box(
         modifier = Modifier
@@ -89,10 +76,10 @@ fun AddNewScreen(viewModel: ScheduleViewModel, navController: NavController) {
             ) {
                 page->
                 if(page==1){
-                    addingPrepod(viewModel = viewModel,navController = navController)
+                    AddingEmployee(viewModel = viewModel,navController = navController)
                 }
                 else {
-                    adding_newGroup(viewModel = viewModel, navController = navController)
+                    AddingNewGroup(viewModel = viewModel, navController = navController)
 
                 }
             }

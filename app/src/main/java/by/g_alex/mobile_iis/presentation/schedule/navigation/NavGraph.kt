@@ -1,11 +1,11 @@
-package com.example.compose.presentation.list
+package by.g_alex.mobile_iis.presentation.schedule.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import by.g_alex.mobile_iis.presentation.schedule.AddNewScreen
-import by.g_alex.mobile_iis.presentation.schedule.ScheduleListScreen
+import by.g_alex.mobile_iis.presentation.schedule.main_screens.AddNewScreen
+import by.g_alex.mobile_iis.presentation.schedule.main_screens.ScheduleListScreen
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.navigation.Screen
 

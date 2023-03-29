@@ -1,21 +1,21 @@
-package com.example.compose.data.remote.dto.prepodSchedule
+package by.g_alex.mobile_iis.data.remote.dto.prepodSchedule
 
-import com.example.compose.domain.model.LessonModel
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
 
-data class PrepScheduleDto(
+data class ScheduleDto(
     val employeeDto: EmployeeDto,
     val endDate: String,
     val endExamsDate: Any,
     val exams: List<Any>?,
-    val schedules: Schedules,
+    val schedulesDto: SchedulesDto,
     val startDate: String,
     val startExamsDate: String?,
-    val studentGroupDto: StudentGroup?
+    val studentGroupDto: StudentGroupDto?
 )
 
-fun PrepScheduleDto.toLessonList(): List<LessonModel> {
+fun ScheduleDto.toLessonList(): List<LessonModel> {
     val mo = mutableListOf<LessonModel>()
-    with(schedules) {
+    with(schedulesDto) {
         Monday?.onEach { mnd ->
             val trans = mnd.toLessonModel("MONDAY")
             trans.id = employeeDto.urlId

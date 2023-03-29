@@ -1,8 +1,8 @@
-package com.example.compose.data.remote.dto.prepod
+package by.g_alex.mobile_iis.data.remote.dto.employee
 
-import com.example.compose.domain.model.PrepodModel
+import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 
-data class PrepodDto(
+data class EmployeeListItemDto(
     val academicDepartment: List<String>,
     val calendarId: String,
     val degree: String,
@@ -15,8 +15,8 @@ data class PrepodDto(
     val rank: String,
     val urlId: String
 )
-fun PrepodDto.toPrepodModel():PrepodModel{
-    return PrepodModel(
+fun EmployeeListItemDto.toEmployeeModel(): EmployeeModel {
+    return EmployeeModel(
         academicDepartment = academicDepartment,
         degree = degree,
         fio = fio,

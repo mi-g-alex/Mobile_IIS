@@ -6,40 +6,49 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import by.g_alex.mobile_iis.common.Constants.ADDEDGROUPS
-import by.g_alex.mobile_iis.common.Constants.ADDEDPREPS
-import com.example.compose.presentation.list.SetUpNavGraph
+import by.g_alex.mobile_iis.common.Constants.ADDED_GROUPS
+import by.g_alex.mobile_iis.common.Constants.ADDED_SCHEDULE
+import by.g_alex.mobile_iis.presentation.schedule.navigation.SetUpNavGraph
 
 
 @Composable
-fun ScheduleStartUp() {
+fun ScheduleStartUp(
+    viewModel: ScheduleViewModel = hiltViewModel(),
+) {
 
-    val viewModel = ScheduleViewModel()
     viewModel.context = LocalContext.current
 
-    val preferences = remember{mutableStateOf(viewModel.context.getSharedPreferences(ADDEDGROUPS, Context.MODE_PRIVATE))}
+    val preferences = remember {
+        mutableStateOf(
+            viewModel.context.getSharedPreferences(
+                ADDED_GROUPS,
+                Context.MODE_PRIVATE
+            )
+        )
+    }
 
     viewModel.getCurrentWeek()
 
-    val set = preferences.value.getStringSet(ADDEDGROUPS, emptySet())
+    val set = preferences.value.getStringSet(ADDED_GROUPS, emptySet())
+
     if (set?.isNotEmpty() == true) {
-        viewModel.getScheadule(set.minOf { it })
-        viewModel.headertext.value = set.minOf { it }
+        viewModel.getSchedule(set.minOf { it })
+        viewModel.headerText.value = set.minOf { it }
     } else {
-        preferences.value = viewModel.context.getSharedPreferences(ADDEDPREPS, Context.MODE_PRIVATE)
-        val prepSet = preferences.value.getStringSet(ADDEDPREPS, emptySet())
+        preferences.value =
+            viewModel.context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
+        val prepSet = preferences.value.getStringSet(ADDED_SCHEDULE, emptySet())
         if (prepSet?.isNotEmpty() == true) {
-            viewModel.getPrepodScheadule(
+            viewModel.getEmployeeSchedule(
                 preferences.value.getString(prepSet.minOf { it }, "") ?: ""
             )
-            viewModel.headertext.value = prepSet.first()
+            viewModel.headerText.value = prepSet.first()
         }
     }
     val navController: NavHostController = rememberNavController()
     SetUpNavGraph(navController = navController, viewModel = viewModel)
-
-
 }
 
