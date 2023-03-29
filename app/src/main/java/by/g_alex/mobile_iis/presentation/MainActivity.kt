@@ -3,6 +3,7 @@ package by.g_alex.mobile_iis.presentation
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -15,11 +16,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,7 +31,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import by.g_alex.mobile_iis.presentation.schedule.ScheduleScreen
+import by.g_alex.mobile_iis.R
+import by.g_alex.mobile_iis.presentation.schedule.ScheduleStartUp
 import by.g_alex.mobile_iis.presentation.ui.theme.MobileIISTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,6 +42,8 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContent {
             MobileIISTheme {
@@ -53,9 +58,9 @@ class MainActivity : ComponentActivity() {
                                     icon = Icons.Default.Home
                                 ),
                                 BottomNavItem(
-                                    name = "Chat",
+                                    name = "Schedule",
                                     route = "schedule",
-                                    icon = Icons.Default.Notifications,
+                                    icon = ImageVector.vectorResource(id = R.drawable.schedule_icon),
                                 )
                             ),
                             navController = navController,
@@ -85,7 +90,7 @@ fun Navigation(navController: NavHostController) {
             MainScreen()
         }
         composable("schedule") {
-            ScheduleScreen()
+            ScheduleStartUp()
         }
     }
 }
