@@ -54,7 +54,7 @@ fun ScheduleListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     // .height(300.dp)
-                    .clip(shape = AbsoluteRoundedCornerShape(20.dp))
+                    .clip(shape = AbsoluteRoundedCornerShape(20.dp,20.dp,0.dp,0.dp))
                     .background(Color(0xff212121))
 
             ) {
