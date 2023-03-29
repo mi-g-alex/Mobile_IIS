@@ -8,12 +8,12 @@ import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
 import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
 
 @Database(
+    version = 4,
     entities = [
         ProfilePersonalCVEntity::class,
         CookieEntity::class,
         LoginAndPasswordEntity::class
     ],
-    version = 4
 )
 @TypeConverters(Converters::class)
 abstract class UserDataBase : RoomDatabase() {

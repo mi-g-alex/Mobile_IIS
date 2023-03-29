@@ -22,18 +22,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.g_alex.mobile_iis.R
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.presentation.Screen
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.flowlayout.FlowRow
-import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileCVScreen(
     navController: NavController,
     viewModel: ProfileViewModel = hiltViewModel(),
-    lifecycleScope: LifecycleCoroutineScope
 ) {
     val state = viewModel.state.value
     val uriHandler = LocalUriHandler.current
@@ -194,13 +191,6 @@ fun ProfileCVScreen(
                                             text = references.name
                                         )
                                     },
-                                    /*Icon = {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.tg_outline),
-                                            contentDescription = "Localized description",
-                                            Modifier.size(AssistChipDefaults.IconSize)
-                                        )
-                                    }*/
                                 )
                             }
                         }
@@ -210,10 +200,9 @@ fun ProfileCVScreen(
 
                 Button(
                     onClick = {
-                        lifecycleScope.launch {
-                            viewModel.logOut()
-                            navController.navigate(Screen.LoginScreen.route)
-                        }
+                        viewModel.logOut()
+                        navController.navigate(Screen.LoginScreen.route)
+
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -230,12 +219,6 @@ fun ProfileCVScreen(
             if (state.error == "LessCookie") {
                 navController.navigate(Screen.LoginScreen.route)
             }
-        }
-
-        if (state.error.isNotBlank()) {
-            Text(
-                text = state.error
-            )
         }
 
         if (state.isLoading) {

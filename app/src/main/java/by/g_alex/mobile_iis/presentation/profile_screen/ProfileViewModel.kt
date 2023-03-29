@@ -10,6 +10,7 @@ import by.g_alex.mobile_iis.domain.use_case.login.LogOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,9 +26,8 @@ class ProfileViewModel @Inject constructor(
         getProfileCV()
     }
 
-    suspend fun logOut(){
-        logOutUseCase.logOut()
-    }
+/*    suspend fun logOut(){
+    }*/
 
     private fun getProfileCV() {
         getProfileCVUseCase().onEach { result ->
@@ -45,5 +45,11 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun logOut() {
+        viewModelScope.launch {
+            logOutUseCase.logOut()
+        }
     }
 }

@@ -10,7 +10,7 @@ interface UserDao {
 
     // Cookie
     @Query("SELECT * FROM CookieEntity WHERE alwaysField = 0")
-    suspend fun getCookie(): CookieEntity
+    suspend fun getCookie(): CookieEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setCookie(cookie: CookieEntity)
@@ -35,4 +35,7 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setProfilePersonalCV(profilePersonalCVEntity: ProfilePersonalCVEntity)
+
+    @Query("DELETE FROM ProfilePersonalCVEntity")
+    suspend fun deleteProfilePersonalCV()
 }

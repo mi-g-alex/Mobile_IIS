@@ -1,10 +1,8 @@
 package by.g_alex.mobile_iis.data.repository
 
-import android.util.Log
 import by.g_alex.mobile_iis.data.local.UserDao
 import by.g_alex.mobile_iis.data.local.entity.CookieEntity
 import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
-//import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 
@@ -43,5 +41,9 @@ class UserDataBaseRepositoryImpl(
 
     override suspend fun setProfilePersonalCV(personalCV: PersonalCV) {
         dao.setProfilePersonalCV(personalCV.toEntity())
+    }
+
+    override suspend fun deleteProfilePersonalCV() {
+        dao.deleteProfilePersonalCV()
     }
 }

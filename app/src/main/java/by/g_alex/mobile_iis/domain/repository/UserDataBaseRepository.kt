@@ -1,8 +1,6 @@
 package by.g_alex.mobile_iis.domain.repository
 
-import by.g_alex.mobile_iis.data.local.entity.CookieEntity
 import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
-//import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 
 interface UserDataBaseRepository {
@@ -25,4 +23,6 @@ interface UserDataBaseRepository {
     suspend fun getProfilePersonalCV(): PersonalCV?
 
     suspend fun setProfilePersonalCV(personalCV: PersonalCV)
+
+    suspend fun deleteProfilePersonalCV()
 }

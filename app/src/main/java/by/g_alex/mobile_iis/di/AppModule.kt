@@ -16,6 +16,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -26,13 +28,22 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideIisApi(): IisApi =
-        Retrofit.Builder()
+    fun provideIisApi(): IisApi {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BASIC
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+
+
+        return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL_IIS)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(IisApi::class.java)
-
+    }
 
     @Provides
     @Singleton
