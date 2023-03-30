@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.domain.use_case.get_profile.get_personal_cv
 
+import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
@@ -34,6 +35,7 @@ class GetPersonalCVUseCase @Inject constructor(
                         val newCookie = responseFromLogin.headers()["Set-Cookie"].toString()
                         db_repository.setCookie(newCookie)
                         val data = api_repository.getProfilePersonalCV(newCookie).toPersonalCv()
+                        db_repository.setProfilePersonalCV(data)
                         emit(Resource.Success<PersonalCV>(data))
                     } catch (e: HttpException) {
                         emit(
@@ -52,9 +54,11 @@ class GetPersonalCVUseCase @Inject constructor(
             }
             if (cookie != null) {
                 val data = api_repository.getProfilePersonalCV(cookie).toPersonalCv()
+                db_repository.setProfilePersonalCV(data)
                 emit(Resource.Success<PersonalCV>(data))
             }
         } catch (e: HttpException) {
+            Log.e("123", e.toString())
             val loginAndPassword = db_repository.getLoginAndPassword()
             if (loginAndPassword?.login == null || loginAndPassword.password == null) {
                 emit(Resource.Error<PersonalCV>("LessCookie"))
@@ -69,12 +73,15 @@ class GetPersonalCVUseCase @Inject constructor(
                     val cookie = responseFromLogin.headers()["Set-Cookie"].toString()
                     db_repository.setCookie(cookie)
                     val data = api_repository.getProfilePersonalCV(cookie).toPersonalCv()
+                    db_repository.setProfilePersonalCV(data)
                     emit(Resource.Success<PersonalCV>(data))
                 } catch (e: HttpException) {
+                    Log.e("|123", e.toString())
                     emit(
                         Resource.Error<PersonalCV>(e.localizedMessage ?: "ConnectionError")
                     )
                 } catch (e: IOException) {
+                    Log.e("||123", e.toString())
                     emit(
                         Resource.Error<PersonalCV>(
                             "LessCookie"
@@ -83,11 +90,9 @@ class GetPersonalCVUseCase @Inject constructor(
                 }
             }
         } catch (e: IOException) {
-            emit(
-                Resource.Error<PersonalCV>(
-                    e.message.toString()
-                )
-            )
+            val data = db_repository.getProfilePersonalCV()
+            Log.e("12312341234123", data.toString())
+            emit(Resource.Success<PersonalCV>(data))
         }
     }
 }
