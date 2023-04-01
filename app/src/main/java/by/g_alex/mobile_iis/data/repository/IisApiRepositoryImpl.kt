@@ -6,10 +6,9 @@ import by.g_alex.mobile_iis.data.remote.dto.employee.toEmployeeModel
 import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
-import by.g_alex.mobile_iis.data.remote.dto.prepodSchedule.toLessonList
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
-import com.example.compose.data.remote.dto.Schedule.toLessonList
+import by.g_alex.mobile_iis.data.remote.dto.schedule.toLessonList
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import retrofit2.Call
@@ -35,7 +34,7 @@ class IisApiRepositoryImpl @Inject constructor(
         api.logout(token)
     }
 
-    override suspend fun getSchedule(groupNum:String): List<LessonModel> {
+    override suspend fun getSchedule(groupNum: String): List<LessonModel> {
         return api.getSchedule(groupNum).toLessonList()
     }
 
@@ -47,11 +46,11 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getGroups().map { item -> item.toGroupModel() }
     }
 
-    override suspend fun getEmployeeSchedule(urlId:String): List<LessonModel> {
+    override suspend fun getEmployeeSchedule(urlId: String): List<LessonModel> {
         return api.getEmployeeSchedule(urlId)?.toLessonList() ?: emptyList()
     }
 
     override suspend fun getEmployees(): List<EmployeeModel> {
-        return api.getEmployeesList().map {item -> item.toEmployeeModel()}
+        return api.getEmployeesList().map { item -> item.toEmployeeModel() }
     }
 }

@@ -3,10 +3,9 @@ package by.g_alex.mobile_iis.data.remote
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
-import com.example.compose.data.remote.dto.Schedule.MainDto
+import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
 import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
-import by.g_alex.mobile_iis.data.remote.dto.prepodSchedule.ScheduleDto
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -34,6 +33,6 @@ interface IisApi {
     suspend fun getEmployeesList(): List<EmployeeListItemDto>
 
     @GET("api/v1/employees/schedule/{urlId}")
-    suspend fun getEmployeeSchedule(@Path("urlId") urlId: String): ScheduleDto?
+    suspend fun getEmployeeSchedule(@Path("urlId") urlId: String): MainDto?
 
 }

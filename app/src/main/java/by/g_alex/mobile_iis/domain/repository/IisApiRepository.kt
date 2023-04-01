@@ -17,7 +17,7 @@ interface IisApiRepository {
 
     suspend fun logout(token: String)
 
-    suspend fun getSchedule(groupNum: String): List<LessonModel>
+    suspend fun getSchedule(groupNum: String): List<LessonModel>?
 
     suspend fun getCurrentWeek(): Int
 

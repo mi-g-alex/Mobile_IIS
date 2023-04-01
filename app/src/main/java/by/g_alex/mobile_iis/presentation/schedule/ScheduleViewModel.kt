@@ -130,11 +130,11 @@ class ScheduleViewModel @Inject constructor(
                 is Resource.Success -> {
                     _state.value = ScheduleState(Days = result.data)
 
-                    if (db.getSchedule(grNum).isEmpty()) {
+                    /*if (db.getSchedule(grNum).isEmpty()) {
                         for (n in _state.value.Days ?: emptyList()) {
-                            db.insertSchedule(n)
+                         //   db.insertSchedule(n)
                         }
-                    }
+                    }*/
                 }
 
                 is Resource.Error -> {
@@ -157,18 +157,18 @@ class ScheduleViewModel @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                     _state.value = ScheduleState(Days = result.data)
-                    if (db.getSchedule(urlId).isEmpty()) {
+                    /*if (db.getSchedule(urlId).isEmpty()) {
                         for (n in _state.value.Days ?: emptyList()) {
-                            db.insertSchedule(n)
+                       //     db.insertSchedule(n)
                         }
-                    }
+                    }*/
                 }
 
                 is Resource.Error -> {
-                    val schedules: List<LessonModel> = db.getSchedule(urlId)
+                    /*val schedules: List<LessonModel> = db.getSchedule(urlId)
                     if (schedules.isNotEmpty())
                         _state.value = ScheduleState(Days = schedules)
-                    else
+                    else*/
                         _state.value = ScheduleState(error = result.message ?: "|Empty|")
                 }
 
