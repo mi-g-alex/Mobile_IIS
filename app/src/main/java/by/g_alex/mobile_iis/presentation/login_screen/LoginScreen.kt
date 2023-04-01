@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
-import by.g_alex.mobile_iis.presentation.Screen
 
 @Composable
 fun LoginScreen(
@@ -46,7 +45,7 @@ fun LoginScreen(
             val sharedPreferences: SharedPreferences =
                 context.getSharedPreferences("cookie", Context.MODE_PRIVATE)
             sharedPreferences.edit().putString("cookie", state.cookie).apply()
-            navController.navigate(Screen.ProfileScreen.route)
+            navController.navigate("profileHome")
         }
     }
 

@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.sp
 import by.g_alex.mobile_iis.R
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import by.g_alex.mobile_iis.presentation.Screen
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.flowlayout.FlowRow
 
@@ -201,8 +200,7 @@ fun ProfileCVScreen(
                 Button(
                     onClick = {
                         viewModel.logOut()
-                        navController.navigate(Screen.LoginScreen.route)
-
+                        navController.navigate("login")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -217,7 +215,7 @@ fun ProfileCVScreen(
 
         LaunchedEffect(state.error) {
             if (state.error == "LessCookie") {
-                navController.navigate(Screen.LoginScreen.route)
+                navController.navigate("login")
             }
         }
 
