@@ -15,15 +15,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.navigation.Screen
-import com.example.compose.domain.model.GroupModel
+import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 
 
 @Composable
 fun GroupItem(group: GroupModel, viewModel: ScheduleViewModel, navController: NavController){
     Column(modifier = Modifier.padding(vertical = 5.dp, horizontal = 20.dp).clickable {
         viewModel.addGroups(group.name)
-        viewModel.headertext.value = group.name
-        viewModel.getScheadule(group.name)
+        viewModel.headerText.value = group.name
+        viewModel.getSchedule(group.name)
         //viewModel.getScheadule(group.name)
         //viewModel.getCurrentWeek()
         navController.navigate(Screen.Home.route)

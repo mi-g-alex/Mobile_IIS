@@ -1,6 +1,6 @@
-package com.example.compose.presentation.states
+package by.g_alex.mobile_iis.presentation.schedule.states
 
-import com.example.compose.domain.model.LessonModel
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
 
 data class ScheduleState(
     val isLoading: Boolean = false,

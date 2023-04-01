@@ -2,6 +2,7 @@ package by.g_alex.mobile_iis.data.local
 
 import androidx.room.*
 import by.g_alex.mobile_iis.data.local.entity.CookieEntity
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
 import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
 
@@ -38,4 +39,10 @@ interface UserDao {
 
     @Query("DELETE FROM ProfilePersonalCVEntity")
     suspend fun deleteProfilePersonalCV()
+
+    @Query("SELECT * FROM LessonModel WHERE id LIKE :group")
+    suspend fun getSchedule(group: String): List<LessonModel>
+
+    @Insert
+    suspend fun insertSchedule(users: LessonModel)
 }

@@ -1,15 +1,17 @@
-package com.example.compose.domain.use_case
+package by.g_alex.mobile_iis.domain.use_case.schedule_use_cases
 
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.data.repository.ScheduleRepositoryIMPL
-import com.example.compose.domain.model.LessonModel
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
+import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class getScheduleUseCase {
-    private val repository = ScheduleRepositoryIMPL()
+class GetScheduleUseCase @Inject constructor(
+    private val repository: IisApiRepository,
+){
     operator fun invoke(groupNum:String): Flow<Resource<List<LessonModel>>> = flow{
         try {
             emit(Resource.Loading())
@@ -20,7 +22,7 @@ class getScheduleUseCase {
             emit(Resource.Error(e.localizedMessage?:"ERROR"))
         }
         catch (e: IOException){
-            emit(Resource.Error(e.localizedMessage?:"Cringe no internet conection"))
+            emit(Resource.Error(e.localizedMessage?:"Cringe no internet connection"))
         }
     }
 }

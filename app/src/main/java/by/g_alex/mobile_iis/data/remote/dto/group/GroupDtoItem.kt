@@ -1,6 +1,6 @@
-package com.example.compose.data.remote.dto.group
+package by.g_alex.mobile_iis.data.remote.dto.group
 
-import com.example.compose.domain.model.GroupModel
+import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 
 data class GroupDtoItem(
     val calendarId: String,

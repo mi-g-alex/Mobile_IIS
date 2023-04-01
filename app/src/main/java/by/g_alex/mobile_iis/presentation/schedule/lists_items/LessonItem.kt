@@ -1,6 +1,5 @@
-package com.example.compose.presentation.list.component
+package by.g_alex.mobile_iis.presentation.schedule.lists_items
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.compose.domain.model.*
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
 
 
 @Composable

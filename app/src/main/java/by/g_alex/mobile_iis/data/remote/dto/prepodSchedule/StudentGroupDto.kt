@@ -1,6 +1,6 @@
-package com.example.compose.data.remote.dto.prepodSchedule
+package by.g_alex.mobile_iis.data.remote.dto.prepodSchedule
 
-data class StudentGroup(
+data class StudentGroupDto(
     val educationDegree: Int,
     val name: String,
     val numberOfStudents: Int,

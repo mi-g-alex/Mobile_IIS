@@ -1,16 +1,29 @@
 package by.g_alex.mobile_iis.domain.repository
 
+import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
+import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
+import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import retrofit2.Call
 
 interface IisApiRepository {
     suspend fun loginToAccount(
-        username : String,
-        password : String
-    ) : Call<LoginResponseDto>
+        username: String,
+        password: String
+    ): Call<LoginResponseDto>
 
-    suspend fun getProfilePersonalCV(token : String) : PersonalCVDto
+    suspend fun getProfilePersonalCV(token: String): PersonalCVDto
 
-    suspend fun logout(token : String)
+    suspend fun logout(token: String)
+
+    suspend fun getSchedule(groupNum: String): List<LessonModel>
+
+    suspend fun getCurrentWeek(): Int
+
+    suspend fun getGroups(): List<GroupModel>
+
+    suspend fun getEmployees(): List<EmployeeModel>
+
+    suspend fun getEmployeeSchedule(urlId: String): List<LessonModel>
 }

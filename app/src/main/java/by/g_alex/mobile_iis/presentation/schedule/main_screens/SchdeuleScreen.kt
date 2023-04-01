@@ -1,4 +1,4 @@
-package by.g_alex.mobile_iis.presentation.schedule
+package by.g_alex.mobile_iis.presentation.schedule.main_screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R.drawable
+import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
+import by.g_alex.mobile_iis.presentation.schedule.additional_views.BottomSHIIT
+import by.g_alex.mobile_iis.presentation.schedule.additional_views.ScheduleColumn
 import kotlinx.coroutines.launch
 
 @SuppressLint("MutableCollectionMutableState")
@@ -34,7 +37,7 @@ fun ScheduleListScreen(
 ) {
     val state = viewModel.state.value
     val coroutineScope = rememberCoroutineScope()
-    val currentGroup = viewModel.headertext.value
+    val currentGroup = viewModel.headerText.value
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed
     )

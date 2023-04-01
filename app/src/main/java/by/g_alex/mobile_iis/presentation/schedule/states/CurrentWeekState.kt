@@ -1,4 +1,4 @@
-package com.example.compose.presentation.states
+package by.g_alex.mobile_iis.presentation.schedule.states
 
 data class CurrentWeekState(
     val isLoading: Boolean = false,
