@@ -17,7 +17,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -68,7 +67,7 @@ fun AddingEmployee(viewModel: ScheduleViewModel, navController: NavController){
                     focusedLabelColor = androidx.compose.material.MaterialTheme.colors.primary,
                     cursorColor = androidx.compose.material.MaterialTheme.colors.background ,
                     leadingIconColor = Color.LightGray,
-                    /*backgroundColor = Color.Black//Color(0xff212121)*/
+                    backgroundColor = Color.Black//Color(0xff212121)
                 ),
                 leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search") }
             )

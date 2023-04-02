@@ -2,20 +2,15 @@ package by.g_alex.mobile_iis.presentation.schedule.main_screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -40,10 +35,7 @@ fun ScheduleListScreen(
     viewModel: ScheduleViewModel,
     navController: NavController
 ) {
-
     BottomSheetScaffold(viewModel, navController)
-
-
 }
 
 
@@ -95,9 +87,11 @@ fun BottomSheetScaffold(
                     })
             }
         ) {
-            Box(modifier = Modifier
-                .padding(it)
-                .fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxSize()
+            ) {
                 if (state.Days?.isNotEmpty() == true) {
                     ScheduleColumn(viewModel = viewModel)
                 } else if (!state.isLoading) {

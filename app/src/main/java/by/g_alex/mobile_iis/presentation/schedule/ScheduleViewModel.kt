@@ -52,13 +52,6 @@ class ScheduleViewModel @Inject constructor(
     val groupState: State<GroupState> = _grState
     val prepState: State<EmployeeState> = _prState
 
-
-    fun getURLIDbyEmployeeFio(fio: String): String {
-        val prefs = context.getSharedPreferences(fio, Context.MODE_PRIVATE)
-        val urlId = prefs.getString(fio, "")
-        return urlId ?: ""
-    }
-
     fun addEmployees(employee: EmployeeModel) {
         val prefs = context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
         val list = prefs.getStringSet(ADDED_SCHEDULE, emptySet())?.toMutableSet()
@@ -130,11 +123,11 @@ class ScheduleViewModel @Inject constructor(
                 is Resource.Success -> {
                     _state.value = ScheduleState(Days = result.data)
 
-                    /*if (db.getSchedule(grNum).isEmpty()) {
-                        for (n in _state.value.Days ?: emptyList()) {
-                         //   db.insertSchedule(n)
-                        }
-                    }*/
+
+                    for (n in _state.value.Days ?: emptyList()) {
+                           db.insertSchedule(n)
+                    }
+
                 }
 
                 is Resource.Error -> {
@@ -144,6 +137,7 @@ class ScheduleViewModel @Inject constructor(
                     else
                         _state.value = ScheduleState(error = result.message ?: "EmptyList")
                 }
+
                 is Resource.Loading -> {
                     _state.value = ScheduleState(isLoading = true)
                 }
@@ -157,19 +151,19 @@ class ScheduleViewModel @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                     _state.value = ScheduleState(Days = result.data)
-                    /*if (db.getSchedule(urlId).isEmpty()) {
+                    if (db.getSchedule(urlId).isEmpty()) {
                         for (n in _state.value.Days ?: emptyList()) {
-                       //     db.insertSchedule(n)
+                            db.insertSchedule(n)
                         }
-                    }*/
+                    }
                 }
 
                 is Resource.Error -> {
-                    /*val schedules: List<LessonModel> = db.getSchedule(urlId)
+                    val schedules: List<LessonModel> = db.getSchedule(urlId)
                     if (schedules.isNotEmpty())
                         _state.value = ScheduleState(Days = schedules)
-                    else*/
-                        _state.value = ScheduleState(error = result.message ?: "|Empty|")
+                    else
+                    _state.value = ScheduleState(error = result.message ?: "|Empty|")
                 }
 
                 is Resource.Loading -> {
