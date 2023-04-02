@@ -45,18 +45,18 @@ class Converters(
     }
 
     @TypeConverter
-    fun listIntToString(list: List<Int>): String {
+    fun listIntToString(list: List<Int>?): String {
         return jsonParser.toJson(
             list,
-            object : TypeToken<ArrayList<Int>>() {}.type
+            object : TypeToken<ArrayList<Int>?>() {}.type
         ) ?: "[]"
     }
 
     @TypeConverter
-    fun listIntFromString(json: String): List<Int> {
-        return jsonParser.fromJson<ArrayList<Int>>(
+    fun listIntFromString(json: String): List<Int>? {
+        return jsonParser.fromJson<ArrayList<Int>?>(
             json,
-            object : TypeToken<ArrayList<Int>>() {}.type
+            object : TypeToken<ArrayList<Int>?>() {}.type
         ) ?: emptyList()
     }
 

@@ -8,8 +8,10 @@ import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
 import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
 
+
+
 @Database(
-    version = 4,
+    version = 5,
     entities = [
         ProfilePersonalCVEntity::class,
         CookieEntity::class,

@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 data class LessonModel(
     @PrimaryKey(autoGenerate = true)
     val key: Int = 0,
-    var id: String?,
+    var id: String,
     val auditories: List<String>?,
     val endLessonTime: String?,
     val lessonTypeAbbrev: String?,
-    val numSubgroup: Int?,
+    val numSubgroup: Int,
     val startLessonTime: String?,
     val subject: String?,
     val subjectFullName: String?,
