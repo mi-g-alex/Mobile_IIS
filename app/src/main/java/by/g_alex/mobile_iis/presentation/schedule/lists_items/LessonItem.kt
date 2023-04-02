@@ -32,10 +32,7 @@ fun LessonItem(
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 5.dp)
             .height(60.dp)
-            .clickable { },
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 10.dp
-        )
+            .clickable { }
     ) {
         Row(modifier = Modifier.weight(40f)) {
             Column(

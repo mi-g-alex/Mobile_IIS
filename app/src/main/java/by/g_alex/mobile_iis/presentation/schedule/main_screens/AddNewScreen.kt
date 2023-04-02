@@ -57,9 +57,7 @@ fun AddNewScreen(viewModel: ScheduleViewModel, navController: NavController) {
             Column {
                 val pagerState: PagerState = rememberPagerState(initialPage = 0)
                 val coroutineScope = rememberCoroutineScope()
-
                 TabRow(
-
                     selectedTabIndex = pagerState.currentPage
                 ) {
                     // Add tabs for all of our pages
@@ -75,7 +73,6 @@ fun AddNewScreen(viewModel: ScheduleViewModel, navController: NavController) {
                         )
                     }
                 }
-
                 HorizontalPager(
                     state = pagerState,
                     pageCount = titles.size,

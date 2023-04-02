@@ -25,9 +25,6 @@ fun ScheduleColumn(viewModel: ScheduleViewModel){
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 60.dp)
-            .background(Color.Black)
-
     ) {
         val date = mutableStateOf(LocalDate.now())
         date.value = LocalDate.now()
@@ -62,7 +59,7 @@ fun ScheduleColumn(viewModel: ScheduleViewModel){
                     if (!firstStep) {
                         items(mutableListOf(txt)) { itm ->
                             Text(
-                                text = itm, color = Color.LightGray,
+                                text = itm,
                                 modifier = Modifier.padding(
                                     start = 20.dp,
                                     top = 10.dp,

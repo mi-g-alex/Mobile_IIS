@@ -68,10 +68,9 @@ fun AddingEmployee(viewModel: ScheduleViewModel, navController: NavController){
                     focusedLabelColor = androidx.compose.material.MaterialTheme.colors.primary,
                     cursorColor = androidx.compose.material.MaterialTheme.colors.background ,
                     leadingIconColor = Color.LightGray,
-                    backgroundColor = Color.Black//Color(0xff212121)
+                    /*backgroundColor = Color.Black//Color(0xff212121)*/
                 ),
-                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "cajns") },
-                textStyle = TextStyle(color = Color.LightGray)
+                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search") }
             )
             if (state.preps?.isNotEmpty() == true) {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
