@@ -30,6 +30,7 @@ import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AddNewScreen(viewModel: ScheduleViewModel, navController: NavController) {
@@ -40,7 +41,6 @@ fun AddNewScreen(viewModel: ScheduleViewModel, navController: NavController) {
 
     val TabItems = listOf("Groups", "Prepods")
     val pagerState = rememberPagerState(
-        pageCount = 2,
         initialPage = 0
     )
     val coroutineScope = rememberCoroutineScope()
@@ -104,6 +104,7 @@ fun AddNewScreen(viewModel: ScheduleViewModel, navController: NavController) {
             }
 
             HorizontalPager(
+                count = 2,
                 state = pagerState
             ) { page ->
                 if (page == 1) {

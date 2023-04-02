@@ -2,11 +2,7 @@ package by.g_alex.mobile_iis.presentation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -14,12 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.*
 import androidx.navigation.navOptions
-import androidx.navigation.navigation
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
@@ -40,9 +32,8 @@ fun NavigationScreen() {
                     NavigationBarItem(
                         selected = parentRouteName == item,
                         onClick = {
-                            selectedItem.value = 0
-                            navController.navigate(
-                                item, navOptions {
+                            selectedItem.value = index
+                            navController.navigate( item, navOptions {
                                     popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
                                     }
