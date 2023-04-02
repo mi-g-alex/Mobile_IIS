@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
-import by.g_alex.mobile_iis.presentation.schedule.lists_items.PrepItem
+import by.g_alex.mobile_iis.presentation.schedule.lists_items.EmployeeItem
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import kotlinx.coroutines.launch
 
@@ -78,7 +78,7 @@ fun AddingEmployee(viewModel: ScheduleViewModel, navController: NavController){
                     if(searchText.value.isEmpty() || prList.isEmpty())
                         prList.addAll(state.preps!!)
                     items(prList) { itm ->
-                       if(itm.lastName.lowercase().contains(searchText.value.lowercase())) PrepItem(prep = itm, viewModel = viewModel, navController = navController)
+                       if(itm.lastName.lowercase().contains(searchText.value.lowercase())) EmployeeItem(employee = itm, viewModel = viewModel, navController = navController)
                     }
                 }
             } else

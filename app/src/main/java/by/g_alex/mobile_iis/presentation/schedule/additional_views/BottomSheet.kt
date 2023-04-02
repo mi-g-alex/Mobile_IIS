@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BottomSHIIT(viewModel: ScheduleViewModel, navController:NavController, coroutineScope:CoroutineScope, sheetState: BottomSheetState){
+fun BottomSheet(viewModel: ScheduleViewModel, navController:NavController, coroutineScope:CoroutineScope, sheetState: BottomSheetState){
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         items(viewModel.getGroups()) { item ->
             Text(

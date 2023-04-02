@@ -59,7 +59,7 @@ fun ProfileCVScreen(
                         ) {
                             if (profileInfo.photoUrl == null)
                                 Image(
-                                    painter = painterResource(id = R.drawable._00821),
+                                    painter = painterResource(id = R.drawable.profile_default),
                                     contentDescription = profileInfo.lastName + " " + profileInfo.firstName + " " + profileInfo.middleName,
                                     modifier = Modifier
                                         .size(200.dp)
