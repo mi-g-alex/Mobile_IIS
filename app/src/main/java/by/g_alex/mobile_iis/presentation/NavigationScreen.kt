@@ -14,12 +14,13 @@ import androidx.navigation.compose.*
 import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
+import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleStartUp
 
 @Composable
 fun NavigationScreen() {
-    val tabsItems = listOf("Расписание", "Профиль")
+    val tabsItems = listOf("schedule", "mark_book", "profile")
     val selectedItem = remember { mutableStateOf(0) }
     val navController = rememberNavController()
     val navBackStackEntry = navController.currentBackStackEntryAsState()
@@ -33,37 +34,50 @@ fun NavigationScreen() {
                         selected = parentRouteName == item,
                         onClick = {
                             selectedItem.value = index
-                            navController.navigate( item, navOptions {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
+                            navController.navigate(item, navOptions {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
                                 }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                             )
                         },
                         icon = {
                             when (item) {
-                                "Расписание" -> Icon(
+                                "schedule" -> Icon(
                                     painter = painterResource(id = R.drawable.schedule_icon),
                                     contentDescription = null
                                 )
 
-                                "Профиль" -> Icon(
+                                "profile" -> Icon(
                                     painter = painterResource(id = R.drawable.icon_profile),
+                                    contentDescription = null
+                                )
+
+                                "mark_book" -> Icon(
+                                    painter = painterResource(id = R.drawable.baseline_book_24),
                                     contentDescription = null
                                 )
                             }
                         },
-                        label = { Text(text = item) }
+                        label = {
+                            when(item) {
+                                "schedule" -> Text(text = "Расписание")
+
+                                "profile" -> Text(text = "Профиль")
+
+                                "mark_book" -> Text(text = "Зачётка")
+                            }
+                        }
                     )
                 }
             }
         }
     ) {
         Box(modifier = Modifier.padding(it)) {
-            NavHost(navController = navController, startDestination = "Расписание") {
-                navigation(startDestination = "scheduleHome", route = "Расписание") {
+            NavHost(navController = navController, startDestination = "schedule") {
+                navigation(startDestination = "scheduleHome", route = "schedule") {
                     composable(
                         route = "scheduleHome",
                         deepLinks = listOf(NavDeepLink("deeplink://schedule"))
@@ -71,7 +85,7 @@ fun NavigationScreen() {
                         ScheduleStartUp()
                     }
                 }
-                navigation(startDestination = "profileHome", route = "Профиль") {
+                navigation(startDestination = "profileHome", route = "profile") {
                     composable(
                         route = "profileHome",
                         deepLinks = listOf(NavDeepLink("deeplink://profile"))
@@ -83,6 +97,14 @@ fun NavigationScreen() {
                         deepLinks = listOf(NavDeepLink("deeplink://login"))
                     ) {
                         LoginScreen(navController = navController)
+                    }
+                }
+                navigation(startDestination = "mark_bookHome", route = "mark_book") {
+                    composable(
+                        route = "mark_bookHome",
+                        deepLinks = listOf(NavDeepLink("deeplink://mark_book"))
+                    ) {
+                        MarkBookScreen()
                     }
                 }
             }

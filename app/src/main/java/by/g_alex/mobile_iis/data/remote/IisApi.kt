@@ -6,10 +6,13 @@ import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
 import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
+import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import retrofit2.Call
 import retrofit2.http.*
 
 interface IisApi {
+
+    // For AUTH
 
     @POST("api/v1/auth/login")
     fun loginToAccount(@Body request: LoginAndPasswordDto): Call<LoginResponseDto>
@@ -19,6 +22,12 @@ interface IisApi {
 
     @GET("api/v1/auth/logout")
     suspend fun logout(@Header("Cookie") cookieValue: String)
+
+    @GET("api/v1/markbook")
+    suspend fun getMarkBook(@Header("Cookie") cookieValue: String) : MarkBookDto
+
+
+    // For all
 
     @GET("api/v1/schedule?")
     suspend fun getSchedule(@Query("studentGroup") groupNumber: String): MainDto

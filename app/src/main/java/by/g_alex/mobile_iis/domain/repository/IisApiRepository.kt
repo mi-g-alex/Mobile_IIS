@@ -2,12 +2,15 @@ package by.g_alex.mobile_iis.domain.repository
 
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
+import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import retrofit2.Call
 
 interface IisApiRepository {
+
+    // For AUTH
     suspend fun loginToAccount(
         username: String,
         password: String
@@ -16,6 +19,10 @@ interface IisApiRepository {
     suspend fun getProfilePersonalCV(token: String): PersonalCVDto
 
     suspend fun logout(token: String)
+
+    suspend fun getMarkBook(token: String) : MarkBookDto
+
+    // For All
 
     suspend fun getSchedule(groupNum: String): List<LessonModel>?
 
