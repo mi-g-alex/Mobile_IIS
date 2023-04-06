@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.data.remote.dto.schedule
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 
 data class DayDto(
@@ -24,8 +25,14 @@ data class DayDto(
     val split: Boolean
 )
 
-fun DayDto.toLessonModel(weekDay: String): LessonModel {
+fun DayDto.toLessonModel(weekDay: String, isGroup : Boolean): LessonModel {
     Log.w("||||||||||", this.toString())
+    val notation = mutableStateOf("")
+    for(n in studentGroups.indices){
+        notation.value+=studentGroups[n].name
+        if(n!=studentGroups.size-1)
+            notation.value+=", "
+    }
     val str = if (employees?.isNotEmpty() == true)
         employees[0].lastName + " " + employees[0].firstName[0] + "." + employees[0].middleName[0] + "."
     else
@@ -42,6 +49,8 @@ fun DayDto.toLessonModel(weekDay: String): LessonModel {
         weekNumber = weekNumber,
         fio = str,
         note = note,
-        weekDay = weekDay
+        weekDay = weekDay,
+        type = isGroup,
+        groupNum = notation.value//.toString().substring(1,studentGroups.toString().length-2)}
     )
 }

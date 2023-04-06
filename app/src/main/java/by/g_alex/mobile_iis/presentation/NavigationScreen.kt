@@ -1,12 +1,8 @@
 package by.g_alex.mobile_iis.presentation
 
-import android.widget.Space
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
@@ -27,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,10 +31,9 @@ import androidx.navigation.compose.*
 import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
-import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
+import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleStartUp
-import by.g_alex.mobile_iis.presentation.schedule.additional_views.BottomSheet
 import by.g_alex.mobile_iis.presentation.user_group.UserGroupScreen
 import kotlinx.coroutines.launch
 
@@ -107,7 +100,7 @@ fun NavigationScreen() {
 
 
                                     "grade_book" -> Icon(
-                                        painter = painterResource(id = R.drawable.baseline_more_horiz_24),
+                                        painter = painterResource(id = R.drawable.rating),
                                         contentDescription = null,
                                     )
 
@@ -119,15 +112,15 @@ fun NavigationScreen() {
                             },
                             label = {
                                 when (item) {
-                                    "schedule" -> Text(text = "Расписание")
+                                    "schedule" -> Text(text = "Расписание", fontSize = 11.sp)
 
-                                    "mark_book" -> Text(text = "Зачётка")
+                                    "mark_book" -> Text(text = "Зачётка", fontSize = 11.sp)
 
-                                    "profile" -> Text(text = "Профиль")
+                                    "profile" -> Text(text = "Профиль", fontSize = 11.sp)
 
-                                    "grade_book" -> Text(text = "Рейтинг")
+                                    "grade_book" -> Text(text = "Рейтинг", fontSize = 11.sp)
 
-                                    "more" -> Text(text = "Ещё")
+                                    "more" -> Text(text = "Ещё", fontSize = 11.sp)
                                 }
                             }
                         )
@@ -144,6 +137,7 @@ fun NavigationScreen() {
                         ) {
                             ScheduleStartUp()
                         }
+
                     }
                     navigation(startDestination = "profileHome", route = "profile") {
                         composable(
@@ -165,6 +159,14 @@ fun NavigationScreen() {
                             deepLinks = listOf(NavDeepLink("deeplink://mark_book"))
                         ) {
                             UserGroupScreen()
+                        }
+                    }
+                    navigation(startDestination = "grade_bookHome", route = "grade_book") {
+                        composable(
+                            route = "grade_bookHome",
+                            deepLinks = listOf(NavDeepLink("deeplink://grade_book"))
+                        ) {
+                            RatingScreen()
                         }
                     }
                 }

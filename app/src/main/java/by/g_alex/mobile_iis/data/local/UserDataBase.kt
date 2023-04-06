@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.data.local
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -18,6 +19,10 @@ import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
         LoginAndPasswordEntity::class,
         LessonModel::class
     ],
+//    exportSchema = true,
+//    autoMigrations = [
+//        AutoMigration (from = 4, to = 5)
+//    ]
 )
 @TypeConverters(Converters::class)
 abstract class UserDataBase : RoomDatabase() {

@@ -12,15 +12,15 @@ data class MainDto(
     val schedules: SchedulesDto?,
     val exams: List<Any>
 ) {
-    fun toLessonList(): List<LessonModel> {
+    fun toLessonList(type : Boolean): List<LessonModel> {
         val mo = mutableListOf<LessonModel>()
         with(schedules) {
-            this?.Monday?.onEach { mnd -> mo.add(mnd.toLessonModel("MONDAY")) }
-            this?.Tuesday?.onEach { mnd -> mo.add(mnd.toLessonModel("TUESDAY")) }
-            this?.Wednesday?.onEach { mnd -> mo.add(mnd.toLessonModel("WEDNESDAY")) }
-            this?.Thursday?.onEach { mnd -> mo.add(mnd.toLessonModel("THURSDAY")) }
-            this?.Friday?.onEach { mnd -> mo.add(mnd.toLessonModel("FRIDAY")) }
-            this?.Saturday?.onEach { mnd -> mo.add(mnd.toLessonModel("SATURDAY")) }
+            this?.Monday?.onEach { mnd -> mo.add(mnd.toLessonModel("MONDAY",type)) }
+            this?.Tuesday?.onEach { mnd -> mo.add(mnd.toLessonModel("TUESDAY",type)) }
+            this?.Wednesday?.onEach { mnd -> mo.add(mnd.toLessonModel("WEDNESDAY",type)) }
+            this?.Thursday?.onEach { mnd -> mo.add(mnd.toLessonModel("THURSDAY",type)) }
+            this?.Friday?.onEach { mnd -> mo.add(mnd.toLessonModel("FRIDAY",type)) }
+            this?.Saturday?.onEach { mnd -> mo.add(mnd.toLessonModel("SATURDAY",type)) }
         }
         return mo.toList()
     }

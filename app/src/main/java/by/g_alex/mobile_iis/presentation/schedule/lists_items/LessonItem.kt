@@ -43,9 +43,11 @@ fun LessonItem(
             ) {
                 Text(
                     text = schedule.startLessonTime.toString(),
+                    fontSize = 14.sp
                 )
                 Text(
                     text = schedule.endLessonTime.toString(),
+                    fontSize = 12.sp
                 )
             }
             Spacer(modifier = Modifier.padding(5.dp))
@@ -57,8 +59,8 @@ fun LessonItem(
             }
             Box(
                 modifier = Modifier
-                    .width(5.dp)
-                    .fillMaxHeight(0.85f)
+                    .width(4.dp)
+                    .fillMaxHeight(0.75f)
                     .align(Alignment.CenterVertically)
                     .padding()
                     .clip(shape = AbsoluteRoundedCornerShape(40.dp))
@@ -78,7 +80,7 @@ fun LessonItem(
             ) {
                 Text(
                     text = (schedule.subject ?: schedule.note ?: ""),
-                    fontSize = 18.sp
+                    fontSize = 16.sp
                 )
                 if (audit.isNotBlank()) Text(
                     text = audit,
@@ -110,12 +112,23 @@ fun LessonItem(
                     .padding(end = 10.dp)
                     .align(Alignment.CenterVertically)
             ) {
-                schedule.fio?.let {
-                    Text(
-                        modifier = Modifier.align(Alignment.End),
-                        text = it,
-                        fontSize = 16.sp
-                    )
+                if(schedule.type) {
+                    schedule.fio?.let {
+                        Text(
+                            modifier = Modifier.align(Alignment.End),
+                            text = it,
+                            fontSize = 12.sp
+                        )
+                    }
+                }
+                else{
+                    schedule.groupNum?.let {
+                        Text(
+                            modifier = Modifier.align(Alignment.End),
+                            text = it,
+                            fontSize = 10.sp
+                        )
+                    }
                 }
                 if (weeks.value.isNotBlank()) {
                     Text(
@@ -147,7 +160,9 @@ fun preview() {
             weekNumber = listOf(1, 2, 3, 4),
             fio = "Владымцев В. Д.",
             note = null,
-            weekDay = "Понедельник"
+            weekDay = "Понедельник",
+            true,
+            "2323232"
         ),
         1
     )

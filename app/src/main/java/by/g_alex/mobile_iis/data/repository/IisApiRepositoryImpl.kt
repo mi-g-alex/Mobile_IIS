@@ -44,7 +44,7 @@ class IisApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSchedule(groupNum: String): List<LessonModel> {
-        return api.getSchedule(groupNum).toLessonList()
+        return api.getSchedule(groupNum).toLessonList(true)
     }
 
     override suspend fun getCurrentWeek(): Int {
@@ -56,7 +56,7 @@ class IisApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getEmployeeSchedule(urlId: String): List<LessonModel> {
-        return api.getEmployeeSchedule(urlId)?.toLessonList() ?: emptyList()
+        return api.getEmployeeSchedule(urlId)?.toLessonList(false) ?: emptyList()
     }
 
     override suspend fun getEmployees(): List<EmployeeModel> {

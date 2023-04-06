@@ -18,5 +18,7 @@ data class LessonModel(
     val weekNumber: List<Int>?,
     val fio:String?,
     val note : String?,
-    val weekDay : String?
+    val weekDay : String?,
+    val type : Boolean,
+    val groupNum : String
 )
