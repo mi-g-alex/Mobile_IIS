@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.presentation.schedule.main_screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -74,15 +75,14 @@ fun BottomSheetScaffold(
                     )
                 },
                     navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch {
-                                bottomSheetState.show()
-                            }
-                        }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.hide),
-                                contentDescription = "Выбрать расписание"
-                            )
+                        Icon(
+                            painter = painterResource(id = R.drawable.hide),
+                            contentDescription = "Выбрать расписание"
+                        )
+                    },
+                    modifier = Modifier.clickable {
+                        scope.launch {
+                            bottomSheetState.show()
                         }
                     })
             }

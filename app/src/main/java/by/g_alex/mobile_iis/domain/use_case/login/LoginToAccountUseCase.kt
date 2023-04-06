@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.domain.use_case.login
 
+import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
@@ -35,6 +36,7 @@ class LoginToAccountUseCase @Inject constructor(
                 )
             )
         } catch (e: IOException) {
+            Log.e("Login Error", e.toString())
             emit(
                 Resource.Error<Response<LoginResponseDto>>(
                     "Couldn't Login"

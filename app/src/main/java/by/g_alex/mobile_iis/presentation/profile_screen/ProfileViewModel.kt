@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.domain.use_case.get_profile.get_personal_cv.GetPersonalCVUseCase
+import by.g_alex.mobile_iis.domain.use_case.get_profile.personal_cv.GetPersonalCVUseCase
 import by.g_alex.mobile_iis.domain.use_case.login.LogOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

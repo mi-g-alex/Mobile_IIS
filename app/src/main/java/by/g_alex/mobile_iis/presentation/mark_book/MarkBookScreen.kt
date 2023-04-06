@@ -1,52 +1,30 @@
 package by.g_alex.mobile_iis.presentation.mark_book
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import by.g_alex.mobile_iis.R
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import by.g_alex.mobile_iis.presentation.mark_book.addtional.MarkBookListScreen
-import by.g_alex.mobile_iis.presentation.schedule.additional_views.AddingEmployee
-import by.g_alex.mobile_iis.presentation.schedule.additional_views.AddingNewGroup
-import coil.compose.rememberAsyncImagePainter
-import com.google.accompanist.flowlayout.FlowRow
 import kotlinx.coroutines.launch
-import kotlin.math.sign
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MarkBookScreen(
     viewModel: MarkBookViewModel = hiltViewModel(),
 ) {
-
-    //viewModel.getMarkBook()
     val state = viewModel.state.value
+
+
 
     Scaffold(
         topBar = {
@@ -70,10 +48,10 @@ fun MarkBookScreen(
             )
         }
     ) {
-        Box(modifier = Modifier.padding(it)) {
-            if(state.markBookState != null){
+        Box(modifier = Modifier.padding(it).fillMaxSize()) {
+            if (state.markBookState != null) {
                 val titles = mutableListOf<Int>()
-                for(i in 1..state.markBookState.markPages.size) titles.add(i)
+                for (i in 1..state.markBookState.markPages.size) titles.add(i)
                 Column {
                     val pagerState: PagerState = rememberPagerState(initialPage = titles.size - 2)
                     val coroutineScope = rememberCoroutineScope()
@@ -101,6 +79,22 @@ fun MarkBookScreen(
                         MarkBookListScreen(item = state.markBookState, id = page + 1)
                     }
                 }
+            }
+            if (state.error.isNotBlank()) {
+                if(state.error == "LessCookie") {
+                    Box(modifier = Modifier.align(Alignment.Center)) {
+                        Column(modifier = Modifier) {
+                            Text(
+                                text = "Сначала войдите в аккаунт...",
+                                fontSize = 25.sp
+                            )
+                        }
+                    }
+                }
+            }
+
+            if (state.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
     }

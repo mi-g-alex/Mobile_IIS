@@ -1,4 +1,4 @@
-package by.g_alex.mobile_iis.domain.use_case.get_profile.get_personal_cv
+package by.g_alex.mobile_iis.domain.use_case.get_profile.personal_cv
 
 import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
@@ -21,36 +21,7 @@ class GetPersonalCVUseCase @Inject constructor(
             emit(Resource.Loading<PersonalCV>())
             val cookie = db_repository.getCookie()
             if (cookie == null) {
-                val loginAndPassword = db_repository.getLoginAndPassword()
-                if (loginAndPassword?.login == null || loginAndPassword.password == null) {
-                    emit(Resource.Error<PersonalCV>("LessCookie"))
-                } else {
-                    try {
-                        val responseFromLogin =
-                            api_repository.loginToAccount(
-                                loginAndPassword.login,
-                                loginAndPassword.password
-                            )
-                                .awaitResponse()
-                        val newCookie = responseFromLogin.headers()["Set-Cookie"].toString()
-                        db_repository.setCookie(newCookie)
-                        val data = api_repository.getProfilePersonalCV(newCookie).toPersonalCv()
-                        db_repository.setProfilePersonalCV(data)
-                        emit(Resource.Success<PersonalCV>(data))
-                    } catch (e: HttpException) {
-                        emit(
-                            Resource.Error<PersonalCV>(e.localizedMessage ?: "LessCookie")
-                        )
-                    } catch (e: IOException) {
-                        emit(
-                            Resource.Error<PersonalCV>(
-                                e.message.toString()
-                            )
-                        )
-                    }
-                }
-
-
+                emit(Resource.Error<PersonalCV>("LessCookie"))
             }
             if (cookie != null) {
                 val data = api_repository.getProfilePersonalCV(cookie).toPersonalCv()

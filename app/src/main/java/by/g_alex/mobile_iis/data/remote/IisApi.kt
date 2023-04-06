@@ -6,7 +6,7 @@ import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
 import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
-import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
+import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -24,7 +24,10 @@ interface IisApi {
     suspend fun logout(@Header("Cookie") cookieValue: String)
 
     @GET("api/v1/markbook")
-    suspend fun getMarkBook(@Header("Cookie") cookieValue: String) : MarkBookDto
+    suspend fun getMarkBook(@Header("Cookie") cookieValue: String) : by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
+
+    @GET("api/v1/student-groups/user-group-info")
+    suspend fun getUserGroup(@Header("Cookie") cookieValue: String) : UserGroupDto
 
 
     // For all

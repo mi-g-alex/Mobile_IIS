@@ -1,4 +1,4 @@
-package by.g_alex.mobile_iis.domain.use_case.mark_book
+package by.g_alex.mobile_iis.domain.use_case.get_profile.mark_book
 
 import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
@@ -21,35 +21,7 @@ class GetMarkBookUseCase @Inject constructor(
             emit(Resource.Loading<MarkBookDto>())
             val cookie = db_repository.getCookie()
             if (cookie == null) {
-                val loginAndPassword = db_repository.getLoginAndPassword()
-                if (loginAndPassword?.login == null || loginAndPassword.password == null) {
-                    emit(Resource.Error<MarkBookDto>("LessCookie"))
-                } else {
-                    try {
-                        val responseFromLogin =
-                            api_repository.loginToAccount(
-                                loginAndPassword.login,
-                                loginAndPassword.password
-                            )
-                                .awaitResponse()
-                        val newCookie = responseFromLogin.headers()["Set-Cookie"].toString()
-                        db_repository.setCookie(newCookie)
-                        val data = api_repository.getMarkBook(newCookie)
-                        emit(Resource.Success<MarkBookDto>(data))
-                    } catch (e: HttpException) {
-                        emit(
-                            Resource.Error<MarkBookDto>(e.localizedMessage ?: "LessCookie")
-                        )
-                    } catch (e: IOException) {
-                        emit(
-                            Resource.Error<MarkBookDto>(
-                                e.message.toString()
-                            )
-                        )
-                    }
-                }
-
-
+                emit(Resource.Error<MarkBookDto>("LessCookie"))
             }
             if (cookie != null) {
                 val data = api_repository.getMarkBook(cookie)

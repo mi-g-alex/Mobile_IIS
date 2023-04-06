@@ -34,7 +34,7 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    val context = LocalContext.current
+
     val state = viewModel.state.value
     val loginText = remember { mutableStateOf(TextFieldValue()) }
     val passText = remember { mutableStateOf(TextFieldValue()) }
@@ -42,9 +42,6 @@ fun LoginScreen(
 
     LaunchedEffect(state.cookie) {
         if (state.cookie != "" && state.cookie != null) {
-            val sharedPreferences: SharedPreferences =
-                context.getSharedPreferences("cookie", Context.MODE_PRIVATE)
-            sharedPreferences.edit().putString("cookie", state.cookie).apply()
             navController.navigate("profileHome")
         }
     }
@@ -124,8 +121,7 @@ fun LoginScreen(
                 Text(
                     text = state.error
                 )
-            } else Text(text = "")
-
+            }
         }
     }
 }
