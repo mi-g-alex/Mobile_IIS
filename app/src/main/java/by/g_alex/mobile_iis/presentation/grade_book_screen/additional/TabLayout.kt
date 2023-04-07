@@ -29,9 +29,8 @@ fun TabLayout(
         viewModel.state
     }
     val diciplineList = mutableMapOf<String, Dicipline>()
-    Log.e("GIRJIORJG", gradeList.value.gradeBookState.toString())
-    if (gradeList.value.gradeBookState.isNotEmpty()) {
-        gradeList.value.gradeBookState[0].student.lessons.onEach {
+    if (gradeList.value.gradeBookState!!.isNotEmpty()) {
+        gradeList.value.gradeBookState!![0].student.lessons.onEach {
             if (!diciplineList.keys.contains(it.lessonNameAbbrev)) {
                 diciplineList.put(
                     it.lessonNameAbbrev,
@@ -42,16 +41,16 @@ fun TabLayout(
             if(type == "Итого" || type == it.controlPoint) {
                 when (it.lessonTypeId) {
                     2 -> {
-                        diciplineList[it.lessonNameAbbrev]!!.lkM += it.marks.count()
-                        diciplineList[it.lessonNameAbbrev]!!.lkH += it.gradeBookOmissions
+                      //  diciplineList[it.lessonNameAbbrev]!!.lkM += it.marks.count()
+                      //  diciplineList[it.lessonNameAbbrev]!!.lkH += it.gradeBookOmissions
                     }
                     3 -> {
-                        diciplineList[it.lessonNameAbbrev]!!.pzM += it.marks.count()
-                        diciplineList[it.lessonNameAbbrev]!!.pzH += it.gradeBookOmissions
+                      //  diciplineList[it.lessonNameAbbrev]!!.pzM += it.marks.count()
+                      //  diciplineList[it.lessonNameAbbrev]!!.pzH += it.gradeBookOmissions
                     }
                     4 -> {
-                        diciplineList[it.lessonNameAbbrev]!!.lbM += it.marks.count()
-                        diciplineList[it.lessonNameAbbrev]!!.lbH += it.gradeBookOmissions
+                      //  diciplineList[it.lessonNameAbbrev]!!.lbM += it.marks.count()
+                      //  diciplineList[it.lessonNameAbbrev]!!.lbH += it.gradeBookOmissions
                     }
                 }
             }

@@ -65,7 +65,10 @@ fun ProfileCVScreen(
                                         .size(200.dp)
                                         .clip(CircleShape)
                                         .background(Color.Gray, shape = CircleShape)
-                                        .border(1.dp, Color.Green),
+                                        .border(1.dp, Color.Green)
+                                        .clickable {
+
+                                        },
                                     contentScale = ContentScale.Crop,
                                 )
                             else Image(

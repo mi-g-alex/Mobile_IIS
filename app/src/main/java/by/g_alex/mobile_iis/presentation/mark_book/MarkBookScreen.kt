@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.mark_book
 
-import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
@@ -23,9 +22,6 @@ fun MarkBookScreen(
     viewModel: MarkBookViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
-
-
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(

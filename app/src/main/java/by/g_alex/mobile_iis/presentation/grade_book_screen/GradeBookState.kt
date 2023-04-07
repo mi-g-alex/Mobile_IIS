@@ -4,6 +4,6 @@ import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 
 data class GradeBookState (
     val isLoading: Boolean = false,
-    val gradeBookState: List<GradeBookDto> = emptyList(),
+    val gradeBookState: List<GradeBookDto>? = null,
     val error: String = ""
 )
