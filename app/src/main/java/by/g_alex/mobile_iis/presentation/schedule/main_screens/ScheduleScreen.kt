@@ -7,13 +7,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -24,10 +18,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
-import by.g_alex.mobile_iis.presentation.schedule.additional_views.ScheduleColumn
 import by.g_alex.mobile_iis.R
+import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.additional_views.BottomSheet
+import by.g_alex.mobile_iis.presentation.schedule.additional_views.ScheduleColumn
 import kotlinx.coroutines.launch
 
 
@@ -36,6 +30,7 @@ fun ScheduleListScreen(
     viewModel: ScheduleViewModel,
     navController: NavController
 ) {
+
     BottomSheetScaffold(viewModel, navController)
 }
 

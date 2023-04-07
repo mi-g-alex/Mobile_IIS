@@ -21,7 +21,10 @@ class MainActivity : ComponentActivity() {
         actionBar?.hide()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContent {
+
             MobileIISTheme {
+
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
