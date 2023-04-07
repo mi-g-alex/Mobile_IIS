@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.schedule.additional_views
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,16 +8,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
+import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.lists_items.LessonItem
 import java.time.LocalDate
 
 @Composable
 fun ScheduleColumn(viewModel: ScheduleViewModel){
-    val state = viewModel.state.value
     val weekState = viewModel.weekState.value
     val currentGroup = viewModel.headerText.value
     val currentSchedule = viewModel.state.value.Days ?: emptyList()
@@ -28,9 +25,8 @@ fun ScheduleColumn(viewModel: ScheduleViewModel){
     ) {
         val date = mutableStateOf(LocalDate.now())
         date.value = LocalDate.now()
-        var upcnt = 1
-        var txt = ""
-        upcnt = weekState.week ?: 1
+        var upcnt = weekState.week ?: 1
+        var txt : String
         val mutlist = mutableStateOf(mutableListOf<LessonModel>())
         while ((date.value.month.value < 6 || (date.value.month.value in 9..12)) && currentGroup != "None") {
             mutlist.value = mutableListOf<LessonModel>()
