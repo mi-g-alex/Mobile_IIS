@@ -108,7 +108,7 @@ private fun Item(it: UserGroupDto.GroupInfoStudentDto) {
             }
             FlowRow(
                 mainAxisSpacing = 8.dp,
-                crossAxisSpacing = 10.dp,
+                crossAxisSpacing = (-5).dp,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 AssistChip(

@@ -3,6 +3,7 @@ package by.g_alex.mobile_iis.presentation.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Colors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -62,13 +63,11 @@ fun MobileIISTheme(
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
         }
     }
+
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setStatusBarColor(
-            color = if(darkTheme)Color.Transparent
-            else
-                Color.LightGray,
-            darkIcons = false
+            color = colorScheme.background,
         )
     }
 
