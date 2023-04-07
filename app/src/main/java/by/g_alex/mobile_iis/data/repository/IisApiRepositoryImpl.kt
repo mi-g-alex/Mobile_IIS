@@ -3,6 +3,7 @@ package by.g_alex.mobile_iis.data.repository
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
 import by.g_alex.mobile_iis.data.remote.dto.employee.toEmployeeModel
+import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
@@ -35,6 +36,9 @@ class IisApiRepositoryImpl @Inject constructor(
         api.logout(token)
     }
 
+    override suspend fun getGradeBook(cookie: String): List<GradeBookDto> {
+        return api.getGradeBook(cookie)
+    }
     override suspend fun getMarkBook(token: String) : MarkBookDto {
         return api.getMarkBook(token)
     }

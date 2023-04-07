@@ -6,6 +6,7 @@ import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
 import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
+import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import retrofit2.Call
 import retrofit2.http.*
@@ -29,6 +30,8 @@ interface IisApi {
     @GET("api/v1/student-groups/user-group-info")
     suspend fun getUserGroup(@Header("Cookie") cookieValue: String) : UserGroupDto
 
+    @GET("https://iis.bsuir.by/api/v1/grade-book")
+    suspend fun getGradeBook(@Header("Cookie") cookieValue: String) : List<GradeBookDto>
 
     // For all
 

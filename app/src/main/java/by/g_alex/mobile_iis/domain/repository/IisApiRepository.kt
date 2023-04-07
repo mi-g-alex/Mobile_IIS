@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.domain.repository
 
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
+import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
@@ -19,6 +20,7 @@ interface IisApiRepository {
 
     suspend fun getProfilePersonalCV(token: String): PersonalCVDto
 
+    suspend fun getGradeBook(cookie : String) : List<GradeBookDto>
     suspend fun logout(token: String)
 
     suspend fun getMarkBook(token: String) : MarkBookDto
