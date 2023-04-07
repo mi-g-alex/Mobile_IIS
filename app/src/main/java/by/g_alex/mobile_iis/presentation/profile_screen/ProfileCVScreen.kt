@@ -1,6 +1,10 @@
 package by.g_alex.mobile_iis.presentation.profile_screen
 
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -8,6 +12,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -34,6 +42,15 @@ fun ProfileCVScreen(
     val state = viewModel.state.value
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
+
+    var selectedImageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+
+    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri -> selectedImageUri = uri }
+    )
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         state.profileInfo?.let { profileInfo ->
@@ -67,7 +84,9 @@ fun ProfileCVScreen(
                                         .background(Color.Gray, shape = CircleShape)
                                         .border(1.dp, Color.Green)
                                         .clickable {
-
+                                            singlePhotoPickerLauncher.launch(
+                                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                            )
                                         },
                                     contentScale = ContentScale.Crop,
                                 )
@@ -78,7 +97,12 @@ fun ProfileCVScreen(
                                     .size(200.dp)
                                     .clip(CircleShape)
                                     .background(Color.White)
-                                    .border(3.dp, Color.Black, CircleShape),
+                                    .border(3.dp, Color.Black, CircleShape)
+                                    .clickable {
+                                        singlePhotoPickerLauncher.launch(
+                                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                        )
+                                    },
                                 contentScale = ContentScale.Crop,
                             )
                         }
