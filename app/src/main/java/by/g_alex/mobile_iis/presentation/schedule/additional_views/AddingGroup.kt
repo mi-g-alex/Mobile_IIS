@@ -27,21 +27,21 @@ import by.g_alex.mobile_iis.presentation.schedule.lists_items.GroupItem
 
 @Composable
 fun AddingNewGroup(viewModel: ScheduleViewModel, navController:NavController){
-    val searchtext = remember {
+    val searchText = remember {
         mutableStateOf("")
     }
     Box() {
         val state = viewModel.groupState.value
         Column(modifier = Modifier.fillMaxSize()) {
             OutlinedTextField(
-                value = searchtext.value,
+                value = searchText.value,
                 shape = MaterialTheme.shapes.large,
                 onValueChange = { newText ->
-                    searchtext.value = newText
+                    searchText.value = newText
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
-                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "asjcnakjs") },
+                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search") },
                 textStyle = TextStyle(color = Color.LightGray),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -52,7 +52,7 @@ fun AddingNewGroup(viewModel: ScheduleViewModel, navController:NavController){
             if (state.Groups.isNotEmpty()) {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(state.Groups) { itm ->
-                        if (itm.name.contains(searchtext.value)) GroupItem(
+                        if (itm.name.contains(searchText.value)) GroupItem(
                             group = itm,
                             viewModel,
                             navController

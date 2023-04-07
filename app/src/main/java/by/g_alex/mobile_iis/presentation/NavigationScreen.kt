@@ -19,6 +19,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -48,8 +49,8 @@ fun NavigationScreen() {
     val tabsItems = listOf("schedule", "mark_book", "profile", "grade_book", "more")
     val selectedItem = remember { mutableStateOf(0) }
     val navController = rememberNavController()
-    val navBackStackEntry = navController.currentBackStackEntryAsState()
-    val parentRouteName = navBackStackEntry.value?.destination?.route
+    /*val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val parentRouteName = navBackStackEntry.value?.destination?.route*/
 
 
     val scope = rememberCoroutineScope()
@@ -59,7 +60,7 @@ fun NavigationScreen() {
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            BottomMenuMore(navController, scope, bottomSheetState)
+            BottomMenuMore(navController, scope, bottomSheetState, selectedItem)
         },
         sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
         sheetElevation = 12.dp
@@ -69,10 +70,10 @@ fun NavigationScreen() {
                 NavigationBar {
                     tabsItems.forEachIndexed { index, item ->
                         NavigationBarItem(
-                            selected = parentRouteName == item,
+                            selected = selectedItem.value == index,
                             onClick = {
-                                selectedItem.value = index
                                 if (tabsItems[index] != "more") {
+                                    selectedItem.value = index
                                     navController.navigate(item, navOptions {
                                         popUpTo(navController.graph.findStartDestination().id) {
                                             saveState = true
@@ -189,7 +190,8 @@ fun NavigationScreen() {
 fun BottomMenuMore(
     navController: NavHostController,
     scope: CoroutineScope,
-    bottomSheetState: ModalBottomSheetState
+    bottomSheetState: ModalBottomSheetState,
+    selectedItem : MutableState<Int>
 ) {
     Box(
         Modifier
@@ -214,7 +216,7 @@ fun BottomMenuMore(
                                 }
                                 launchSingleTop = true
                             })
-
+                            selectedItem.value = 4
                         },
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

@@ -1,37 +1,39 @@
 package by.g_alex.mobile_iis.presentation.user_group
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
-import com.google.accompanist.flowlayout.FlowRow
 import android.widget.Toast
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.*
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontStyle.Companion.Italic
 import androidx.compose.ui.text.font.FontWeight.Companion.ExtraBold
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
-import by.g_alex.mobile_iis.presentation.mark_book.addtional.MarkBookListScreen
-import kotlinx.coroutines.launch
-import java.util.concurrent.Flow
+import com.google.accompanist.flowlayout.FlowRow
 
 
 @Composable
@@ -44,7 +46,7 @@ fun UserGroupScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(state.userGroupState?.numberOfGroup ?: "Loading...")
+                    state.userGroupState?.numberOfGroup?.let { Text("Группа $it") }
                 },
             )
         }
@@ -136,7 +138,7 @@ private fun Item(it: UserGroupDto.GroupInfoStudentDto) {
                         try {
                             val emailIntent =
                                 Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + it.email))
-                            ctx.startActivity(emailIntent);
+                            ctx.startActivity(emailIntent)
                         } catch (_: Exception) {
                             Toast
                                 .makeText(ctx, "An error occurred", Toast.LENGTH_LONG)
