@@ -4,10 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.CircularProgressIndicator
@@ -42,14 +41,6 @@ fun AddingNewGroup(viewModel: ScheduleViewModel, navController:NavController){
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = androidx.compose.material.MaterialTheme.colors.background,
-                    unfocusedBorderColor = androidx.compose.material.MaterialTheme.colors.background,
-                    focusedLabelColor = androidx.compose.material.MaterialTheme.colors.primary,
-                    cursorColor = androidx.compose.material.MaterialTheme.colors.background,
-                    leadingIconColor = Color.LightGray,
-                    backgroundColor = MaterialTheme.colorScheme.background//Color(0xff212121)
-                ),
                 leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "asjcnakjs") },
                 textStyle = TextStyle(color = Color.LightGray),
                 modifier = Modifier

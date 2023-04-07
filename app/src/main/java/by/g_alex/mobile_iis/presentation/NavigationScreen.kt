@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.*
@@ -27,14 +29,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
-import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
-import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
 import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
+import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
+import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
+import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleStartUp
 import by.g_alex.mobile_iis.presentation.user_group.UserGroupScreen
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -54,7 +59,7 @@ fun NavigationScreen() {
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            BottomMenuMore()
+            BottomMenuMore(navController, scope, bottomSheetState)
         },
         sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
         sheetElevation = 12.dp
@@ -73,7 +78,6 @@ fun NavigationScreen() {
                                             saveState = true
                                         }
                                         launchSingleTop = true
-                                        restoreState = true
                                     })
                                 } else {
                                     scope.launch {
@@ -137,7 +141,6 @@ fun NavigationScreen() {
                         ) {
                             ScheduleStartUp()
                         }
-
                     }
                     navigation(startDestination = "profileHome", route = "profile") {
                         composable(
@@ -158,7 +161,7 @@ fun NavigationScreen() {
                             route = "mark_bookHome",
                             deepLinks = listOf(NavDeepLink("deeplink://mark_book"))
                         ) {
-                            UserGroupScreen()
+                            MarkBookScreen()
                         }
                     }
                     navigation(startDestination = "grade_bookHome", route = "grade_book") {
@@ -169,14 +172,25 @@ fun NavigationScreen() {
                             RatingScreen()
                         }
                     }
+                    composable(
+                        route = "groupHome",
+                        deepLinks = listOf(NavDeepLink("deeplink://grade_book"))
+                    ) {
+                        UserGroupScreen()
+                    }
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BottomMenuMore() {
+fun BottomMenuMore(
+    navController: NavHostController,
+    scope: CoroutineScope,
+    bottomSheetState: ModalBottomSheetState
+) {
     Box(
         Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -186,19 +200,31 @@ fun BottomMenuMore() {
         LazyVerticalGrid(
             columns = GridCells.Fixed(4)
         ) {
-            for (i in 1..14)
-                item {
-                    Column(
-                        Modifier.align(Alignment.Center),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_groups_24),
-                            contentDescription = null
-                        )
-                        Text(text = "group")
-                    }
+            item {
+                Column(
+                    Modifier
+                        .align(Alignment.Center)
+                        .clickable {
+                            scope.launch {
+                                bottomSheetState.hide()
+                            }
+                            navController.navigate("groupHome", navOptions {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                            })
+
+                        },
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_groups_24),
+                        contentDescription = null
+                    )
+                    Text(text = "Группа")
                 }
+            }
             item {
                 Spacer(Modifier.height(50.dp))
             }

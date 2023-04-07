@@ -3,9 +3,8 @@ package by.g_alex.mobile_iis.presentation.schedule.additional_views
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.CircularProgressIndicator
@@ -61,14 +60,6 @@ fun AddingEmployee(viewModel: ScheduleViewModel, navController: NavController){
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 10.dp),
                 singleLine = true,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = androidx.compose.material.MaterialTheme.colors.background,
-                    unfocusedBorderColor = androidx.compose.material.MaterialTheme.colors.background,
-                    focusedLabelColor = androidx.compose.material.MaterialTheme.colors.primary,
-                    cursorColor = androidx.compose.material.MaterialTheme.colors.background ,
-                    leadingIconColor = Color.LightGray,
-                    backgroundColor = MaterialTheme.colorScheme.background//Color(0xff212121)
-                ),
                 leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search") }
             )
             if (state.preps?.isNotEmpty() == true) {
