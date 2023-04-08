@@ -47,6 +47,9 @@ class UserDataBaseRepositoryImpl(
         dao.deleteProfilePersonalCV()
     }
 
+    override suspend fun deleteSchedulebyName(name: String) {
+        dao.deleteSchedulebyName(name)
+    }
     override suspend fun getSchedule(group: String): List<LessonModel> {
         return dao.getSchedule(group);
     }

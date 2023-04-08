@@ -2,8 +2,10 @@ package by.g_alex.mobile_iis.presentation.schedule
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Constants.ADDED_GROUPS
@@ -25,6 +27,7 @@ import by.g_alex.mobile_iis.presentation.schedule.states.ScheduleState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -72,7 +75,14 @@ class ScheduleViewModel @Inject constructor(
         list?.add(group)
         prefs.edit().putStringSet(ADDED_GROUPS, list).apply()
     }
+    fun deleteScheduleFromDb(name:String){
+        val prefs = context.getSharedPreferences(ADDED_GROUPS, Context.MODE_PRIVATE)
+        val list  = prefs.getStringSet(ADDED_GROUPS, emptySet())?.toMutableSet()
+        list?.remove(name)
+        prefs.edit().remove(ADDED_GROUPS).putStringSet(ADDED_GROUPS,list).apply()
 
+        viewModelScope.launch {db.deleteSchedulebyName(name)}
+    }
     fun getGroups(): List<String> {
         val prefs = context.getSharedPreferences(ADDED_GROUPS, Context.MODE_PRIVATE)
         val list = prefs.getStringSet(ADDED_GROUPS, emptySet())
@@ -118,26 +128,29 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun getSchedule(grNum: String) {
+        viewModelScope.launch {
+            val schedules: List<LessonModel> = db.getSchedule(grNum)
+            if (schedules.isNotEmpty())
+                _state.value = ScheduleState(Days = schedules)
+            else
+                _state.value = ScheduleState(error = "EmptyList")
+        }
         getScheduleUseCase(grNum).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = ScheduleState(Days = result.data)
-
-
                     for (n in _state.value.Days ?: emptyList()) {
                            db.insertSchedule(n)
                     }
-
                 }
-
                 is Resource.Error -> {
-                    val schedules: List<LessonModel> = db.getSchedule(grNum)
-                    if (schedules.isNotEmpty())
-                        _state.value = ScheduleState(Days = schedules)
-                    else
-                        _state.value = ScheduleState(error = result.message ?: "EmptyList")
+                    Log.e("TUOBOSRALSA","OBOSRALSA")
+//                    val schedules: List<LessonModel> = db.getSchedule(grNum)
+//                    if (schedules.isNotEmpty())
+//                        _state.value = ScheduleState(Days = schedules)
+//                    else
+//                        _state.value = ScheduleState(error = result.message ?: "EmptyList")
                 }
-
                 is Resource.Loading -> {
                     _state.value = ScheduleState(isLoading = true)
                 }
@@ -147,6 +160,13 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun getEmployeeSchedule(urlId: String) {
+        viewModelScope.launch {
+            val schedules: List<LessonModel> = db.getSchedule(urlId)
+            if (schedules.isNotEmpty())
+                _state.value = ScheduleState(Days = schedules)
+            else
+                _state.value = ScheduleState(error = "|Empty|")
+        }
         getEmployeeScheduleUseCase(urlId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
@@ -159,11 +179,11 @@ class ScheduleViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    val schedules: List<LessonModel> = db.getSchedule(urlId)
-                    if (schedules.isNotEmpty())
-                        _state.value = ScheduleState(Days = schedules)
-                    else
-                    _state.value = ScheduleState(error = result.message ?: "|Empty|")
+//                    val schedules: List<LessonModel> = db.getSchedule(urlId)
+//                    if (schedules.isNotEmpty())
+//                        _state.value = ScheduleState(Days = schedules)
+//                    else
+//                    _state.value = ScheduleState(error = result.message ?: "|Empty|")
                 }
 
                 is Resource.Loading -> {
@@ -185,10 +205,12 @@ class ScheduleViewModel @Inject constructor(
 
                 is Resource.Error -> {
                     val wek = prefs.getInt(CURRENT_WEEK, Context.MODE_PRIVATE)
-                    if (wek == 0)
-                        _wState.value = CurrentWeekState(error = result.message ?: "Penis")
+                    if (wek == 0) {
+                        _wState.value = CurrentWeekState(week = 1,error = result.message ?: "Penis")
+                    }
                     else
                         _wState.value = CurrentWeekState(week = wek)
+                    Log.e("week",wek.toString())
                 }
 
                 is Resource.Loading -> {

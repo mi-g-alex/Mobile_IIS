@@ -42,7 +42,6 @@ fun AddingNewGroup(viewModel: ScheduleViewModel, navController:NavController){
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
                 leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search") },
-                textStyle = TextStyle(color = Color.LightGray),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 10.dp)
@@ -71,8 +70,7 @@ fun AddingNewGroup(viewModel: ScheduleViewModel, navController:NavController){
                 fontSize = 20.sp,
                 modifier = Modifier.align(
                     Alignment.Center
-                ),
-                color = Color.LightGray
+                )
             )
     }
 }

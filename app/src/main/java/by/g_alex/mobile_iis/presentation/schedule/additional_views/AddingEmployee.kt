@@ -60,7 +60,8 @@ fun AddingEmployee(viewModel: ScheduleViewModel, navController: NavController){
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 10.dp),
                 singleLine = true,
-                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search") }
+                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search")
+                }
             )
             if (state.preps?.isNotEmpty() == true) {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
@@ -77,13 +78,12 @@ fun AddingEmployee(viewModel: ScheduleViewModel, navController: NavController){
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
         if (state.error.isNotBlank())
-            androidx.compose.material.Text(
+            androidx.compose.material3.Text(
                 text = "Something went wrong..." + state.error,
                 fontSize = 20.sp,
                 modifier = Modifier.align(
                     Alignment.Center
-                ),
-                color = Color.LightGray
+                )
             )
     }
 }

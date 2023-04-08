@@ -43,6 +43,8 @@ interface UserDao {
     @Query("SELECT * FROM LessonModel WHERE id LIKE :group")
     suspend fun getSchedule(group: String): List<LessonModel>
 
+    @Query("DELETE FROM LessonModel WHERE id LIKE :name")
+    suspend fun deleteSchedulebyName(name:String)
     @Insert
     suspend fun insertSchedule(users: LessonModel)
 }

@@ -8,16 +8,20 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,27 +41,50 @@ fun BottomSheet(
     scope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState,
 ) {
+    val groups = remember{ mutableStateOf(viewModel.getGroups())}
     Box(Modifier.background(MaterialTheme.colorScheme.background)) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(15.dp)
         ) {
-            items(viewModel.getGroups()) { item ->
-                Text(
-                    text = item,
-                    fontSize = 30.sp,
-                    modifier = Modifier
-                        .padding(vertical = 5.dp)
-                        .fillMaxWidth()
-                        .clickable {
-                            viewModel.getSchedule(item); viewModel.headerText.value =
-                            item
-                            scope.launch {
-                                bottomSheetState.hide()
-                            }
-                        })
 
+            items(groups.value) { item ->
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = item,
+                        fontSize = 30.sp,
+                        modifier = Modifier
+                            .padding(vertical = 5.dp)
+                            .weight(0.7f)
+                            //.fillMaxWidth()
+                            .clickable {
+                                viewModel.getSchedule(item); viewModel.headerText.value =
+                                item
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                }
+                            }
+                    )
+                    Image(
+                        imageVector = ImageVector.vectorResource(R.drawable.baseline_delete_24),
+                        contentDescription = "Delete",
+                        modifier = Modifier.weight(0.1f)
+                            .padding(top = 5.dp, bottom = 5.dp, end = 5.dp).align(Alignment.CenterVertically)
+                            .clickable {
+                                viewModel.deleteScheduleFromDb(item)
+                                groups.value = viewModel.getGroups()
+                                if(groups.value.isNotEmpty()) {
+                                    viewModel.headerText.value = groups.value.first()
+                                    viewModel.getSchedule(groups.value.first())
+                                }
+                                else{
+                                    viewModel.headerText.value = "None"
+                                }
+                            },
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface)
+                    )
+                }
             }
 
             item {
@@ -105,7 +132,7 @@ fun BottomSheet(
                             .height(70.dp)
                             .width(70.dp)
                             .padding(top = 5.dp, bottom = 5.dp, end = 5.dp),
-                        colorFilter = ColorFilter.tint(Color.LightGray)
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface)
                     )
                     Text(
                         text = "Add new",

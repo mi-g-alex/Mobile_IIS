@@ -139,7 +139,7 @@ fun ProfileCVScreen(
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             text = profileInfo.lastName + " " + profileInfo.firstName + " " + profileInfo.middleName,
-                            fontSize = 28.sp
+                            fontSize = 25.sp
                         )
                         Text(
                             modifier = Modifier
@@ -147,8 +147,7 @@ fun ProfileCVScreen(
                                 .padding(bottom = 20.dp),
                             textAlign = TextAlign.Center,
                             text = "Курс " + profileInfo.course + ", " + profileInfo.faculty + ", " + profileInfo.speciality + ", " + profileInfo.studentGroup,
-                            fontSize = 20.sp,
-                            color = Color.DarkGray
+                            fontSize = 20.sp
                         )
                     }
                 }
@@ -165,7 +164,7 @@ fun ProfileCVScreen(
                     ) {
                         Text(
                             text = "Основная информация",
-                            fontSize = 30.sp
+                            fontSize = 23.sp
                         )
                         profileInfo.summary?.let {
                             Text(
@@ -177,12 +176,12 @@ fun ProfileCVScreen(
                         Divider(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 5.dp)
+                                .padding(vertical = 15.dp)
                         )
 
                         Text(
                             text = "Навыки",
-                            fontSize = 30.sp
+                            fontSize = 23.sp
                         )
                         FlowRow(
                             mainAxisSpacing = 8.dp,
@@ -208,7 +207,7 @@ fun ProfileCVScreen(
 
                         Text(
                             text = "Ссылки",
-                            fontSize = 30.sp
+                            fontSize = 23.sp
                         )
 
                         FlowRow(

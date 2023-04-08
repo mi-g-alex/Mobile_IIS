@@ -27,7 +27,7 @@ interface UserDataBaseRepository {
 
     suspend fun deleteProfilePersonalCV()
 
-
+    suspend fun deleteSchedulebyName(name:String)
     // Schedule
     suspend fun getSchedule(group: String): List<LessonModel>
 

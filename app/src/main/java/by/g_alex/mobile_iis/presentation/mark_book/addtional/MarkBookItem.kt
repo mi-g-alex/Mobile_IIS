@@ -24,12 +24,12 @@ fun MarkBookItem(mark: MarkBookDto.MapValue.Mark) {
         Column {
             Text(
                 text = mark.subject,
-                fontSize = 40.sp,
+                fontSize = 30.sp,
                 modifier = Modifier.padding(5.dp)
             )
             Text(
                 text = mark.formOfControl + " | " + mark.hours + "ч.",
-                fontSize = 25.sp,
+                fontSize = 20.sp,
                 modifier = Modifier.padding(5.dp)
             )
 
