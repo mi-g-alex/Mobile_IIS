@@ -1,10 +1,16 @@
 package by.g_alex.mobile_iis.presentation.profile_screen
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
+import android.util.Base64
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -28,12 +34,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.drawable.toBitmap
 import by.g_alex.mobile_iis.R
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.flowlayout.FlowRow
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
+
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun ProfileCVScreen(
     navController: NavController,
@@ -45,6 +57,22 @@ fun ProfileCVScreen(
 
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
+    }
+
+    LaunchedEffect(selectedImageUri) {
+        if(selectedImageUri != null){
+            val uri: Uri? = selectedImageUri
+            val source: ImageDecoder.Source =
+                uri?.let { ImageDecoder.createSource(context.contentResolver, it) }!!
+            val bitmap: Bitmap = ImageDecoder.decodeBitmap(source)
+            Log.e("~~~", bitmap.toString())
+            val outputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, outputStream)
+            val imageBytes = outputStream.toByteArray()
+            val base64String = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+            Log.e("~~~", base64String.length.toString())
+            viewModel.updatePhoto(base64String)
+        }
     }
 
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(

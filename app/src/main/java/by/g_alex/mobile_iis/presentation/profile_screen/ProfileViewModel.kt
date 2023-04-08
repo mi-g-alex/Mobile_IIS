@@ -1,11 +1,13 @@
 package by.g_alex.mobile_iis.presentation.profile_screen
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.domain.use_case.get_profile.personal_cv.GetPersonalCVUseCase
+import by.g_alex.mobile_iis.domain.use_case.get_profile.personal_cv.UpdatePhotoUseCase
 import by.g_alex.mobile_iis.domain.use_case.login.LogOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -16,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getProfileCVUseCase: GetPersonalCVUseCase,
-    private val logOutUseCase: LogOutUseCase
+    private val logOutUseCase: LogOutUseCase,
+    private val updatePhotoUseCase: UpdatePhotoUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf<ProfileCVState>(ProfileCVState())
@@ -48,5 +51,13 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             logOutUseCase.logOut()
         }
+    }
+
+    fun updatePhoto(source: String) {
+        Log.e("~~~", "Start")
+        viewModelScope.launch {
+            updatePhotoUseCase.updatePhoto(source)
+        }
+        Log.e("~~~", "End")
     }
 }

@@ -41,16 +41,16 @@ fun TabLayout(
             if(type == "Итого" || type == it.controlPoint) {
                 when (it.lessonTypeId) {
                     2 -> {
-                      //  diciplineList[it.lessonNameAbbrev]!!.lkM += it.marks.count()
-                      //  diciplineList[it.lessonNameAbbrev]!!.lkH += it.gradeBookOmissions
+                        diciplineList[it.lessonNameAbbrev]!!.lkM += it.marks.count()
+                        diciplineList[it.lessonNameAbbrev]!!.lkH += it.gradeBookOmissions
                     }
                     3 -> {
-                      //  diciplineList[it.lessonNameAbbrev]!!.pzM += it.marks.count()
-                      //  diciplineList[it.lessonNameAbbrev]!!.pzH += it.gradeBookOmissions
+                        diciplineList[it.lessonNameAbbrev]!!.pzM += it.marks.count()
+                        diciplineList[it.lessonNameAbbrev]!!.pzH += it.gradeBookOmissions
                     }
                     4 -> {
-                      //  diciplineList[it.lessonNameAbbrev]!!.lbM += it.marks.count()
-                      //  diciplineList[it.lessonNameAbbrev]!!.lbH += it.gradeBookOmissions
+                        diciplineList[it.lessonNameAbbrev]!!.lbM += it.marks.count()
+                        diciplineList[it.lessonNameAbbrev]!!.lbH += it.gradeBookOmissions
                     }
                 }
             }

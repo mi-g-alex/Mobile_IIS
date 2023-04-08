@@ -32,6 +32,10 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getProfilePersonCV(token)
     }
 
+    override suspend fun updatePhoto(request: String, token: String): Call<String> {
+        return api.updatePhoto(request, token)
+    }
+
     override suspend fun logout(token: String) {
         api.logout(token)
     }

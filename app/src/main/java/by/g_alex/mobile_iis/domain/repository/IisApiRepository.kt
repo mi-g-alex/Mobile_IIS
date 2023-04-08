@@ -20,11 +20,15 @@ interface IisApiRepository {
 
     suspend fun getProfilePersonalCV(token: String): PersonalCVDto
 
-    suspend fun getGradeBook(cookie : String) : List<GradeBookDto>
+    suspend fun updatePhoto(request: String, token: String): Call<String>
+
+    suspend fun getGradeBook(cookie: String): List<GradeBookDto>
+
     suspend fun logout(token: String)
 
-    suspend fun getMarkBook(token: String) : MarkBookDto
-    suspend fun getUserGroup(token: String) : UserGroupDto
+    suspend fun getMarkBook(token: String): MarkBookDto
+
+    suspend fun getUserGroup(token: String): UserGroupDto
 
     // For All
 

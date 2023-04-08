@@ -21,6 +21,9 @@ interface IisApi {
     @GET("api/v1/profiles/personal-cv")
     suspend fun getProfilePersonCV(@Header("Cookie") cookieValue: String): PersonalCVDto
 
+    @POST("api/v1/profiles/my-photo")
+    fun updatePhoto(@Body photo : String, @Header("Cookie") cookieValue: String) : Call<String>
+
     @GET("api/v1/auth/logout")
     suspend fun logout(@Header("Cookie") cookieValue: String)
 
@@ -30,7 +33,7 @@ interface IisApi {
     @GET("api/v1/student-groups/user-group-info")
     suspend fun getUserGroup(@Header("Cookie") cookieValue: String) : UserGroupDto
 
-    @GET("https://iis.bsuir.by/api/v1/grade-book")
+    @GET("api/v1/grade-book")
     suspend fun getGradeBook(@Header("Cookie") cookieValue: String) : List<GradeBookDto>
 
     // For all
