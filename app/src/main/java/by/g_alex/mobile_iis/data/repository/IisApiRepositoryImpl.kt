@@ -13,6 +13,8 @@ import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import javax.inject.Inject
 
@@ -33,7 +35,8 @@ class IisApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updatePhoto(request: String, token: String): Call<String> {
-        return api.updatePhoto(request, token)
+        val requestBody = request.toRequestBody("text/plain".toMediaType())
+        return api.updatePhoto(requestBody, token)
     }
 
     override suspend fun logout(token: String) {

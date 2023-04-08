@@ -8,6 +8,7 @@ import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -22,7 +23,7 @@ interface IisApi {
     suspend fun getProfilePersonCV(@Header("Cookie") cookieValue: String): PersonalCVDto
 
     @POST("api/v1/profiles/my-photo")
-    fun updatePhoto(@Body photo : String, @Header("Cookie") cookieValue: String) : Call<String>
+    fun updatePhoto(@Body body: RequestBody, @Header("Cookie") cookieValue: String) : Call<String>
 
     @GET("api/v1/auth/logout")
     suspend fun logout(@Header("Cookie") cookieValue: String)
