@@ -67,7 +67,7 @@ fun BottomSheet(
                             }
                     )
                     Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.baseline_delete_24),
+                        imageVector = ImageVector.vectorResource(R.drawable.baseline_star_24),
                         contentDescription = "Delete",
                         modifier = Modifier.weight(0.1f)
                             .padding(top = 5.dp, bottom = 5.dp, end = 5.dp).align(Alignment.CenterVertically)

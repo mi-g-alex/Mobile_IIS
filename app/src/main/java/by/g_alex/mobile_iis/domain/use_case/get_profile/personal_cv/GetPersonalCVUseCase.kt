@@ -29,7 +29,6 @@ class GetPersonalCVUseCase @Inject constructor(
                 emit(Resource.Success<PersonalCV>(data))
             }
         } catch (e: HttpException) {
-            Log.e("123", e.toString())
             val loginAndPassword = db_repository.getLoginAndPassword()
             if (loginAndPassword?.login == null || loginAndPassword.password == null) {
                 emit(Resource.Error<PersonalCV>("LessCookie"))
@@ -47,12 +46,10 @@ class GetPersonalCVUseCase @Inject constructor(
                     db_repository.setProfilePersonalCV(data)
                     emit(Resource.Success<PersonalCV>(data))
                 } catch (e: HttpException) {
-                    Log.e("|123", e.toString())
                     emit(
                         Resource.Error<PersonalCV>(e.localizedMessage ?: "ConnectionError")
                     )
                 } catch (e: IOException) {
-                    Log.e("||123", e.toString())
                     emit(
                         Resource.Error<PersonalCV>(
                             "LessCookie"
@@ -62,7 +59,6 @@ class GetPersonalCVUseCase @Inject constructor(
             }
         } catch (e: IOException) {
             val data = db_repository.getProfilePersonalCV()
-            Log.e("12312341234123", data.toString())
             emit(Resource.Success<PersonalCV>(data))
         }
     }

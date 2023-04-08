@@ -65,12 +65,11 @@ fun ProfileCVScreen(
             val source: ImageDecoder.Source =
                 uri?.let { ImageDecoder.createSource(context.contentResolver, it) }!!
             val bitmap: Bitmap = ImageDecoder.decodeBitmap(source)
-            Log.e("~~~", bitmap.toString())
             val outputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, outputStream)
+            Log.e("~~~", selectedImageUri!!.encodedUserInfo.toString())
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             val imageBytes = outputStream.toByteArray()
             val base64String = Base64.encodeToString(imageBytes, Base64.DEFAULT)
-            Log.e("~~~", base64String.length.toString())
             viewModel.updatePhoto(base64String)
         }
     }

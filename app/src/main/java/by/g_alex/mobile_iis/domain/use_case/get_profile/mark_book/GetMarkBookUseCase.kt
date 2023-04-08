@@ -28,7 +28,6 @@ class GetMarkBookUseCase @Inject constructor(
                 emit(Resource.Success<MarkBookDto>(data))
             }
         } catch (e: HttpException) {
-            Log.e("123", e.toString())
             val loginAndPassword = db_repository.getLoginAndPassword()
             if (loginAndPassword?.login == null || loginAndPassword.password == null) {
                 emit(Resource.Error<MarkBookDto>("LessCookie"))

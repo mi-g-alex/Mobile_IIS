@@ -43,7 +43,6 @@ fun RatingScreen(
         Box(modifier = Modifier
             .padding(it)
             .fillMaxSize()) {
-            Log.e("~~~~~", state.toString())
             if (state.gradeBookState != null) {
                 val titles = listOf("Итого", "01.03", "01.04", "01.05", "Вне")
                 val pagerState: PagerState = rememberPagerState(initialPage = 0)

@@ -26,7 +26,6 @@ data class DayDto(
 )
 
 fun DayDto.toLessonModel(weekDay: String, isGroup : Boolean): LessonModel {
-    Log.w("||||||||||", this.toString())
     val notation = mutableStateOf("")
     for(n in studentGroups.indices){
         notation.value+=studentGroups[n].name
