@@ -4,6 +4,7 @@ import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
+import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
@@ -29,6 +30,8 @@ interface IisApiRepository {
     suspend fun getMarkBook(token: String): MarkBookDto
 
     suspend fun getUserGroup(token: String): UserGroupDto
+
+    suspend fun getOmissionsByStudent(token: String): List<OmissionsByStudentDto>
 
     // For All
 
