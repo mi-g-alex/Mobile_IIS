@@ -54,10 +54,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun updatePhoto(source: String) {
-        Log.e("~~~", "Start")
         viewModelScope.launch {
             updatePhotoUseCase.updatePhoto(source)
         }
-        Log.e("~~~", "End")
     }
 }

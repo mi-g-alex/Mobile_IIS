@@ -37,6 +37,7 @@ import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
 import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
+import by.g_alex.mobile_iis.presentation.omissions_screen.OmissionsScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleStartUp
 import by.g_alex.mobile_iis.presentation.user_group.UserGroupScreen
@@ -179,6 +180,12 @@ fun NavigationScreen() {
                     ) {
                         UserGroupScreen()
                     }
+                    composable(
+                        route = "omissionsHome",
+                        deepLinks = listOf(NavDeepLink("deeplink://grade_book"))
+                    ) {
+                        OmissionsScreen()
+                    }
                 }
             }
         }
@@ -191,7 +198,7 @@ fun BottomMenuMore(
     navController: NavHostController,
     scope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState,
-    selectedItem : MutableState<Int>
+    selectedItem: MutableState<Int>
 ) {
     Box(
         Modifier
@@ -199,37 +206,64 @@ fun BottomMenuMore(
             .fillMaxWidth()
             .wrapContentHeight(Alignment.CenterVertically)
     ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(4)
-        ) {
-            item {
-                Column(
-                    Modifier
-                        .align(Alignment.Center)
-                        .clickable {
-                            scope.launch {
-                                bottomSheetState.hide()
-                            }
-                            navController.navigate("groupHome", navOptions {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+        Column {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(4)
+            ) {
+                item {
+                    Column(
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .clickable {
+                                scope.launch {
+                                    bottomSheetState.hide()
                                 }
-                                launchSingleTop = true
-                            })
-                            selectedItem.value = 4
-                        },
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_groups_24),
-                        contentDescription = null
-                    )
-                    Text(text = "Группа")
+                                navController.navigate("groupHome", navOptions {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                })
+                                selectedItem.value = 4
+                            },
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_groups_24),
+                            contentDescription = null
+                        )
+                        Text(text = "Группа")
+                    }
+                }
+                item {
+                    Column(
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .clickable {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                }
+                                navController.navigate("omissionsHome", navOptions {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                })
+                                selectedItem.value = 4
+                            },
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.omissions_icon),
+                            contentDescription = null
+                        )
+                        Text(text = "Группа")
+                    }
                 }
             }
-            item {
-                Spacer(Modifier.height(50.dp))
-            }
+
+            Spacer(Modifier.height(50.dp))
+
         }
     }
 }

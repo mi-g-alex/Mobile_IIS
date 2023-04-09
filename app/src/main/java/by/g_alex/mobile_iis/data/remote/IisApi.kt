@@ -7,6 +7,7 @@ import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
 import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
+import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -36,6 +37,9 @@ interface IisApi {
 
     @GET("api/v1/grade-book")
     suspend fun getGradeBook(@Header("Cookie") cookieValue: String) : List<GradeBookDto>
+
+    @GET("api/v1/omissions-by-student")
+    suspend fun getOmissionsByStudent(@Header("Cookie") cookieValue: String) : List<OmissionsByStudentDto>
 
     // For all
 
