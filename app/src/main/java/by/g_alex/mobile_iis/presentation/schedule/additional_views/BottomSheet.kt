@@ -78,7 +78,7 @@ fun BottomSheet(
                                 preferences.edit().putString(FAVOURITE_SCHEDULE,item).apply()
                                 viewModel.favourite.value = item
                             },
-                        tint = if(viewModel.favourite.value == item) Color.Yellow
+                        tint = if(viewModel.favourite.value == item) MaterialTheme.colorScheme.inverseSurface
                     else MaterialTheme.colorScheme.inverseSurface
                     )
                     Image(
@@ -133,7 +133,7 @@ fun BottomSheet(
                                 preferences.edit().putString(FAVOURITE_SCHEDULE,item).apply()
                                 viewModel.favourite.value = item
                             },
-                        tint = if(viewModel.favourite.value == item) Color.Yellow
+                        tint = if(viewModel.favourite.value == item) MaterialTheme.colorScheme.inverseSurface
                         else MaterialTheme.colorScheme.inverseSurface
                     )
                     Image(
