@@ -55,7 +55,7 @@ interface IisApi {
     suspend fun getStudyApplications(@Header("Cookie") cookieValue: String): List<StudyApplicationsDto>
 
     @GET("api/v1/library/debts") // Задолженности библиотека
-    suspend fun getStudyLibDebts(@Header("Cookie") cookieValue: String): List<String?>
+    suspend fun getStudyLibDebts(@Header("Cookie") cookieValue: String): List<String>
 
     // For all
 

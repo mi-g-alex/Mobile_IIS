@@ -10,6 +10,9 @@ import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
+import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
+import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
+import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
@@ -57,6 +60,22 @@ class IisApiRepositoryImpl @Inject constructor(
 
     override suspend fun getOmissionsByStudent(token: String): List<OmissionsByStudentDto> {
         return api.getOmissionsByStudent(token)
+    }
+
+    override suspend fun getStudyMarkSheet(token: String): List<StudyMarkSheetDto> {
+        return api.getStudyMarkSheet(token)
+    }
+
+    override suspend fun getStudyCertificate(token: String): List<StudyCertificationsDto> {
+        return api.getStudyCertificate(token)
+    }
+
+    override suspend fun getStudyApplications(token: String): List<StudyApplicationsDto> {
+        return api.getStudyApplications(token)
+    }
+
+    override suspend fun getStudyLibDebts(token: String): List<String> {
+        return api.getStudyLibDebts(token)
     }
 
     override suspend fun getSchedule(groupNum: String): List<LessonModel> {
