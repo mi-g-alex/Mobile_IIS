@@ -39,6 +39,7 @@ import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
 import by.g_alex.mobile_iis.presentation.omissions_screen.OmissionsScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleStartUp
+import by.g_alex.mobile_iis.presentation.study_screen.StudyScreen
 import by.g_alex.mobile_iis.presentation.user_group.UserGroupScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -141,7 +142,7 @@ fun NavigationScreen() {
                         OmissionsScreen()
                     }
                     composable(route = "studyHome") {
-
+                        StudyScreen()
                     }
 
                 }
@@ -168,7 +169,12 @@ fun BottomMenuMore(
             "omissionsHome",
             "Пропуски",
             R.drawable.omissions_icon
-        )
+        ),
+        BaseNavItem(
+            "studyHome",
+            "Учёба",
+            R.drawable.baseline_school_24
+        ),
     )
     Box(
         Modifier
