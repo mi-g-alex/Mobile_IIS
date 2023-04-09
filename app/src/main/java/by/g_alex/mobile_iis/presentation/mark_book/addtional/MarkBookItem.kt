@@ -21,7 +21,7 @@ fun MarkBookItem(mark: MarkBookDto.MapValue.Mark) {
             .wrapContentHeight()
             .padding(horizontal = 10.dp, vertical = 5.dp)
     ) {
-        Column {
+        Column(modifier = Modifier.padding(10.dp)) {
             Text(
                 text = mark.subject,
                 fontSize = 30.sp,

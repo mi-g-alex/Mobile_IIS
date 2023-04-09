@@ -23,8 +23,8 @@ fun MarkBookListScreen(item: MarkBookDto, id: Int) {
             if (a?.marks?.size != null) {
                 item {
                     Text(
-                        text = "Средний балл: " + a.averageMark.toString(),
-                        fontSize = 30.sp,
+                        text = "Средний балл за семестр: " + a.averageMark.toString(),
+                        fontSize = 20.sp,
                         modifier = Modifier
                             .padding(10.dp)
                     )
