@@ -45,6 +45,6 @@ interface UserDao {
 
     @Query("DELETE FROM LessonModel WHERE id LIKE :name")
     suspend fun deleteSchedulebyName(name:String)
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSchedule(users: LessonModel)
 }

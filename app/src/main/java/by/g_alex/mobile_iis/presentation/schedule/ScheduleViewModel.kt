@@ -142,8 +142,18 @@ class ScheduleViewModel @Inject constructor(
         getScheduleUseCase(grNum).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    val stop = mutableStateOf(false)
                     _state.value = ScheduleState(Days = result.data)
                     for (n in _state.value.Days ?: emptyList()) {
+                        val bufList = db.getSchedule(grNum)
+                        for (m in bufList){
+                            if (n == m) {
+                                stop.value = true
+                                break
+                            }
+                        }
+                        if(stop.value)
+                            break
                            db.insertSchedule(n)
                     }
                 }
