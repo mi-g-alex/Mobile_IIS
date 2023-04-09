@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
@@ -47,7 +46,13 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NavigationScreen() {
-    val tabsItems = listOf("schedule", "mark_book", "profile", "grade_book", "more")
+    val tabsItems = listOf<BaseNavItem>(
+        BaseNavItem("schedule", "Расписание", R.drawable.schedule_icon),
+        BaseNavItem("mark_book", "Зачётка", R.drawable.baseline_book_24),
+        BaseNavItem("profile", "Профиль", R.drawable.icon_profile),
+        BaseNavItem("grade_book", "Рейтинг", R.drawable.rating),
+        BaseNavItem("more", "Ещё", R.drawable.baseline_more_horiz_24),
+    )
     val selectedItem = remember { mutableStateOf(0) }
     val navController = rememberNavController()
 
@@ -70,9 +75,9 @@ fun NavigationScreen() {
                         NavigationBarItem(
                             selected = selectedItem.value == index,
                             onClick = {
-                                if (tabsItems[index] != "more") {
+                                if (item.route != "more") {
                                     selectedItem.value = index
-                                    navController.navigate(item, navOptions {
+                                    navController.navigate(item.route, navOptions {
                                         popUpTo(navController.graph.findStartDestination().id) {
                                             saveState = true
                                         }
@@ -85,46 +90,13 @@ fun NavigationScreen() {
                                 }
                             },
                             icon = {
-                                when (item) {
-                                    "schedule" -> Icon(
-                                        painter = painterResource(id = R.drawable.schedule_icon),
-                                        contentDescription = null
-                                    )
-
-                                    "mark_book" -> Icon(
-                                        painter = painterResource(id = R.drawable.baseline_book_24),
-                                        contentDescription = null
-                                    )
-
-                                    "profile" -> Icon(
-                                        painter = painterResource(id = R.drawable.icon_profile),
-                                        contentDescription = null
-                                    )
-
-
-                                    "grade_book" -> Icon(
-                                        painter = painterResource(id = R.drawable.rating),
-                                        contentDescription = null,
-                                    )
-
-                                    "more" -> Icon(
-                                        painter = painterResource(id = R.drawable.baseline_more_horiz_24),
-                                        contentDescription = null,
-                                    )
-                                }
+                                Icon(
+                                    painter = painterResource(id = item.icon),
+                                    contentDescription = item.title
+                                )
                             },
                             label = {
-                                when (item) {
-                                    "schedule" -> Text(text = "Расписание", fontSize = 11.sp)
-
-                                    "mark_book" -> Text(text = "Зачётка", fontSize = 11.sp)
-
-                                    "profile" -> Text(text = "Профиль", fontSize = 11.sp)
-
-                                    "grade_book" -> Text(text = "Рейтинг", fontSize = 11.sp)
-
-                                    "more" -> Text(text = "Ещё", fontSize = 11.sp)
-                                }
+                                Text(text = item.title, fontSize = 11.sp)
                             }
                         )
                     }
@@ -153,29 +125,25 @@ fun NavigationScreen() {
                         }
                     }
                     navigation(startDestination = "mark_bookHome", route = "mark_book") {
-                        composable(
-                            route = "mark_bookHome",
-                        ) {
+                        composable(route = "mark_bookHome") {
                             MarkBookScreen()
                         }
                     }
                     navigation(startDestination = "grade_bookHome", route = "grade_book") {
-                        composable(
-                            route = "grade_bookHome",
-                        ) {
+                        composable(route = "grade_bookHome") {
                             RatingScreen()
                         }
                     }
-                    composable(
-                        route = "groupHome",
-                    ) {
+                    composable(route = "groupHome") {
                         UserGroupScreen()
                     }
-                    composable(
-                        route = "omissionsHome",
-                    ) {
+                    composable(route = "omissionsHome") {
                         OmissionsScreen()
                     }
+                    composable(route = "studyHome") {
+
+                    }
+
                 }
             }
         }
@@ -190,6 +158,18 @@ fun BottomMenuMore(
     bottomSheetState: ModalBottomSheetState,
     selectedItem: MutableState<Int>
 ) {
+    val listOfItems = listOf<BaseNavItem>(
+        BaseNavItem(
+            "groupHome",
+            "Группа",
+            R.drawable.group_icon
+        ),
+        BaseNavItem(
+            "omissionsHome",
+            "Пропуски",
+            R.drawable.omissions_icon
+        )
+    )
     Box(
         Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -200,7 +180,7 @@ fun BottomMenuMore(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(4)
             ) {
-                item {
+                items(listOfItems.size) { i ->
                     Column(
                         Modifier
                             .align(Alignment.CenterHorizontally)
@@ -208,7 +188,7 @@ fun BottomMenuMore(
                                 scope.launch {
                                     bottomSheetState.hide()
                                 }
-                                navController.navigate("groupHome", navOptions {
+                                navController.navigate(listOfItems[i].route, navOptions {
                                     popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
                                     }
@@ -219,41 +199,20 @@ fun BottomMenuMore(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_groups_24),
-                            contentDescription = null
+                            painter = painterResource(id = listOfItems[i].icon),
+                            contentDescription = listOfItems[i].title
                         )
-                        Text(text = "Группа")
-                    }
-                }
-                item {
-                    Column(
-                        Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .clickable {
-                                scope.launch {
-                                    bottomSheetState.hide()
-                                }
-                                navController.navigate("omissionsHome", navOptions {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                })
-                                selectedItem.value = 4
-                            },
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.omissions_icon),
-                            contentDescription = null
-                        )
-                        Text(text = "Группа")
+                        Text(text = listOfItems[i].title)
                     }
                 }
             }
-
             Spacer(Modifier.height(50.dp))
-
         }
     }
 }
+
+data class BaseNavItem(
+    val route: String,
+    val title: String,
+    val icon: Int,
+)
