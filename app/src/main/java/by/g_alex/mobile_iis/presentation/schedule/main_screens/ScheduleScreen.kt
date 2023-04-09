@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -70,12 +69,7 @@ fun BottomSheetScaffold(
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_star_24),
-                            contentDescription = "sdcscds",
-                            tint = Color.Yellow,
-                            modifier = Modifier.align(Alignment.CenterVertically)
-                        )
+
                     }
                 },
                     navigationIcon = {

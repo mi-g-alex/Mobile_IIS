@@ -2,14 +2,14 @@ package by.g_alex.mobile_iis.presentation.grade_book_screen.additional
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,8 +23,8 @@ import by.g_alex.mobile_iis.presentation.grade_book_screen.GradeBookViewModel
 @Composable
 fun TabLayout(
     viewModel: GradeBookViewModel = hiltViewModel(),
-    type : String
-){
+    type: String
+) {
     val gradeList = remember {
         viewModel.state
     }
@@ -34,23 +34,28 @@ fun TabLayout(
             if (!diciplineList.keys.contains(it.lessonNameAbbrev)) {
                 diciplineList.put(
                     it.lessonNameAbbrev,
-                    Dicipline(it.lessonNameAbbrev, 0, 0, 0, 0, 0, 0)
+                    Dicipline(it.lessonNameAbbrev, 0, 0, 0, 0, 0, 0, mutableListOf(), mutableListOf(),
+                        mutableListOf()
+                    )
                 )
                 Log.e("LESSSOS", it.lessonNameAbbrev)
             }
-            if(type == "Итого" || type == it.controlPoint) {
+            if (type == "Итого" || type == it.controlPoint) {
                 when (it.lessonTypeId) {
                     2 -> {
                         diciplineList[it.lessonNameAbbrev]!!.lkM += it.marks.count()
                         diciplineList[it.lessonNameAbbrev]!!.lkH += it.gradeBookOmissions
+                        it.marks.onEach {mark->diciplineList[it.lessonNameAbbrev]!!.lkMarks.add(mark)}
                     }
                     3 -> {
                         diciplineList[it.lessonNameAbbrev]!!.pzM += it.marks.count()
                         diciplineList[it.lessonNameAbbrev]!!.pzH += it.gradeBookOmissions
+                        it.marks.onEach {mark->diciplineList[it.lessonNameAbbrev]!!.pzMarks.add(mark)}
                     }
                     4 -> {
                         diciplineList[it.lessonNameAbbrev]!!.lbM += it.marks.count()
                         diciplineList[it.lessonNameAbbrev]!!.lbH += it.gradeBookOmissions
+                        it.marks.onEach {mark->diciplineList[it.lessonNameAbbrev]!!.lrMarks.add(mark)}
                     }
                 }
             }
@@ -63,12 +68,21 @@ fun TabLayout(
             .verticalScroll(rememberScrollState())
     )
     {
-
+        val openDialog = remember { mutableStateOf(false) }
+        val dialogTitle = remember{ mutableStateOf("") }
+        val diciplineObject = remember{ mutableStateOf( Dicipline("", 0, 0, 0, 0, 0, 0, mutableListOf(), mutableListOf(),
+            mutableListOf()
+        )) }
         diciplineList.onEach { dicipline ->
             Card(
                 modifier = Modifier
                     .padding(horizontal = 10.dp, vertical = 5.dp)
                     .fillMaxWidth()
+                    .clickable {
+                        openDialog.value = true
+                        dialogTitle.value = dicipline.key
+                        diciplineObject.value = dicipline.value
+                    }
             )
             {
                 Text(
@@ -108,6 +122,28 @@ fun TabLayout(
                         Text(text = dicipline.value.lbH.toString() + " ч.")
                     }
                 }
+            }
+            if (openDialog.value) {
+                AlertDialog(
+                    onDismissRequest = {
+                        openDialog.value = false
+                    },
+                    title = { Text(text = dialogTitle.value) },
+                    text = { Column() {
+                        Text("ПЗ: "+diciplineObject.value.pzMarks.toString().removePrefix("[").removeSuffix("]"))
+                        Text("ЛР: "+diciplineObject.value.lrMarks.toString().removePrefix("[").removeSuffix("]"))
+                        Text("ЛК: "+diciplineObject.value.lkMarks.toString().removePrefix("[").removeSuffix("]"))
+                    }},
+                    confirmButton = {
+                        Button(
+
+                            onClick = {
+                                openDialog.value = false
+                            }) {
+                            Text("Ok")
+                        }
+                    }
+                )
             }
         }
     }

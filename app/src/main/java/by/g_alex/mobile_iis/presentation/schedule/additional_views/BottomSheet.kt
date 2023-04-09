@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,14 +18,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
-import by.g_alex.mobile_iis.common.Constants.ADDED_SCHEDULE
+import by.g_alex.mobile_iis.common.Constants.FAVOURITE_SCHEDULE
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.navigation.Screen
 import kotlinx.coroutines.CoroutineScope
@@ -64,6 +67,20 @@ fun BottomSheet(
                                 }
                             }
                     )
+                    Icon(
+                        painter = if(viewModel.favourite.value == item)  painterResource(id = R.drawable.baseline_star_24)
+                                else painterResource(id = R.drawable.baseline_star_outline_24),
+                        contentDescription = "sdcscds",
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                            .clickable {
+                                val preferences = viewModel.context.getSharedPreferences(
+                                    FAVOURITE_SCHEDULE,Context.MODE_PRIVATE)
+                                preferences.edit().putString(FAVOURITE_SCHEDULE,item).apply()
+                                viewModel.favourite.value = item
+                            },
+                        tint = if(viewModel.favourite.value == item) Color.Yellow
+                    else MaterialTheme.colorScheme.inverseSurface
+                    )
                     Image(
                         imageVector = ImageVector.vectorResource(R.drawable.baseline_delete_24),
                         contentDescription = "Delete",
@@ -91,9 +108,6 @@ fun BottomSheet(
             }
 
             items(viewModel.getEmployees()) { item ->
-                val prefs =
-                    viewModel.context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
-                val urlID = prefs.getString(item, "") ?: ""
                 Row(modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = item,
@@ -102,12 +116,26 @@ fun BottomSheet(
                             .padding(vertical = 5.dp)
                             .weight(0.7f)
                             .clickable {
-                                viewModel.getEmployeeSchedule(urlID); viewModel.headerText.value =
+                                viewModel.getEmployeeSchedule(item); viewModel.headerText.value =
                                 item
                                 scope.launch {
                                     bottomSheetState.hide()
                                 }
                             })
+                    Icon(
+                        painter = if(viewModel.favourite.value == item)  painterResource(id = R.drawable.baseline_star_24)
+                        else painterResource(id = R.drawable.baseline_star_outline_24),
+                        contentDescription = "sdcscds",
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                            .clickable {
+                                val preferences = viewModel.context.getSharedPreferences(
+                                    FAVOURITE_SCHEDULE,Context.MODE_PRIVATE)
+                                preferences.edit().putString(FAVOURITE_SCHEDULE,item).apply()
+                                viewModel.favourite.value = item
+                            },
+                        tint = if(viewModel.favourite.value == item) Color.Yellow
+                        else MaterialTheme.colorScheme.inverseSurface
+                    )
                     Image(
                         imageVector = ImageVector.vectorResource(R.drawable.baseline_delete_24),
                         contentDescription = "Delete",

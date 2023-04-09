@@ -1,24 +1,19 @@
 package by.g_alex.mobile_iis.presentation.schedule.lists_items
 
-import by.g_alex.mobile_iis.R
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import by.g_alex.mobile_iis.R
+import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.navigation.Screen
-import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 
 
 @Composable
@@ -31,7 +26,7 @@ fun GroupItem(group: GroupModel, viewModel: ScheduleViewModel, navController: Na
             viewModel.getSchedule(group.name)
             navController.navigate(Screen.Home.route)
         }) {
-        Row(modifier = Modifier.padding(bottom = 10.dp)) {
+        Row(modifier = Modifier.padding(bottom = 10.dp).fillMaxWidth()) {
             Image(
                 painter = painterResource(id = R.drawable.group_item_icon),
                 contentDescription = group.name,

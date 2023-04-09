@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.grade_book_screen
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
@@ -23,7 +22,10 @@ data class Dicipline(
     var lkH: Int,
     var lkM: Int,
     var lbH: Int,
-    var lbM: Int
+    var lbM: Int,
+    val pzMarks : MutableList<Int>,
+    val lkMarks : MutableList<Int>,
+    val lrMarks : MutableList<Int>
 )
 
 @OptIn(ExperimentalFoundationApi::class)

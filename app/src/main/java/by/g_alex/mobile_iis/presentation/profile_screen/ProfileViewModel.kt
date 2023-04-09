@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.profile_screen
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

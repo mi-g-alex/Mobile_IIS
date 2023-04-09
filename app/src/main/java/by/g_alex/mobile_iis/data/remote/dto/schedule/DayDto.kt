@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.data.remote.dto.schedule
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 

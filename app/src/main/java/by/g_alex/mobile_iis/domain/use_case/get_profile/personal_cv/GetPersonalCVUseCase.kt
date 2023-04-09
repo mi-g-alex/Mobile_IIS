@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.domain.use_case.get_profile.personal_cv
 
-import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository

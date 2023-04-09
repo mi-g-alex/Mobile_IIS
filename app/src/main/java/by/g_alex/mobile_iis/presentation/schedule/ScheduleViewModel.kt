@@ -45,6 +45,7 @@ class ScheduleViewModel @Inject constructor(
     @SuppressLint("StaticFieldLeak")
     lateinit var context: Context
     val headerText = mutableStateOf("None")
+    val favourite = mutableStateOf("None")
     val state: State<ScheduleState> = _state
     val weekState: State<CurrentWeekState> = _wState
     val groupState: State<GroupState> = _grState
@@ -162,7 +163,10 @@ class ScheduleViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getEmployeeSchedule(urlId: String) {
+    fun getEmployeeSchedule(fio: String) {
+        val prefs =
+            context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
+        val urlId = prefs.getString(fio, "") ?: ""
         viewModelScope.launch {
             val schedules: List<LessonModel> = db.getSchedule(urlId)
             if (schedules.isNotEmpty())

@@ -1,28 +1,21 @@
 package by.g_alex.mobile_iis.presentation.schedule.lists_items
 
-import androidx.compose.foundation.Image
-import by.g_alex.mobile_iis.R
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import by.g_alex.mobile_iis.R
+import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
-import by.g_alex.mobile_iis.presentation.schedule.navigation.Screen
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -40,7 +33,7 @@ fun EmployeeItem(
             viewModel.getEmployeeSchedule(employee.urlId)
             navController.navigateUp()
         }) {
-        Row(modifier = Modifier.padding(bottom = 10.dp)) {
+        Row(modifier = Modifier.padding(bottom = 10.dp).fillMaxWidth()) {
             GlideImage(
                 model = employee.photoLink,
                 contentScale = ContentScale.FillBounds,

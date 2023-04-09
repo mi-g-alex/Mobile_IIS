@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.domain.use_case.get_profile.mark_book
 
-import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
