@@ -74,8 +74,13 @@ fun ScheduleColumn(viewModel: ScheduleViewModel){
             items(mutlist.value) { iter ->
                 LessonItem(schedule = iter, week = cnt)
             }
-            if (date.value.dayOfWeek.toString() != "SATURDAY") date.value =
+            if (date.value.dayOfWeek.toString() != "SATURDAY"&& date.value.dayOfWeek.toString() != "SUNDAY") date.value =
                 date.value.plusDays(1)
+            else if(date.value.dayOfWeek.toString() == "SUNDAY"){
+                date.value = date.value.plusDays(1)
+                upcnt++;upcnt %= 5
+                if (upcnt == 0) upcnt++
+            }
             else {
                 date.value = date.value.plusDays(2)
                 upcnt++;upcnt %= 5

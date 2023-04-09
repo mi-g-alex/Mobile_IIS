@@ -5,7 +5,6 @@ import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Constants.ADDED_GROUPS
@@ -15,14 +14,10 @@ import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
-import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetCurrentWeekUseCase
-import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetEmployeeScheduleUseCase
-import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetEmployeesListUseCase
-import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetGroupsUseCase
-import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetScheduleUseCase
+import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.*
 import by.g_alex.mobile_iis.presentation.schedule.states.CurrentWeekState
-import by.g_alex.mobile_iis.presentation.schedule.states.GroupState
 import by.g_alex.mobile_iis.presentation.schedule.states.EmployeeState
+import by.g_alex.mobile_iis.presentation.schedule.states.GroupState
 import by.g_alex.mobile_iis.presentation.schedule.states.ScheduleState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -74,6 +69,14 @@ class ScheduleViewModel @Inject constructor(
         val list = prefs.getStringSet(ADDED_GROUPS, emptySet())?.toMutableSet()
         list?.add(group)
         prefs.edit().putStringSet(ADDED_GROUPS, list).apply()
+    }
+    fun deleteEmployeeScheduleFromDb(name:String){
+        val prefs = context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
+        val list  = prefs.getStringSet(ADDED_SCHEDULE, emptySet())?.toMutableSet()
+        list?.remove(name)
+        prefs.edit().remove(ADDED_SCHEDULE).putStringSet(ADDED_SCHEDULE,list).apply()
+
+        viewModelScope.launch {db.deleteSchedulebyName(name)}
     }
     fun deleteScheduleFromDb(name:String){
         val prefs = context.getSharedPreferences(ADDED_GROUPS, Context.MODE_PRIVATE)
