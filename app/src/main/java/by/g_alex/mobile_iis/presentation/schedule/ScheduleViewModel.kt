@@ -136,8 +136,6 @@ class ScheduleViewModel @Inject constructor(
             val schedules: List<LessonModel> = db.getSchedule(grNum)
             if (schedules.isNotEmpty())
                 _state.value = ScheduleState(Days = schedules)
-            else
-                _state.value = ScheduleState(error = "EmptyList")
         }
         getScheduleUseCase(grNum).onEach { result ->
             when (result) {
@@ -154,7 +152,7 @@ class ScheduleViewModel @Inject constructor(
                         }
                         if(stop.value)
                             break
-                           db.insertSchedule(n)
+                        db.insertSchedule(n)
                     }
                 }
                 is Resource.Error -> {
@@ -181,16 +179,23 @@ class ScheduleViewModel @Inject constructor(
             val schedules: List<LessonModel> = db.getSchedule(urlId)
             if (schedules.isNotEmpty())
                 _state.value = ScheduleState(Days = schedules)
-            else
-                _state.value = ScheduleState(error = "|Empty|")
         }
         getEmployeeScheduleUseCase(urlId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    Log.e("BLUA","qwertyuiop")
+                    val stop = mutableStateOf(false)
                     _state.value = ScheduleState(Days = result.data)
                     if (db.getSchedule(urlId).isEmpty()) {
                         for (n in _state.value.Days ?: emptyList()) {
+                            val bufList = db.getSchedule(urlId)
+                            for (m in bufList){
+                                if (n == m) {
+                                    stop.value = true
+                                    break
+                                }
+                            }
+                            if(stop.value)
+                                break
                             db.insertSchedule(n)
                         }
                     }

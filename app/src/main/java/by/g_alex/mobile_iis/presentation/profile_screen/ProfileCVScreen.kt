@@ -27,14 +27,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ElevatedSuggestionChip
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -191,6 +184,7 @@ fun ProfileCVScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 15.dp),
+                            color = MaterialTheme.colorScheme.inverseSurface
                         )
 
                         Text(
@@ -217,6 +211,7 @@ fun ProfileCVScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 15.dp),
+                            color = MaterialTheme.colorScheme.inverseSurface
                         )
 
                         Text(

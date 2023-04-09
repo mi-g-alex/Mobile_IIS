@@ -1,11 +1,9 @@
 package by.g_alex.mobile_iis.presentation.grade_book_screen.additional
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -13,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -92,13 +89,11 @@ fun TabLayout(
                         .align(Alignment.CenterHorizontally)
                         .padding(5.dp)
                 )
-                Box(
+                Divider(
                     modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .clip(shape = RoundedCornerShape(40.dp))
-                        .background(MaterialTheme.colorScheme.inverseSurface)
+                    .padding(horizontal = 20.dp)
+                       .fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.inverseSurface
                 )
                 Row(
                     modifier = Modifier
