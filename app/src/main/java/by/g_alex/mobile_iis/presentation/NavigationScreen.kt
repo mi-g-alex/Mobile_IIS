@@ -50,9 +50,6 @@ fun NavigationScreen() {
     val tabsItems = listOf("schedule", "mark_book", "profile", "grade_book", "more")
     val selectedItem = remember { mutableStateOf(0) }
     val navController = rememberNavController()
-    /*val navBackStackEntry = navController.currentBackStackEntryAsState()
-    val parentRouteName = navBackStackEntry.value?.destination?.route*/
-
 
     val scope = rememberCoroutineScope()
     val bottomSheetState =
@@ -139,7 +136,6 @@ fun NavigationScreen() {
                     navigation(startDestination = "scheduleHome", route = "schedule") {
                         composable(
                             route = "scheduleHome",
-                            deepLinks = listOf(NavDeepLink("deeplink://schedule"))
                         ) {
                             ScheduleStartUp()
                         }
@@ -147,13 +143,11 @@ fun NavigationScreen() {
                     navigation(startDestination = "profileHome", route = "profile") {
                         composable(
                             route = "profileHome",
-                            deepLinks = listOf(NavDeepLink("deeplink://profile"))
                         ) {
                             ProfileCVScreen(navController)
                         }
                         composable(
                             route = "login",
-                            deepLinks = listOf(NavDeepLink("deeplink://login"))
                         ) {
                             LoginScreen(navController = navController)
                         }
@@ -161,7 +155,6 @@ fun NavigationScreen() {
                     navigation(startDestination = "mark_bookHome", route = "mark_book") {
                         composable(
                             route = "mark_bookHome",
-                            deepLinks = listOf(NavDeepLink("deeplink://mark_book"))
                         ) {
                             MarkBookScreen()
                         }
@@ -169,20 +162,17 @@ fun NavigationScreen() {
                     navigation(startDestination = "grade_bookHome", route = "grade_book") {
                         composable(
                             route = "grade_bookHome",
-                            deepLinks = listOf(NavDeepLink("deeplink://grade_book"))
                         ) {
                             RatingScreen()
                         }
                     }
                     composable(
                         route = "groupHome",
-                        deepLinks = listOf(NavDeepLink("deeplink://grade_book"))
                     ) {
                         UserGroupScreen()
                     }
                     composable(
                         route = "omissionsHome",
-                        deepLinks = listOf(NavDeepLink("deeplink://grade_book"))
                     ) {
                         OmissionsScreen()
                     }
