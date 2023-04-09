@@ -123,28 +123,29 @@ fun TabLayout(
                     }
                 }
             }
-            if (openDialog.value) {
-                AlertDialog(
-                    onDismissRequest = {
-                        openDialog.value = false
-                    },
-                    title = { Text(text = dialogTitle.value) },
-                    text = { Column() {
-                        Text("ПЗ: "+diciplineObject.value.pzMarks.toString().removePrefix("[").removeSuffix("]"))
-                        Text("ЛР: "+diciplineObject.value.lrMarks.toString().removePrefix("[").removeSuffix("]"))
-                        Text("ЛК: "+diciplineObject.value.lkMarks.toString().removePrefix("[").removeSuffix("]"))
-                    }},
-                    confirmButton = {
-                        Button(
 
-                            onClick = {
-                                openDialog.value = false
-                            }) {
-                            Text("Ok")
-                        }
+        }
+        if (openDialog.value) {
+            AlertDialog(
+                onDismissRequest = {
+                    openDialog.value = false
+                },
+                title = { Text(text = dialogTitle.value) },
+                text = { Column() {
+                    Text("ПЗ: "+diciplineObject.value.pzMarks.toString().removePrefix("[").removeSuffix("]"))
+                    Text("ЛР: "+diciplineObject.value.lrMarks.toString().removePrefix("[").removeSuffix("]"))
+                    Text("ЛК: "+diciplineObject.value.lkMarks.toString().removePrefix("[").removeSuffix("]"))
+                }},
+                confirmButton = {
+                    Button(
+
+                        onClick = {
+                            openDialog.value = false
+                        }) {
+                        Text("Ok")
                     }
-                )
-            }
+                }
+            )
         }
     }
 }
