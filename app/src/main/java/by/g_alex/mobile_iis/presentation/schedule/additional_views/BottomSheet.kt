@@ -181,7 +181,7 @@ fun BottomSheet(
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface)
                     )
                     Text(
-                        text = "Add new",
+                        text = "Добавить",
                         fontSize = 30.sp,
                         modifier = Modifier.align(Alignment.CenterVertically)
                     )

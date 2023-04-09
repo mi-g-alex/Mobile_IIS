@@ -96,6 +96,7 @@ fun BottomSheetScaffold(
                     Text(
                         text = "No Schedule found((((....",
                         fontSize = 20.sp,
+                        textAlign = TextAlign.Center
                     )
                 }
                 if (state.error.isNotBlank()) {

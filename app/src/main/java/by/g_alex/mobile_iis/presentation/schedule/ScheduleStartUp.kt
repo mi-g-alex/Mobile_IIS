@@ -54,7 +54,7 @@ fun ScheduleStartUp(
             val prepSet = preferences.value.getStringSet(ADDED_SCHEDULE, emptySet())
             if (prepSet?.isNotEmpty() == true) {
                 viewModel.getEmployeeSchedule(
-                    preferences.value.getString(prepSet.minOf { it }, "") ?: ""
+                    prepSet.first()
                 )
                 viewModel.headerText.value = prepSet.first()
             }

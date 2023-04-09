@@ -166,7 +166,7 @@ class ScheduleViewModel @Inject constructor(
     fun getEmployeeSchedule(fio: String) {
         val prefs =
             context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
-        val urlId = prefs.getString(fio, "") ?: ""
+        val urlId = prefs.getString(fio, fio) ?: fio
         viewModelScope.launch {
             val schedules: List<LessonModel> = db.getSchedule(urlId)
             if (schedules.isNotEmpty())
@@ -177,6 +177,7 @@ class ScheduleViewModel @Inject constructor(
         getEmployeeScheduleUseCase(urlId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    Log.e("BLUA","qwertyuiop")
                     _state.value = ScheduleState(Days = result.data)
                     if (db.getSchedule(urlId).isEmpty()) {
                         for (n in _state.value.Days ?: emptyList()) {
@@ -186,6 +187,7 @@ class ScheduleViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
+                    Log.e("BLUA","sdcscscd")
 //                    val schedules: List<LessonModel> = db.getSchedule(urlId)
 //                    if (schedules.isNotEmpty())
 //                        _state.value = ScheduleState(Days = schedules)
@@ -194,6 +196,7 @@ class ScheduleViewModel @Inject constructor(
                 }
 
                 is Resource.Loading -> {
+                    Log.e("BLUA","zxcvbnm")
                     _state.value = ScheduleState(isLoading = true)
                 }
             }
