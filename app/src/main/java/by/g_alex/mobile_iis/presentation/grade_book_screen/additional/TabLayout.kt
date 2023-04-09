@@ -70,6 +70,10 @@ fun TabLayout(
         val diciplineObject = remember{ mutableStateOf( Dicipline("", 0, 0, 0, 0, 0, 0, mutableListOf(), mutableListOf(),
             mutableListOf()
         )) }
+        val skips = remember{mutableStateOf(0)}
+        val ball = remember{ mutableStateOf("") }
+        //Text(text = "Ср. оценка: "+skips.value, fontSize = 15.sp, modifier = Modifier.padding(10.dp))
+        //Text("Пропуски: "+ball.value, fontSize = 15.sp, modifier = Modifier.padding(10.dp))
         diciplineList.onEach { dicipline ->
             Card(
                 modifier = Modifier
@@ -91,8 +95,8 @@ fun TabLayout(
                 )
                 Divider(
                     modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                       .fillMaxWidth(),
+                        .padding(horizontal = 20.dp)
+                        .fillMaxWidth(),
                     color = MaterialTheme.colorScheme.inverseSurface
                 )
                 Row(
