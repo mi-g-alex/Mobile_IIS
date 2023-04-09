@@ -1,8 +1,10 @@
 package by.g_alex.mobile_iis.presentation.study_screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,8 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.ExtraBold
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -89,15 +95,25 @@ private fun Item(it: StudyCertificationsDto) {
             .padding(horizontal = 10.dp, vertical = 5.dp)
     ) {
         Column(Modifier.padding(10.dp)) {
-            Text(text = it.provisionPlace, fontWeight = ExtraBold, fontSize = 20.sp)
-            Text(text = it.dateOrder, fontSize = 18.sp)
             var t = ""
             when (it.status) {
-                1 -> t = "Напечатана"
+                1 -> t = "Напечатано"
                 2 -> t = "Обработка"
                 3 -> t = "Отклонена"
             }
-            if (t.isNotEmpty()) Text("Статус: $t", fontSize = 18.sp)
+            Text(
+                text = it.provisionPlace,
+                fontWeight = ExtraBold,
+                fontSize = 18.sp,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
+                Text(text = it.dateOrder, fontSize = 18.sp)
+                Text(text = t, fontFamily = FontFamily.Monospace, fontSize = 18.sp)
+            }
             if (it.rejectionReason != null) {
                 Text(text = "Причина отказа: ${it.rejectionReason}", fontSize = 18.sp)
             }
