@@ -16,7 +16,7 @@ data class MarkBookDto(
             val canStudyInParallel: Any?, // null
             val commonMark: Double?, // 9.158940397350994
             val commonRetakes: Double?, // 0.013245033112582781
-            val date: String, // 24.12.2022
+            val date: String?, // 24.12.2022
             val formOfControl: String, // Диф.зачет
             val fullSubject: String, // Логика
             val hours: String, // 108.0
@@ -26,7 +26,7 @@ data class MarkBookDto(
             val mark: String, // 7
             val retakesCount: Int, // 0
             val subject: String, // Логика
-            val teacher: String // Бархатков А. И.
+            val teacher: String? // Бархатков А. И.
         )
     }
 }

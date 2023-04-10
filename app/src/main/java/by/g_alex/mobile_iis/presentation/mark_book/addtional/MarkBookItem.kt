@@ -1,6 +1,8 @@
 package by.g_alex.mobile_iis.presentation.mark_book.addtional
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -10,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
@@ -23,16 +26,34 @@ fun MarkBookItem(mark: MarkBookDto.MapValue.Mark) {
             .padding(horizontal = 10.dp, vertical = 5.dp)
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
-            Text(
-                text = mark.subject,
-                fontSize = 30.sp,
-                modifier = Modifier.padding(5.dp)
-            )
-            Text(
-                text = mark.formOfControl + " | " + mark.hours + "ч.",
-                fontSize = 20.sp,
-                modifier = Modifier.padding(5.dp)
-            )
+            Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
+                Text(
+                    text = mark.subject,
+                    fontSize = 30.sp,
+                    modifier = Modifier.padding(5.dp),
+                    fontWeight = FontWeight.ExtraBold
+                )
+                Text(
+                    text = mark.mark,
+                    fontSize = 30.sp,
+                    modifier = Modifier.padding(5.dp),
+                    fontWeight = FontWeight.ExtraBold
+                )
+            }
+            Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
+                Text(
+                    text = mark.formOfControl + " | " + mark.hours + "ч.",
+                    modifier = Modifier.padding(5.dp),
+                    fontSize = 20.sp
+                )
+                mark.date?.let {
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(5.dp),
+                        fontSize = 20.sp
+                    )
+                }
+            }
 
             Divider(
                 modifier = Modifier
@@ -40,6 +61,14 @@ fun MarkBookItem(mark: MarkBookDto.MapValue.Mark) {
                     .padding(5.dp),
                 color = MaterialTheme.colorScheme.inverseSurface
             )
+
+            if (mark.teacher != null) {
+                Text(
+                    text = mark.teacher,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(5.dp)
+                )
+            }
 
             if (mark.commonRetakes != null) {
                 Text(
@@ -56,20 +85,16 @@ fun MarkBookItem(mark: MarkBookDto.MapValue.Mark) {
                 )
             }
 
-            if (mark.commonMark != null)
-                Text(
-                    text = "Отметка: " + mark.mark
-                            + " (" + String.format("%.2f", mark.commonMark) + ")",
-                    fontSize = 20.sp,
-                    modifier = Modifier.padding(5.dp)
-                )
-            else {
-                Text(
-                    text = "Отметка: " + mark.mark,
-                    fontSize = 20.sp,
-                    modifier = Modifier.padding(5.dp)
-                )
-            }
+            var t = ""
+            if (mark.commonMark != null) t =
+                "Отметка: " + mark.mark + " (" + String.format("%.2f", mark.commonMark) + ")"
+            else if (mark.mark.isNotEmpty()) t = "Отметка: " + mark.mark
+
+            if (t.isNotEmpty()) Text(
+                text = t,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(5.dp)
+            )
         }
     }
 }
