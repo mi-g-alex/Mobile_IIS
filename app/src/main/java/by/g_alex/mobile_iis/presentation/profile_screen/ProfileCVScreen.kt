@@ -117,7 +117,7 @@ fun ProfileCVScreen(
                                         .size(200.dp)
                                         .clip(CircleShape)
                                         .background(Color.Gray, shape = CircleShape)
-                                        .border(1.dp, Color.Green)
+                                        .border(3.dp, MaterialTheme.colorScheme.outline, CircleShape)
                                         .clickable {
                                             singlePhotoPickerLauncher.launch(
                                                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)

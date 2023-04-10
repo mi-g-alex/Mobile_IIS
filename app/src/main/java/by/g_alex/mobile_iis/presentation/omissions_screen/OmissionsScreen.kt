@@ -39,7 +39,15 @@ fun OmissionsScreen(
                 .fillMaxSize()
         ) {
             if (state.omissionsState != null) {
-                Item(state.omissionsState)
+                if (state.omissionsState.isNotEmpty()) {
+                    Item(state.omissionsState)
+                } else {
+                    Text(
+                        text = "Тут ничего нет",
+                        modifier = Modifier.align(Alignment.Center),
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
             if (state.error.isNotBlank()) {
                 if (state.error == "LessCookie") {
@@ -64,7 +72,7 @@ fun OmissionsScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Item(it: List<OmissionsByStudentDto>) {
-    LazyColumn() {
+    LazyColumn {
         for (i in it.indices) {
             if (i == 0) {
                 stickyHeader {
@@ -105,7 +113,10 @@ private fun Item(it: List<OmissionsByStudentDto>) {
                                 .padding(vertical = 3.dp)
                                 .align(CenterHorizontally)
                         )
-                        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
                             Text(
                                 text = "C " + SimpleDateFormat(
                                     "dd.MM.yyyy",

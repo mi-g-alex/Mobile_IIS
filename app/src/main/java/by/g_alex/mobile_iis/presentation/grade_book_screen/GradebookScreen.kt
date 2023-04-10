@@ -78,8 +78,18 @@ fun RatingScreen(
 
                 }
             }
+
             if (state.error.isNotBlank()) {
-                Text(text = state.error)
+                if(state.error == "LessCookie") {
+                    Box(modifier = Modifier.align(Alignment.Center)) {
+                        Column(modifier = Modifier) {
+                            Text(
+                                text = "Сначала войдите в аккаунт...",
+                                fontSize = 25.sp
+                            )
+                        }
+                    }
+                }
             }
 
             if (state.isLoading) {
