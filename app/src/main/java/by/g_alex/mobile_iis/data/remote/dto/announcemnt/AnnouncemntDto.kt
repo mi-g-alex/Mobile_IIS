@@ -9,6 +9,6 @@ data class AnnouncemntDto(
     val endTime: String,
     val id: Int,
     val startTime: String,
-    val studentGroups: List<StudentGroup>,
+    val studentGroups: List<StudentGroup>?,
     val urlId: String
 )

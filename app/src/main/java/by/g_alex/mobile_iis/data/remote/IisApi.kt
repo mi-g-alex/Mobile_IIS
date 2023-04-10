@@ -58,7 +58,7 @@ interface IisApi {
     @GET("api/v1/library/debts") // Задолженности библиотека
     suspend fun getStudyLibDebts(@Header("Cookie") cookieValue: String): List<String>
 
-    @GET("api/v1/announcements") // Задолженности библиотека
+    @GET("api/v1/announcements") // Обьявления
     suspend fun getAnnouncements(@Header("Cookie") cookieValue: String): List<AnnouncemntDto>
 
     // For all

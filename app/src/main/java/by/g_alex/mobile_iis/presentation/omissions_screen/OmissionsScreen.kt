@@ -2,26 +2,12 @@ package by.g_alex.mobile_iis.presentation.omissions_screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Card
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,8 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 
 @Composable
@@ -115,7 +100,7 @@ private fun Item(it: List<OmissionsByStudentDto>) {
                     Column(modifier = Modifier.padding(8.dp)) {
                         Text(
                             text = it[i].name,
-                            fontSize = 30.sp,
+                            fontSize = 20.sp,
                             modifier = Modifier
                                 .padding(vertical = 3.dp)
                                 .align(CenterHorizontally)
@@ -126,22 +111,22 @@ private fun Item(it: List<OmissionsByStudentDto>) {
                                     "dd.MM.yyyy",
                                     Locale.getDefault()
                                 ).format(Date(it[i].dateFrom)),
-                                fontSize = 20.sp,
-                                modifier = Modifier.padding(vertical = 3.dp)
+                                fontSize = 15.sp,
+                                modifier = Modifier.padding(5.dp)
                             )
                             Text(
                                 text = "До " + SimpleDateFormat(
                                     "dd.MM.yyyy",
                                     Locale.getDefault()
                                 ).format(Date(it[i].dateTo)),
-                                fontSize = 20.sp,
-                                modifier = Modifier.padding(vertical = 3.dp)
+                                fontSize = 15.sp,
+                                modifier = Modifier.padding(5.dp)
                             )
                         }
                         it[i].note?.let { it1 ->
                             Text(
                                 text = it1,
-                                modifier = Modifier.padding(vertical = 5.dp)
+                                modifier = Modifier.padding(5.dp)
                             )
                         }
                     }
