@@ -2,13 +2,7 @@ package by.g_alex.mobile_iis.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
+import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
 import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
 import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
@@ -144,6 +139,9 @@ fun NavigationScreen() {
                     composable(route = "studyHome") {
                         StudyScreen()
                     }
+                    composable(route = "announcements"){
+                        AnnouncementScreen()
+                    }
 
                 }
             }
@@ -168,12 +166,17 @@ fun BottomMenuMore(
         BaseNavItem(
             "omissionsHome",
             "Пропуски",
-            R.drawable.omissions_icon
+            R.drawable.baseline_do_not_disturb_24
         ),
         BaseNavItem(
             "studyHome",
             "Учёба",
             R.drawable.baseline_school_24
+        ),
+        BaseNavItem(
+            "announcements",
+            "Объявления",
+            R.drawable.baseline_watch_later_24
         ),
     )
     Box(
@@ -184,7 +187,9 @@ fun BottomMenuMore(
     ) {
         Column {
             LazyVerticalGrid(
-                columns = GridCells.Fixed(4)
+                columns = GridCells.Fixed(4),
+                verticalArrangement = Arrangement.SpaceAround,
+                horizontalArrangement = Arrangement.SpaceAround
             ) {
                 items(listOfItems.size) { i ->
                     Column(
@@ -201,14 +206,16 @@ fun BottomMenuMore(
                                     launchSingleTop = true
                                 })
                                 selectedItem.value = 4
-                            },
+                            }
+                            .padding(10.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Icon(
                             painter = painterResource(id = listOfItems[i].icon),
-                            contentDescription = listOfItems[i].title
+                            contentDescription = listOfItems[i].title,
+
                         )
-                        Text(text = listOfItems[i].title)
+                        Text(text = listOfItems[i].title, fontSize = 12.sp)
                     }
                 }
             }
