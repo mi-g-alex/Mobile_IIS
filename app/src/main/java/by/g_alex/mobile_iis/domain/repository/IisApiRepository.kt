@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.domain.repository
 
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
+import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
@@ -41,6 +42,7 @@ interface IisApiRepository {
     suspend fun getStudyApplications(token: String): List<StudyApplicationsDto>
     suspend fun getStudyLibDebts(token: String): List<String>
 
+    suspend fun getAnnouncements(token:String):List<AnnouncemntDto>
     // For All
 
     suspend fun getSchedule(groupNum: String): List<LessonModel>?

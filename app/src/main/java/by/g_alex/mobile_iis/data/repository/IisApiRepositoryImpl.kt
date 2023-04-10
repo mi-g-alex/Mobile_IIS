@@ -2,6 +2,7 @@ package by.g_alex.mobile_iis.data.repository
 
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
+import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.toEmployeeModel
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
@@ -64,6 +65,10 @@ class IisApiRepositoryImpl @Inject constructor(
 
     override suspend fun getStudyMarkSheet(token: String): List<StudyMarkSheetDto> {
         return api.getStudyMarkSheet(token)
+    }
+
+    override suspend fun getAnnouncements(token: String): List<AnnouncemntDto> {
+        return api.getAnnouncements(token)
     }
 
     override suspend fun getStudyCertificate(token: String): List<StudyCertificationsDto> {

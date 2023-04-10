@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.data.remote
 
+import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
@@ -56,6 +57,9 @@ interface IisApi {
 
     @GET("api/v1/library/debts") // Задолженности библиотека
     suspend fun getStudyLibDebts(@Header("Cookie") cookieValue: String): List<String>
+
+    @GET("api/v1/announcements") // Задолженности библиотека
+    suspend fun getAnnouncements(@Header("Cookie") cookieValue: String): List<AnnouncemntDto>
 
     // For all
 
