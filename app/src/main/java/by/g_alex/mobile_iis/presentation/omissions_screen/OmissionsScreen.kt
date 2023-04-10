@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -109,6 +110,7 @@ private fun Item(it: List<OmissionsByStudentDto>) {
                         Text(
                             text = it[i].name,
                             fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .padding(vertical = 3.dp)
                                 .align(CenterHorizontally)
