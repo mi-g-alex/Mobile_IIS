@@ -85,16 +85,13 @@ fun MarkBookItem(mark: MarkBookDto.MapValue.Mark) {
                 )
             }
 
-            var t = ""
-            if (mark.commonMark != null) t =
-                "Отметка: " + mark.mark + " (" + String.format("%.2f", mark.commonMark) + ")"
-            else if (mark.mark.isNotEmpty()) t = "Отметка: " + mark.mark
+            if (mark.commonMark != null)
+                Text(
+                    text = "Cр. балл за 4 года: " + String.format("%.2f", mark.commonMark),
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(5.dp)
+                )
 
-            if (t.isNotEmpty()) Text(
-                text = t,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(5.dp)
-            )
         }
     }
 }
