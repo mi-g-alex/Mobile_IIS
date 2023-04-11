@@ -10,7 +10,7 @@ data class EmployeeListItemDto(
     val firstName: String,
     val id: Int,
     val lastName: String,
-    val middleName: String,
+    val middleName: String?,
     val photoLink: String,
     val rank: String,
     val urlId: String
@@ -23,7 +23,7 @@ fun EmployeeListItemDto.toEmployeeModel(): EmployeeModel {
         firstName = firstName,
         id = id,
         lastName = lastName,
-        middleName = middleName,
+        middleName = middleName ?: "",
         photoLink = photoLink,
         rank = rank,
         urlId = urlId

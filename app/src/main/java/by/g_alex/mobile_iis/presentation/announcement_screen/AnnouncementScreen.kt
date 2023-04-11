@@ -52,7 +52,7 @@ fun AnnouncementScreen(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = it.content, fontWeight = FontWeight.ExtraBold, modifier = Modifier
+                                text = it.content, fontWeight = FontWeight.Bold, modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(5.dp), textAlign = TextAlign.Center, fontSize = 20.sp
                             )

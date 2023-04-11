@@ -31,13 +31,13 @@ fun MarkBookItem(mark: MarkBookDto.MapValue.Mark) {
                     text = mark.subject,
                     fontSize = 30.sp,
                     modifier = Modifier.padding(5.dp),
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = mark.mark,
                     fontSize = 30.sp,
                     modifier = Modifier.padding(5.dp),
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.Bold
                 )
             }
             Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {

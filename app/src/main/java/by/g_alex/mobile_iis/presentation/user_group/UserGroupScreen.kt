@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle.Companion.Italic
-import androidx.compose.ui.text.font.FontWeight.Companion.ExtraBold
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -99,7 +99,7 @@ private fun Item(it: UserGroupDto.GroupInfoStudentDto) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = it.fio, fontWeight = ExtraBold, fontSize = 18.sp)
+                Text(text = it.fio, fontWeight = Bold, fontSize = 18.sp)
                 if (it.position.isNotBlank())
                     Text(
                         text = it.position,
