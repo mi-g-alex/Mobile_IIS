@@ -30,6 +30,7 @@ interface UserDataBaseRepository {
     suspend fun insertMarkBook(markbook : MarkBookMarkModel)
 
     suspend fun deleteMarkBooks()
+
     suspend fun getGradeBook():List<GradeBookLessonModel>
 
     suspend fun insertGradeBook(gradebook:GradeBookLessonModel)

@@ -1,61 +1,56 @@
 package by.g_alex.mobile_iis.data.remote.dto.study
 
+
 data class StudyMarkSheetDto(
-    val absentDate: String?, // string
-    val certificate: Boolean?, // true
-    val createDate: String?, // string
+    val absentDate: Any?, // null
+    val certificate: Boolean?, // false
+    val createDate: String?, // 09.02.2023
     val employee: Employee?,
-    val expireDate: String?, // string
-    val hours: Int?, // 0
-    val id: Int?, // 0
+    val expireDate: Any?, // null
+    val hours: Any?, // null
+    val id: Int?, // 69949
     val markSheetType: MarkSheetType?,
-    val number: String?, // string
-    val paymentFormMap: PaymentFormMap?,
-    val price: Int?, // 0
-    val reason: Int?, // 0
-    val rejectionReason: String?, // string
-    val requestValidationDoc: String?, // string
-    val retakeCount: Int?, // 0
-    val status: String?, // string
+    val number: String?, // 405/0817
+    val paymentFormMap: Any?, // null
+    val price: Double?, // 2.52
+    val reason: Int?, // 2
+    val rejectionReason: Any?, // null
+    val requestValidationDoc: Any?, // null
+    val retakeCount: Int?, // 1
+    val status: String?, // ��������������������
     val subject: Subject?,
-    val term: Int? // 0
+    val term: Int? // 1
 ) {
     data class Employee(
-        val academicDepartment: String?, // string
-        val fio: String?, // string
-        val firstName: String?, // string
-        val id: Int?, // 0
-        val lastName: String?, // string
-        val middleName: String?, // string
-        val price: Int? // 0
+        val academicDepartment: String?, // ������.������
+        val fio: String?, // ���������� ��. ��.
+        val firstName: String?, // ��������
+        val id: Int?, // 500550
+        val lastName: String?, // ����������
+        val middleName: String?, // ��������������������������
+        val price: Double? // 6.3
     )
 
     data class MarkSheetType(
-        val coefficient: Int?, // 0
-        val fullName: String?, // string
-        val id: Int?, // 0
-        val isCourseWork: Boolean?, // true
+        val coefficient: Double?, // 0.4
+        val fullName: String?, // 1231231
+        val id: Int?, // 1
+        val isCourseWork: Boolean?, // false
         val isExam: Boolean?, // true
-        val isLab: Boolean?, // true
-        val isOffset: Boolean?, // true
-        val isRemote: Boolean?, // true
-        val price: Int?, // 0
-        val shortName: String? // string
-    )
-
-    data class PaymentFormMap(
-        val additionalProp1: String?, // string
-        val additionalProp2: String?, // string
-        val additionalProp3: String? // string
+        val isLab: Boolean?, // false
+        val isOffset: Boolean?, // false
+        val isRemote: Boolean?, // false
+        val price: Any?, // null
+        val shortName: String? // ������., ������. ���������� (����., ������., ��������.)
     )
 
     data class Subject(
-        val abbrev: String?, // string
-        val focsId: Int?, // 0
-        val id: Int?, // 0
-        val lessonTypeAbbrev: String?, // string
-        val name: String?, // string
-        val term: Int?, // 0
-        val thId: Int? // 0
+        val abbrev: String?, // ������������
+        val focsId: Int?, // 204842
+        val id: Int?, // 23215
+        val lessonTypeAbbrev: String?, // ����������.
+        val name: String?, // ���������������������������� �� �������������������� ������������ ���������������� ������������������
+        val term: Int?, // 1
+        val thId: Any? // null
     )
 }

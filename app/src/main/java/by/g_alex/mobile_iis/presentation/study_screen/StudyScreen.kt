@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
+import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -38,8 +39,24 @@ fun StudyScreen(
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
-            if (state.studyCertificate != null) {
-                LazyColumn {
+            LazyColumn {
+                if (!(state.studyAll?.mark_sheet.isNullOrEmpty())) {
+                    stickyHeader {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            text = "Ведомостички",
+                            fontSize = 28.sp
+                        )
+                    }
+                    state.studyAll?.mark_sheet?.let {
+                        items(it.size) {
+                            MarkSheetItem(state.studyAll.mark_sheet[it])
+                        }
+                    }
+
+                }
+                if (!state.studyAll?.certifications.isNullOrEmpty()) {
                     stickyHeader {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
@@ -48,8 +65,10 @@ fun StudyScreen(
                             fontSize = 28.sp
                         )
                     }
-                    items(state.studyCertificate.size) {
-                        Item(state.studyCertificate[it])
+                    state.studyAll?.certifications?.let {
+                        items(it.size) {
+                            CertificationItem(state.studyAll.certifications[it])
+                        }
                     }
                 }
             }
@@ -74,7 +93,7 @@ fun StudyScreen(
 }
 
 @Composable
-private fun Item(it: StudyCertificationsDto) {
+private fun CertificationItem(it: StudyCertificationsDto) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -101,6 +120,32 @@ private fun Item(it: StudyCertificationsDto) {
                 Text(text = it.dateOrder, fontSize = 15.sp)
                 Text(text = t, fontFamily = FontFamily.Monospace, fontSize = 15.sp)
             }
+            if (it.rejectionReason != null) {
+                Text(text = "Причина отказа: ${it.rejectionReason}", fontSize = 15.sp)
+            }
+        }
+    }
+}
+
+@Composable
+private fun MarkSheetItem(it: StudyMarkSheetDto) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(horizontal = 10.dp, vertical = 5.dp)
+    ) {
+        Column(Modifier.padding(10.dp)) {
+            Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
+                it.createDate?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
+                it.status?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
+            }
+            it.subject?.name?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
+            it.subject?.lessonTypeAbbrev?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
+            it.term?.let { it1 -> Text(text = "$it1 семестр", fontSize = 15.sp) }
+            it.employee?.fio?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
+            it.absentDate?.let { it1 -> Text(text = "Дата пропуска $it1", fontSize = 15.sp) }
+            it.price?.let { it1 -> Text(text = "Дата пропуска $it1", fontSize = 15.sp) }
             if (it.rejectionReason != null) {
                 Text(text = "Причина отказа: ${it.rejectionReason}", fontSize = 15.sp)
             }
