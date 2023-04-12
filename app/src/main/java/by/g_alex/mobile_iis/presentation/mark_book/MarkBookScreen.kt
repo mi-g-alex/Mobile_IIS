@@ -27,10 +27,10 @@ fun MarkBookScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    if (state.markBookState?.averageMark != null) {
+                    if (state.markBookState!!.isNotEmpty()) {
                         Text(
                             text = "Общий средний балл: " +
-                                    state.markBookState.averageMark.toString(),
+                                    state.markBookState[0].averageMarkALL.toString(),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -44,9 +44,9 @@ fun MarkBookScreen(
                 .padding(it)
                 .fillMaxSize()
         ) {
-            if (state.markBookState != null) {
+            if (state.markBookState!!.isNotEmpty() && state.markBookState != null) {
                 val titles = mutableListOf<Int>()
-                for (i in 1..state.markBookState.markPages.size) titles.add(i)
+                for (i in 1..state.markBookState[0].pagesSize) titles.add(i)
                 if (titles.size == 0) {
                     Text(
                         text = "Тут пока пусто",
@@ -77,7 +77,7 @@ fun MarkBookScreen(
                         HorizontalPager(
                             state = pagerState,
                             pageCount = titles.size,
-                            beyondBoundsPageCount = state.markBookState.markPages.size
+                            beyondBoundsPageCount = state.markBookState[0].pagesSize
                         ) { page: Int ->
                             MarkBookListScreen(item = state.markBookState, id = (page + 1))
                         }

@@ -52,6 +52,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             logOutUseCase.logOut()
             db.deleteGradeBooks()
+            db.deleteMarkBooks()
         }
     }
 

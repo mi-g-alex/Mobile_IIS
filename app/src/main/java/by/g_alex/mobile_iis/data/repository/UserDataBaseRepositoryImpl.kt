@@ -5,6 +5,8 @@ import by.g_alex.mobile_iis.data.local.entity.*
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.toGradeBookEntity
+import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
+import by.g_alex.mobile_iis.domain.model.profile.markbook_model.toMarkBookEntity
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 
 class UserDataBaseRepositoryImpl(
@@ -31,6 +33,19 @@ class UserDataBaseRepositoryImpl(
         dao.setLoginAndPassword(LoginAndPasswordEntity(0, username, password))
     }
 
+    override suspend fun getMarkBooks(): List<MarkBookMarkModel> {
+        val marklist = mutableListOf<MarkBookMarkModel>()
+        dao.getMarkBook().onEach {
+            marklist.add(it.toMarkBookMarkModel())
+        }
+        return marklist
+    }
+    override suspend fun deleteMarkBooks() {
+        dao.deleteMarkbooks()
+    }
+    override suspend fun insertMarkBook(markbook: MarkBookMarkModel) {
+        dao.insertMarkBook(markbook.toMarkBookEntity())
+    }
     override suspend fun getGradeBook(): List<GradeBookLessonModel> {
         val gradelist = mutableListOf<GradeBookLessonModel>()
         dao.getGradeBook().onEach {

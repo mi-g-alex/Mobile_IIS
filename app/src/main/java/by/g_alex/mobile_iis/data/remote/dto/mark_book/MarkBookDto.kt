@@ -1,5 +1,7 @@
 package by.g_alex.mobile_iis.data.remote.dto.mark_book
 
+import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
+
 data class MarkBookDto(
     val averageMark: Double, // 9.17
     val markPages: Map<Int,MapValue>,
@@ -29,4 +31,33 @@ data class MarkBookDto(
             val teacher: String? // Бархатков А. И.
         )
     }
+}
+fun MarkBookDto.toListMarkBookMarkModel():List<MarkBookMarkModel>{
+    val markList = mutableListOf<MarkBookMarkModel>()
+    markPages.keys.onEach { ki->
+       markPages[ki]?.marks?.onEach {marks ->
+           markList.add(
+               MarkBookMarkModel(
+                   pagesSize = markPages.keys.size,
+                   averageMarkALL = averageMark,
+                   markPage = ki,
+                   number = number,
+                   averageMark = markPages[ki]?.averageMark?:0.0,
+                   commonMark = marks.commonMark,
+                   commonRetakes = marks.commonRetakes,
+                   date = marks.date,
+                   formOfControl = marks.formOfControl,
+                   fullSubject = marks.fullSubject,
+                   hours = marks.hours,
+                   idFormOfControl = marks.idFormOfControl,
+                   idSubject = marks.idSubject,
+                   mark = marks.mark,
+                   retakesCount = marks.retakesCount,
+                   subject = marks.subject,
+                   teacher = marks.teacher
+               )
+           )
+       }
+    }
+    return markList
 }

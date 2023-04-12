@@ -8,7 +8,7 @@ import by.g_alex.mobile_iis.data.remote.dto.grade_book.toGradeBookLessonModel
 import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
-import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
+import by.g_alex.mobile_iis.data.remote.dto.mark_book.toListMarkBookMarkModel
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
@@ -16,6 +16,7 @@ import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
+import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
@@ -53,8 +54,8 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getGradeBook(cookie)[0].toGradeBookLessonModel()
     }
 
-    override suspend fun getMarkBook(token: String) : MarkBookDto {
-        return api.getMarkBook(token)
+    override suspend fun getMarkBook(token: String) : List<MarkBookMarkModel> {
+        return api.getMarkBook(token).toListMarkBookMarkModel()
     }
 
     override suspend fun getUserGroup(token: String): UserGroupDto {

@@ -7,13 +7,14 @@ import by.g_alex.mobile_iis.data.local.entity.*
 
 
 @Database(
-    version = 6,
+    version = 7,
     entities = [
         ProfilePersonalCVEntity::class,
         CookieEntity::class,
         LoginAndPasswordEntity::class,
         LessonModel::class,
-        GradeBookEntity::class
+        GradeBookEntity::class,
+    MarkBookEntity::class
     ],
 //    exportSchema = true,
 //    autoMigrations = [
