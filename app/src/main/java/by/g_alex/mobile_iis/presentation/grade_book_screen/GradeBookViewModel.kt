@@ -27,6 +27,7 @@ class GradeBookViewModel @Inject constructor(
         getGradeBook()
     }
 
+
     fun getGradeBook() {
         viewModelScope.launch {
             val gradebooks: List<GradeBookLessonModel> = db.getGradeBook()

@@ -25,7 +25,13 @@ data class Dicipline(
     var lbM: Int,
     val pzMarks: MutableList<Int>,
     val lkMarks: MutableList<Int>,
-    val lrMarks: MutableList<Int>
+    val lrMarks: MutableList<Int>,
+)
+
+data class Average(
+    var hours: Int,
+    var markCount: Int,
+    var markSum: Double
 )
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -39,6 +45,13 @@ fun RatingScreen(
     }
     val titles = mutableListOf("Итого")
     val titlesForTab = mutableListOf("Итого")
+    val ktAverage = mutableListOf<Average>(
+        Average(0, 0, 0.0),
+        Average(0, 0, 0.0),
+        Average(0, 0, 0.0),
+        Average(0, 0, 0.0),
+        Average(0, 0, 0.0)
+    )
     val diciplineList = mutableListOf(
         mutableMapOf<String, Dicipline>(),
         mutableMapOf<String, Dicipline>(),
@@ -46,26 +59,33 @@ fun RatingScreen(
         mutableMapOf<String, Dicipline>(),
         mutableMapOf<String, Dicipline>()
     )
-    Log.e("START","START")
+    Log.e("START", "START")
     if (gradeList.value.gradeBookState?.isNotEmpty() == true) {
         gradeList.value.gradeBookState!!.onEach {
-            if(!titles.contains(it.controlPoint)){
+            if (!titles.contains(it.controlPoint)) {
                 titles.remove("Вне КТ")
                 titles.add(it.controlPoint)
                 titlesForTab.add(it.controlPoint.removeSuffix(".2023"))
                 titles.add("Вне КТ")
             }
+            ktAverage[0].hours += it.gradeBookOmissions
+            ktAverage[titles.indexOf(it.controlPoint)].hours += it.gradeBookOmissions
+
+            ktAverage[0].markCount += it.marks.size
+            ktAverage[titles.indexOf(it.controlPoint)].markCount += it.marks.size
+            ktAverage[0].markSum += it.marks.sum()
+            ktAverage[titles.indexOf(it.controlPoint)].markSum += it.marks.sum()
             if (!diciplineList[0].keys.contains(it.lessonNameAbbrev)) {
 
                 diciplineList.onEach { kt ->
                     kt[it.lessonNameAbbrev] = Dicipline(
                         it.lessonNameAbbrev,
                         0,
-                       0,
                         0,
                         0,
-                       0,
-                       0,
+                        0,
+                        0,
+                        0,
                         mutableListOf(),
                         mutableListOf(),
                         mutableListOf()
@@ -73,8 +93,8 @@ fun RatingScreen(
                 }
             }
             val lesos = mutableStateOf(0)
-            for(n in titles.indices){
-                if(titles[n] == it.controlPoint) {
+            for (n in titles.indices) {
+                if (titles[n] == it.controlPoint) {
                     lesos.value = n
                     break
                 }
@@ -84,7 +104,7 @@ fun RatingScreen(
                 2 -> {
                     diciplineList[0][it.lessonNameAbbrev]!!.lkM += it.marks.count()
                     diciplineList[0][it.lessonNameAbbrev]!!.lkH += it.gradeBookOmissions
-                    if(lesos.value>0){
+                    if (lesos.value > 0) {
                         diciplineList[lesos.value][it.lessonNameAbbrev]!!.lkM += it.marks.count()
                         diciplineList[lesos.value][it.lessonNameAbbrev]!!.lkH += it.gradeBookOmissions
                     }
@@ -92,7 +112,7 @@ fun RatingScreen(
                         diciplineList[0][it.lessonNameAbbrev]!!.lkMarks.add(
                             mark
                         )
-                        if(lesos.value>0){
+                        if (lesos.value > 0) {
                             diciplineList[lesos.value][it.lessonNameAbbrev]!!.lkMarks.add(
                                 mark
                             )
@@ -102,7 +122,7 @@ fun RatingScreen(
                 3 -> {
                     diciplineList[0][it.lessonNameAbbrev]!!.pzM += it.marks.count()
                     diciplineList[0][it.lessonNameAbbrev]!!.pzH += it.gradeBookOmissions
-                    if(lesos.value>0){
+                    if (lesos.value > 0) {
                         diciplineList[lesos.value][it.lessonNameAbbrev]!!.pzM += it.marks.count()
                         diciplineList[lesos.value][it.lessonNameAbbrev]!!.pzH += it.gradeBookOmissions
                     }
@@ -110,7 +130,7 @@ fun RatingScreen(
                         diciplineList[0][it.lessonNameAbbrev]!!.pzMarks.add(
                             mark
                         )
-                        if(lesos.value>0){
+                        if (lesos.value > 0) {
                             diciplineList[lesos.value][it.lessonNameAbbrev]!!.pzMarks.add(
                                 mark
                             )
@@ -121,7 +141,7 @@ fun RatingScreen(
                 4 -> {
                     diciplineList[0][it.lessonNameAbbrev]!!.lbM += it.marks.count()
                     diciplineList[0][it.lessonNameAbbrev]!!.lbH += it.gradeBookOmissions
-                    if(lesos.value>0){
+                    if (lesos.value > 0) {
                         diciplineList[lesos.value][it.lessonNameAbbrev]!!.lbM += it.marks.count()
                         diciplineList[lesos.value][it.lessonNameAbbrev]!!.lbH += it.gradeBookOmissions
                     }
@@ -129,7 +149,7 @@ fun RatingScreen(
                         diciplineList[0][it.lessonNameAbbrev]!!.lrMarks.add(
                             mark
                         )
-                        if(lesos.value>0){
+                        if (lesos.value > 0) {
                             diciplineList[lesos.value][it.lessonNameAbbrev]!!.lrMarks.add(
                                 mark
                             )
@@ -139,7 +159,7 @@ fun RatingScreen(
             }
         }
     }
-    Log.e("FINISH","FINISH")
+    Log.e("FINISH", "FINISH")
     titlesForTab.add("Вне КТ")
     Scaffold(
         topBar = {
@@ -181,7 +201,8 @@ fun RatingScreen(
                     ) { page: Int ->
                         coroutineScope.apply {
                             TabLayout(
-                               currentList = diciplineList[page]
+                                currentList = diciplineList[page],
+                                average = ktAverage[page]
                             )
                         }
                     }

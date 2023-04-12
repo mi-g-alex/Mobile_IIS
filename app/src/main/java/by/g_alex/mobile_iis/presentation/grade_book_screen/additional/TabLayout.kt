@@ -14,11 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import by.g_alex.mobile_iis.presentation.grade_book_screen.Average
 import by.g_alex.mobile_iis.presentation.grade_book_screen.Dicipline
 
 @Composable
 fun TabLayout(
-    currentList : MutableMap<String,Dicipline>
+    currentList : MutableMap<String,Dicipline>,
+    average: Average
 ) {
 
     val openDialog = remember { mutableStateOf(false) }
@@ -27,6 +29,7 @@ fun TabLayout(
         mutableListOf()
     )) }
     Log.e("PROLAG","PROLAG")
+
     LazyColumn(
         modifier = Modifier
             //.padding()
@@ -34,7 +37,15 @@ fun TabLayout(
     )
     {
         val diciplineList = mutableStateOf(currentList.values.toList() )
-
+        val aver = if(average.markCount>0 && (average.markSum/average.markCount).toString().length>4)(average.markSum/average.markCount).toString().substring(0,4)
+        else if (average.markCount>0) (average.markSum/average.markCount).toString()
+        else "0.0"
+        item {
+            Column(modifier = Modifier.padding(15.dp)) {
+                Text(text = "Ср. оценка: " + aver)
+                Text(text = "Пропуски: "+average.hours)
+            }
+        }
         items(diciplineList.value) {
                 dicipline ->
             Card(

@@ -1,19 +1,18 @@
 package by.g_alex.mobile_iis.presentation.schedule.lists_items
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,12 +26,18 @@ fun LessonItem(
     schedule: LessonModel,
     week: Int
 ) {
+    val openDialog = remember { mutableStateOf(false) }
+    val dialogTitle = remember { mutableStateOf("") }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 5.dp)
             .height(60.dp)
-            .clickable { }
+            .clickable {
+                openDialog.value = true
+                dialogTitle.value = schedule.subjectFullName ?: schedule.note
+                        ?: "Хз че за дичь такого не может быть"
+            }
     ) {
         Row(modifier = Modifier.weight(40f)) {
             Column(
@@ -112,7 +117,7 @@ fun LessonItem(
                     .padding(end = 10.dp)
                     .align(Alignment.CenterVertically)
             ) {
-                if(schedule.type) {
+                if (schedule.type) {
                     schedule.fio?.let {
                         Text(
                             modifier = Modifier.align(Alignment.End),
@@ -120,9 +125,8 @@ fun LessonItem(
                             fontSize = 12.sp
                         )
                     }
-                }
-                else{
-                    schedule.groupNum?.let {
+                } else {
+                    schedule.groupNum.let {
                         Text(
                             modifier = Modifier.align(Alignment.End),
                             text = it,
@@ -139,6 +143,43 @@ fun LessonItem(
                 }
             }
         }
+    }
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                openDialog.value = false
+            },
+            title = { Text(text = dialogTitle.value + "(" + schedule.lessonTypeAbbrev + ")") },
+            text = {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(schedule.startLessonTime + "-" + schedule.endLessonTime)
+                        Text(
+                            "Нед. " + schedule.weekNumber.toString().removePrefix("[")
+                                .removeSuffix("]")
+                        )
+                    }
+                    if (schedule.auditories?.isNotEmpty() == true) Text(
+                        schedule.auditories[0]
+                    )
+                    Text(schedule.fio ?: "")
+                    Text(schedule.groupNum)
+                    Text(schedule.note ?: "")
+                }
+            },
+            confirmButton = {
+                Button(
+
+                    onClick = {
+                        openDialog.value = false
+                    }) {
+                    Text("Ok")
+                }
+            }
+        )
     }
 }
 
