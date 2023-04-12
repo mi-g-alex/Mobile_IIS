@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle.Companion.Italic
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -93,19 +94,19 @@ private fun Item(it: UserGroupDto.GroupInfoStudentDto) {
             .padding(horizontal = 10.dp, vertical = 5.dp)
     ) {
         Column(Modifier.padding(10.dp)) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = it.fio, fontWeight = Bold, fontSize = 18.sp)
-                if (it.position.isNotBlank())
-                    Text(
-                        text = it.position,
-                        fontStyle = Italic
-                    )
-            }
+
+            if (it.position.isNotBlank())
+                Text(
+                    text = it.position,
+                    fontStyle = Italic,
+                    fontSize = 15.sp,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+            Text(text = it.fio, fontWeight = Bold, fontSize = 18.sp)
+
+
             FlowRow(
                 mainAxisSpacing = 8.dp,
                 crossAxisSpacing = (-5).dp,
