@@ -39,13 +39,13 @@ fun RatingScreen(
     }
     val titles = mutableListOf("Итого")
     val titlesForTab = mutableListOf("Итого")
-    val diciplineList = remember{mutableListOf(
+    val diciplineList = mutableListOf(
         mutableMapOf<String, Dicipline>(),
         mutableMapOf<String, Dicipline>(),
         mutableMapOf<String, Dicipline>(),
         mutableMapOf<String, Dicipline>(),
         mutableMapOf<String, Dicipline>()
-    )}
+    )
     Log.e("START","START")
     if (gradeList.value.gradeBookState?.isNotEmpty() == true) {
         gradeList.value.gradeBookState!!.onEach {
