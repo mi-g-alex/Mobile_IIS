@@ -1,23 +1,19 @@
 package by.g_alex.mobile_iis.data.local
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import by.g_alex.mobile_iis.data.local.entity.CookieEntity
-import by.g_alex.mobile_iis.data.local.entity.LessonModel
-import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
-import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
-
+import by.g_alex.mobile_iis.data.local.entity.*
 
 
 @Database(
-    version = 5,
+    version = 6,
     entities = [
         ProfilePersonalCVEntity::class,
         CookieEntity::class,
         LoginAndPasswordEntity::class,
-        LessonModel::class
+        LessonModel::class,
+        GradeBookEntity::class
     ],
 //    exportSchema = true,
 //    autoMigrations = [

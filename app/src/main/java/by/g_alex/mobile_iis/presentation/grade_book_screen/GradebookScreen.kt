@@ -48,7 +48,7 @@ fun RatingScreen(
     )}
     Log.e("START","START")
     if (gradeList.value.gradeBookState?.isNotEmpty() == true) {
-        gradeList.value.gradeBookState!![0].student.lessons.onEach {
+        gradeList.value.gradeBookState!!.onEach {
             if(!titles.contains(it.controlPoint)){
                 titles.remove("Вне КТ")
                 titles.add(it.controlPoint)
@@ -177,10 +177,9 @@ fun RatingScreen(
                     HorizontalPager(
                         state = pagerState,
                         pageCount = titles.size,
-                        beyondBoundsPageCount = 5
+                        beyondBoundsPageCount = 2
                     ) { page: Int ->
                         coroutineScope.apply {
-                            Log.e("Page",diciplineList[0].toString())
                             TabLayout(
                                currentList = diciplineList[page]
                             )

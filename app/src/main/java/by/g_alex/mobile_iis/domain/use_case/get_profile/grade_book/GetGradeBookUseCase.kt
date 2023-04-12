@@ -1,7 +1,7 @@
 package by.g_alex.mobile_iis.domain.use_case.get_profile.grade_book
 
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
+import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import kotlinx.coroutines.flow.Flow
@@ -14,16 +14,16 @@ class GetGradeBookUseCase@Inject constructor(
     private val api_repository: IisApiRepository,
     private val db_repository: UserDataBaseRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<GradeBookDto>>> = flow {
+    operator fun invoke(): Flow<Resource<List<GradeBookLessonModel>>> = flow {
         try {
-            emit(Resource.Loading<List<GradeBookDto>>())
+            emit(Resource.Loading<List<GradeBookLessonModel>>())
             val cookie = db_repository.getCookie()
             if (cookie == null) {
-                emit(Resource.Error<List<GradeBookDto>>("LessCookie"))
+                emit(Resource.Error<List<GradeBookLessonModel>>("LessCookie"))
             }
             if (cookie != null) {
                 val data = api_repository.getGradeBook(cookie)
-                emit(Resource.Success<List<GradeBookDto>>(data))
+                emit(Resource.Success<List<GradeBookLessonModel>>(data))
             }
         } catch (e: HttpException) {
 

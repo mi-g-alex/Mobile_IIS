@@ -1,10 +1,7 @@
 package by.g_alex.mobile_iis.data.local
 
 import androidx.room.*
-import by.g_alex.mobile_iis.data.local.entity.CookieEntity
-import by.g_alex.mobile_iis.data.local.entity.LessonModel
-import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
-import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
+import by.g_alex.mobile_iis.data.local.entity.*
 
 @Dao
 interface UserDao {
@@ -42,6 +39,15 @@ interface UserDao {
 
     @Query("SELECT * FROM LessonModel WHERE id LIKE :group")
     suspend fun getSchedule(group: String): List<LessonModel>
+
+    @Query("SELECT * FROM GradeBookEntity")
+    suspend fun getGradeBook():List<GradeBookEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGradeBook(gradebook: GradeBookEntity)
+
+    @Query("DELETE FROM GradeBookEntity")
+    suspend fun deleteGradebooks()
 
     @Query("DELETE FROM LessonModel WHERE id LIKE :name")
     suspend fun deleteSchedulebyName(name:String)

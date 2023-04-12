@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.presentation.grade_book_screen.additional
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,9 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import by.g_alex.mobile_iis.presentation.grade_book_screen.Dicipline
-import by.g_alex.mobile_iis.presentation.grade_book_screen.GradeBookViewModel
 
 @Composable
 fun TabLayout(
@@ -27,6 +26,7 @@ fun TabLayout(
     val diciplineObject = remember{ mutableStateOf( Dicipline("", 0, 0, 0,0,0, 0, mutableListOf(), mutableListOf(),
         mutableListOf()
     )) }
+    Log.e("PROLAG","PROLAG")
     LazyColumn(
         modifier = Modifier
             //.padding()
@@ -34,6 +34,7 @@ fun TabLayout(
     )
     {
         val diciplineList = mutableStateOf(currentList.values.toList() )
+
         items(diciplineList.value) {
                 dicipline ->
             Card(
@@ -88,6 +89,7 @@ fun TabLayout(
         }
 
     }
+    Log.e("PROLAG2","PROLAG2")
     if (openDialog.value) {
         AlertDialog(
             onDismissRequest = {
@@ -110,4 +112,5 @@ fun TabLayout(
             }
         )
     }
+    Log.e("PROLAG3","PROLAG3")
 }

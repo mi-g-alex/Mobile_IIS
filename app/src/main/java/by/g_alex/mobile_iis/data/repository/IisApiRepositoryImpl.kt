@@ -4,7 +4,7 @@ import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.toEmployeeModel
-import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
+import by.g_alex.mobile_iis.data.remote.dto.grade_book.toGradeBookLessonModel
 import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
@@ -15,9 +15,10 @@ import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
-import by.g_alex.mobile_iis.domain.repository.IisApiRepository
+import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
+import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -48,9 +49,10 @@ class IisApiRepositoryImpl @Inject constructor(
         api.logout(token)
     }
 
-    override suspend fun getGradeBook(cookie: String): List<GradeBookDto> {
-        return api.getGradeBook(cookie)
+    override suspend fun getGradeBook(cookie: String): List<GradeBookLessonModel> {
+        return api.getGradeBook(cookie)[0].toGradeBookLessonModel()
     }
+
     override suspend fun getMarkBook(token: String) : MarkBookDto {
         return api.getMarkBook(token)
     }

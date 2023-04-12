@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
+import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import by.g_alex.mobile_iis.domain.use_case.get_profile.personal_cv.GetPersonalCVUseCase
 import by.g_alex.mobile_iis.domain.use_case.get_profile.personal_cv.UpdatePhotoUseCase
 import by.g_alex.mobile_iis.domain.use_case.login.LogOutUseCase
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val getProfileCVUseCase: GetPersonalCVUseCase,
     private val logOutUseCase: LogOutUseCase,
-    private val updatePhotoUseCase: UpdatePhotoUseCase
+    private val updatePhotoUseCase: UpdatePhotoUseCase,
+    private val db: UserDataBaseRepository
 ) : ViewModel() {
 
     private val _state = mutableStateOf<ProfileCVState>(ProfileCVState())
@@ -49,6 +51,7 @@ class ProfileViewModel @Inject constructor(
     fun logOut() {
         viewModelScope.launch {
             logOutUseCase.logOut()
+            db.deleteGradeBooks()
         }
     }
 

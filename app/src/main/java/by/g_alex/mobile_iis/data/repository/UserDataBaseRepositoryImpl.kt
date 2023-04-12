@@ -1,10 +1,10 @@
 package by.g_alex.mobile_iis.data.repository
 
 import by.g_alex.mobile_iis.data.local.UserDao
-import by.g_alex.mobile_iis.data.local.entity.CookieEntity
-import by.g_alex.mobile_iis.data.local.entity.LessonModel
-import by.g_alex.mobile_iis.data.local.entity.LoginAndPasswordEntity
+import by.g_alex.mobile_iis.data.local.entity.*
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
+import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
+import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.toGradeBookEntity
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 
 class UserDataBaseRepositoryImpl(
@@ -31,6 +31,20 @@ class UserDataBaseRepositoryImpl(
         dao.setLoginAndPassword(LoginAndPasswordEntity(0, username, password))
     }
 
+    override suspend fun getGradeBook(): List<GradeBookLessonModel> {
+        val gradelist = mutableListOf<GradeBookLessonModel>()
+        dao.getGradeBook().onEach {
+            gradelist.add(it.toGradeBookLessonModel())
+        }
+        return gradelist
+    }
+
+    override suspend fun deleteGradeBooks() {
+        dao.deleteGradebooks()
+    }
+    override suspend fun insertGradeBook(gradebook: GradeBookLessonModel) {
+        dao.insertGradeBook(gradebook.toGradeBookEntity())
+    }
     override suspend fun deleteLoginAndPassword() {
         dao.deleteLoginAndPassword()
     }
