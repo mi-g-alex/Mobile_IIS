@@ -5,6 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class CookieEntity(
-    @PrimaryKey val alwaysField : Int = 0,
-    val cookie : String?
+    @PrimaryKey val alwaysField: Int = 0,
+    val cookie: String?
 )

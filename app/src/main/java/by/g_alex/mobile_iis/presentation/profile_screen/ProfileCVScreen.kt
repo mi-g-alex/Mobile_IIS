@@ -250,7 +250,7 @@ fun ProfileCVScreen(
                                     },
                                     label = {
                                         Text(
-                                            text = references.reference
+                                            text = references.name
                                         )
                                     },
                                 )

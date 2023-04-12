@@ -16,7 +16,8 @@ data class GradeBookEntity(
     val lessonTypeId: Int,
     val marks: List<Int>
 )
-fun GradeBookEntity.toGradeBookLessonModel():GradeBookLessonModel{
+
+fun GradeBookEntity.toGradeBookLessonModel(): GradeBookLessonModel {
     return GradeBookLessonModel(
         controlPoint = controlPoint,
         dateString = dateString,

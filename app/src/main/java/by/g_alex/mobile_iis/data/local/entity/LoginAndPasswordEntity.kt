@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class LoginAndPasswordEntity(
-    @PrimaryKey val alwaysField : Int = 0,
-    val login : String?,
-    val password : String?
+    @PrimaryKey val alwaysField: Int = 0,
+    val login: String?,
+    val password: String?
 )
