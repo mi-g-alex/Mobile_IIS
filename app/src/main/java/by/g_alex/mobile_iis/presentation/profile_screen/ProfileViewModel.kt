@@ -20,7 +20,6 @@ class ProfileViewModel @Inject constructor(
     private val getProfileCVUseCase: GetPersonalCVUseCase,
     private val logOutUseCase: LogOutUseCase,
     private val updatePhotoUseCase: UpdatePhotoUseCase,
-    private val db: UserDataBaseRepository
 ) : ViewModel() {
 
     private val _state = mutableStateOf<ProfileCVState>(ProfileCVState())
@@ -51,8 +50,6 @@ class ProfileViewModel @Inject constructor(
     fun logOut() {
         viewModelScope.launch {
             logOutUseCase.logOut()
-            db.deleteGradeBooks()
-            db.deleteMarkBooks()
         }
     }
 

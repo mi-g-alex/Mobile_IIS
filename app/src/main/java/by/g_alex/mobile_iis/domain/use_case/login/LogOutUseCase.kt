@@ -17,6 +17,8 @@ class LogOutUseCase @Inject constructor(
             db_repository.deleteCookie()
             db_repository.deleteLoginAndPassword()
             db_repository.deleteProfilePersonalCV()
+            db_repository.deleteGradeBooks()
+            db_repository.deleteMarkBooks()
         } catch (_: Exception) {}
     }
 }

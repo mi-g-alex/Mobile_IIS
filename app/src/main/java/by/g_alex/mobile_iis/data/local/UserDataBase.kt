@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.data.local
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -7,7 +8,7 @@ import by.g_alex.mobile_iis.data.local.entity.*
 
 
 @Database(
-    version = 7,
+    version = 8,
     entities = [
         ProfilePersonalCVEntity::class,
         CookieEntity::class,
@@ -16,10 +17,10 @@ import by.g_alex.mobile_iis.data.local.entity.*
         GradeBookEntity::class,
     MarkBookEntity::class
     ],
-//    exportSchema = true,
-//    autoMigrations = [
-//        AutoMigration (from = 4, to = 5)
-//    ]
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration (from = 7, to = 8)
+    ]
 )
 @TypeConverters(Converters::class)
 abstract class UserDataBase : RoomDatabase() {
