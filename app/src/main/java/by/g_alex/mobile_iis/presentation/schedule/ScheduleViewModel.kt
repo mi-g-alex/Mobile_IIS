@@ -221,6 +221,11 @@ class ScheduleViewModel @Inject constructor(
 
     fun getCurrentWeek() {
         val prefs = context.getSharedPreferences(CURRENT_WEEK, Context.MODE_PRIVATE)
+        val wek = prefs.getInt(CURRENT_WEEK, 0)
+        if(wek != 0)
+            _wState.value = CurrentWeekState(week = wek)
+        else
+            _wState.value = CurrentWeekState(week = 1)
         getCurrentWeekUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
@@ -229,13 +234,7 @@ class ScheduleViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    val wek = prefs.getInt(CURRENT_WEEK, Context.MODE_PRIVATE)
-                    if (wek == 0) {
-                        _wState.value = CurrentWeekState(week = 1,error = result.message ?: "Penis")
-                    }
-                    else
-                        _wState.value = CurrentWeekState(week = wek)
-                    Log.e("week",wek.toString())
+
                 }
 
                 is Resource.Loading -> {
