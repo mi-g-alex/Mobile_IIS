@@ -8,6 +8,7 @@ import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
 import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
+import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
@@ -34,7 +35,7 @@ interface IisApi {
     fun updatePhoto(@Body body: RequestBody, @Header("Cookie") cookieValue: String): Call<String>
 
     @GET("api/v1/markbook") // Зачётка
-    suspend fun getMarkBook(@Header("Cookie") cookieValue: String): by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
+    suspend fun getMarkBook(@Header("Cookie") cookieValue: String): MarkBookDto
 
     @GET("api/v1/student-groups/user-group-info") // Группа
     suspend fun getUserGroup(@Header("Cookie") cookieValue: String): UserGroupDto

@@ -71,6 +71,53 @@ fun StudyScreen(
                         }
                     }
                 }
+
+                if (!state.studyAll?.applications.isNullOrEmpty()) {
+                    stickyHeader {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            text = "ДОТ",
+                            fontSize = 28.sp
+                        )
+                    }
+                    state.studyAll?.applications?.let {
+                        item {
+                            Text(text = it.toString())
+                        }
+                    }
+                }
+
+                if (!state.studyAll?.lib_debts.isNullOrEmpty()) {
+                    stickyHeader {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            text = "Задолженности в библиотеке",
+                            fontSize = 28.sp
+                        )
+                    }
+                    state.studyAll?.lib_debts?.let {
+                        items(it.size) { it1 ->
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight()
+                                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                            ) {
+                                Column(Modifier.padding(10.dp)) {
+                                    Text(
+                                        text = "Дата пропуска ${it[it1]}",
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+
+                        }
+                    }
+                }
+
             }
             if (state.error.isNotBlank()) {
                 if (state.error == "LessCookie") {
@@ -140,12 +187,12 @@ private fun MarkSheetItem(it: StudyMarkSheetDto) {
                 it.createDate?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
                 it.status?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
             }
-            it.subject?.name?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
+            it.subject?.abbrev?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
             it.subject?.lessonTypeAbbrev?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
             it.term?.let { it1 -> Text(text = "$it1 семестр", fontSize = 15.sp) }
             it.employee?.fio?.let { it1 -> Text(text = it1, fontSize = 15.sp) }
             it.absentDate?.let { it1 -> Text(text = "Дата пропуска $it1", fontSize = 15.sp) }
-            it.price?.let { it1 -> Text(text = "Дата пропуска $it1", fontSize = 15.sp) }
+            it.price?.let { it1 -> Text(text = "Стоимость $it1", fontSize = 15.sp) }
             if (it.rejectionReason != null) {
                 Text(text = "Причина отказа: ${it.rejectionReason}", fontSize = 15.sp)
             }
