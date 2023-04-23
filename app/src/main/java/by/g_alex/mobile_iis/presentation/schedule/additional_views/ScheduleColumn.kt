@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.presentation.schedule.additional_views
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -7,17 +8,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.lists_items.LessonItem
 import java.time.LocalDate
 
 @Composable
-fun ScheduleColumn(viewModel: ScheduleViewModel){
-    val weekState = viewModel.weekState.value
-    val currentGroup = viewModel.headerText.value
+fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()){
+    val weekState = remember{mutableStateOf(viewModel.weekState.value)}
+    val currentGroup = remember{
+        mutableStateOf( viewModel.headerText.value)}
     val currentSchedule = viewModel.state.value.Days ?: emptyList()
     LazyColumn(
         modifier = Modifier
@@ -25,10 +29,11 @@ fun ScheduleColumn(viewModel: ScheduleViewModel){
     ) {
         val date = mutableStateOf(LocalDate.now())
         date.value = LocalDate.now()
-        var upcnt = weekState.week ?: 1
+
+        var upcnt = weekState.value.week ?: 1
         var txt : String
         val mutlist = mutableStateOf(mutableListOf<LessonModel>())
-        while ((date.value.month.value < 6 || (date.value.month.value in 9..12)) && currentGroup != "None") {
+        while ((date.value.month.value < 6 || (date.value.month.value in 9..12)) && currentGroup.value != "None") {
             mutlist.value = mutableListOf<LessonModel>()
             val downDate = mutableStateOf(date.value)
             val cnt = upcnt
@@ -47,8 +52,11 @@ fun ScheduleColumn(viewModel: ScheduleViewModel){
             var firstStep = false
             var end = false
             txt = month + " " + date.value.dayOfMonth.toString() + ", " + dayOfweek + ", week " + cnt.toString()
+            Log.e("DATE",date.value.toString())
+
             for (n in currentSchedule) {
-                if (n.weekDay == downDate.value.dayOfWeek.toString() && ((n.weekNumber?.contains(
+                Log.e("DATE2",n.dateEnd?:"")
+                if (n.weekDay == downDate.value.dayOfWeek.toString() &&((n.weekNumber?.contains(
                         cnt
                     ) == true)||(n.weekNumber==null))
                 ) {

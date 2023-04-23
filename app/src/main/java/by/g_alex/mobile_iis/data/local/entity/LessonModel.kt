@@ -20,5 +20,6 @@ data class LessonModel(
     val note: String?,
     val weekDay: String?,
     val type: Boolean,
-    val groupNum: String
+    val groupNum: String,
+    val dateEnd : String?
 )

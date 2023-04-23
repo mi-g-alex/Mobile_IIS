@@ -2,10 +2,8 @@ package by.g_alex.mobile_iis.presentation.schedule
 
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -20,38 +18,35 @@ fun ScheduleStartUp(
     viewModel: ScheduleViewModel = hiltViewModel(),
 ) {
 
-    viewModel.context = LocalContext.current
-
-    val preferences = remember {
-        mutableStateOf(
+   // viewModel.context = LocalContext.current
+    Log.e("USE","USAGE")
+    val preferences =
             viewModel.context.getSharedPreferences(
                 ADDED_GROUPS,
                 Context.MODE_PRIVATE
             )
-        )
-    }
 
-    viewModel.getCurrentWeek()
+   // viewModel.getCurrentWeek()
 
-    val set = preferences.value.getStringSet(ADDED_GROUPS, emptySet())
+    val set = preferences.getStringSet(ADDED_GROUPS, emptySet())
 
-    val favouritePrefs = remember {
-        mutableStateOf(
+    val favouritePrefs =
             viewModel.context.getSharedPreferences(
                 FAVOURITE_SCHEDULE,
                 Context.MODE_PRIVATE
             )
-        )
-    }
-    val specialSched = favouritePrefs.value.getString(FAVOURITE_SCHEDULE,"")
-    if(specialSched == null || specialSched == "") {
+
+
+    val specialSched = favouritePrefs.getString(FAVOURITE_SCHEDULE,"")
+    if((specialSched == null || specialSched == "")&&viewModel.headerText.value=="None") {
         if (set?.isNotEmpty() == true) {
             viewModel.getSchedule(set.minOf { it })
             viewModel.headerText.value = set.minOf { it }
+            Log.e("HEADER",viewModel.headerText.value)
         } else {
-            preferences.value =
+            val prefer =
                 viewModel.context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
-            val prepSet = preferences.value.getStringSet(ADDED_SCHEDULE, emptySet())
+            val prepSet = prefer.getStringSet(ADDED_SCHEDULE, emptySet())
             if (prepSet?.isNotEmpty() == true) {
                 viewModel.getEmployeeSchedule(
                     prepSet.first()
@@ -60,14 +55,14 @@ fun ScheduleStartUp(
             }
         }
     }
-    else{
-        if(specialSched.contains("."))
+    else if(viewModel.headerText.value=="None"){
+        if(specialSched!!.contains("."))
             viewModel.getEmployeeSchedule(specialSched)
         else viewModel.getSchedule(specialSched)
         viewModel.headerText.value = specialSched
         viewModel.favourite.value = specialSched
     }
     val navController: NavHostController = rememberNavController()
-    SetUpNavGraph(navController = navController, viewModel = viewModel)
+    SetUpNavGraph(navController = navController)
 }
 

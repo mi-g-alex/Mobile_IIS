@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.presentation.schedule.additional_views
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.common.Constants.FAVOURITE_SCHEDULE
@@ -36,7 +38,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheet(
-    viewModel: ScheduleViewModel,
+    viewModel: ScheduleViewModel = hiltViewModel(),
     navController: NavController,
     scope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState,
@@ -59,8 +61,9 @@ fun BottomSheet(
                             .weight(0.7f)
                             //.fillMaxWidth()
                             .clickable {
-                                viewModel.getSchedule(item); viewModel.headerText.value =
-                                item
+                                viewModel.getSchedule(item);
+                                viewModel.headerText.value = item
+                                Log.e("newHead",viewModel.headerText.value)
                                 scope.launch {
                                     bottomSheetState.hide()
                                 }
@@ -70,11 +73,16 @@ fun BottomSheet(
                         painter = if(viewModel.favourite.value == item)  painterResource(id = R.drawable.baseline_star_24)
                                 else painterResource(id = R.drawable.baseline_star_outline_24),
                         contentDescription = "sdcscds",
-                        modifier = Modifier.align(Alignment.CenterVertically)
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
                             .clickable {
                                 val preferences = viewModel.context.getSharedPreferences(
-                                    FAVOURITE_SCHEDULE,Context.MODE_PRIVATE)
-                                preferences.edit().putString(FAVOURITE_SCHEDULE,item).apply()
+                                    FAVOURITE_SCHEDULE, Context.MODE_PRIVATE
+                                )
+                                preferences
+                                    .edit()
+                                    .putString(FAVOURITE_SCHEDULE, item)
+                                    .apply()
                                 viewModel.favourite.value = item
                             },
                         tint = if(viewModel.favourite.value == item) Color.Yellow
@@ -83,16 +91,17 @@ fun BottomSheet(
                     Image(
                         imageVector = ImageVector.vectorResource(R.drawable.baseline_delete_24),
                         contentDescription = "Delete",
-                        modifier = Modifier.weight(0.1f)
-                            .padding(top = 5.dp, bottom = 5.dp, end = 5.dp).align(Alignment.CenterVertically)
+                        modifier = Modifier
+                            .weight(0.1f)
+                            .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
+                            .align(Alignment.CenterVertically)
                             .clickable {
                                 viewModel.deleteScheduleFromDb(item)
                                 groups.value = viewModel.getGroups()
-                                if(groups.value.isNotEmpty()) {
+                                if (groups.value.isNotEmpty()) {
                                     viewModel.headerText.value = groups.value.first()
                                     viewModel.getSchedule(groups.value.first())
-                                }
-                                else{
+                                } else {
                                     viewModel.headerText.value = "None"
                                 }
                             },
@@ -125,11 +134,16 @@ fun BottomSheet(
                         painter = if(viewModel.favourite.value == item)  painterResource(id = R.drawable.baseline_star_24)
                         else painterResource(id = R.drawable.baseline_star_outline_24),
                         contentDescription = "sdcscds",
-                        modifier = Modifier.align(Alignment.CenterVertically)
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
                             .clickable {
                                 val preferences = viewModel.context.getSharedPreferences(
-                                    FAVOURITE_SCHEDULE,Context.MODE_PRIVATE)
-                                preferences.edit().putString(FAVOURITE_SCHEDULE,item).apply()
+                                    FAVOURITE_SCHEDULE, Context.MODE_PRIVATE
+                                )
+                                preferences
+                                    .edit()
+                                    .putString(FAVOURITE_SCHEDULE, item)
+                                    .apply()
                                 viewModel.favourite.value = item
                             },
                         tint = if(viewModel.favourite.value == item) Color.Yellow
@@ -138,16 +152,17 @@ fun BottomSheet(
                     Image(
                         imageVector = ImageVector.vectorResource(R.drawable.baseline_delete_24),
                         contentDescription = "Delete",
-                        modifier = Modifier.weight(0.1f)
-                            .padding(top = 5.dp, bottom = 5.dp, end = 5.dp).align(Alignment.CenterVertically)
+                        modifier = Modifier
+                            .weight(0.1f)
+                            .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
+                            .align(Alignment.CenterVertically)
                             .clickable {
                                 viewModel.deleteEmployeeScheduleFromDb(item)
                                 employees.value = viewModel.getEmployees()
-                                if(employees.value.isNotEmpty()) {
+                                if (employees.value.isNotEmpty()) {
                                     viewModel.headerText.value = employees.value.first()
                                     viewModel.getSchedule(employees.value.first())
-                                }
-                                else{
+                                } else {
                                     viewModel.headerText.value = "None"
                                 }
                             },

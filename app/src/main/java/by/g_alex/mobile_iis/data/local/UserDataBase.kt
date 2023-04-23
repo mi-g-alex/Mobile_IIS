@@ -8,7 +8,7 @@ import by.g_alex.mobile_iis.data.local.entity.*
 
 
 @Database(
-    version = 8,
+    version = 9,
     entities = [
         ProfilePersonalCVEntity::class,
         CookieEntity::class,
@@ -19,7 +19,7 @@ import by.g_alex.mobile_iis.data.local.entity.*
     ],
     exportSchema = true,
     autoMigrations = [
-        AutoMigration (from = 7, to = 8)
+        AutoMigration (from = 8, to = 9)
     ]
 )
 @TypeConverters(Converters::class)

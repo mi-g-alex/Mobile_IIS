@@ -203,7 +203,8 @@ fun preview() {
             note = null,
             weekDay = "Понедельник",
             true,
-            "2323232"
+            "2323232",
+            "sdmkds"
         ),
         1
     )

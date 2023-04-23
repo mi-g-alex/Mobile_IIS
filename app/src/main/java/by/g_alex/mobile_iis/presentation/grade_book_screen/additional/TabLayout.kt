@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.grade_book_screen.additional
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,7 +27,6 @@ fun TabLayout(
     val diciplineObject = remember{ mutableStateOf( Dicipline("", 0, 0, 0,0,0, 0, mutableListOf(), mutableListOf(),
         mutableListOf()
     )) }
-    Log.e("PROLAG","PROLAG")
 
     LazyColumn(
         modifier = Modifier
@@ -100,7 +98,6 @@ fun TabLayout(
         }
 
     }
-    Log.e("PROLAG2","PROLAG2")
     if (openDialog.value) {
         AlertDialog(
             onDismissRequest = {
@@ -123,5 +120,4 @@ fun TabLayout(
             }
         )
     }
-    Log.e("PROLAG3","PROLAG3")
 }

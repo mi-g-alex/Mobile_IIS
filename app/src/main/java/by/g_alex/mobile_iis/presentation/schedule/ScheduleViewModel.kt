@@ -20,6 +20,7 @@ import by.g_alex.mobile_iis.presentation.schedule.states.EmployeeState
 import by.g_alex.mobile_iis.presentation.schedule.states.GroupState
 import by.g_alex.mobile_iis.presentation.schedule.states.ScheduleState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -27,6 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
+    @SuppressLint("StaticFieldLeak") @ApplicationContext val context: Context,
     private val getScheduleUseCase: GetScheduleUseCase,
     private val getCurrentWeekUseCase: GetCurrentWeekUseCase,
     private val getEmployeeScheduleUseCase: GetEmployeeScheduleUseCase,
@@ -42,14 +44,18 @@ class ScheduleViewModel @Inject constructor(
     private val _prState = mutableStateOf(EmployeeState())
 
 
-    @SuppressLint("StaticFieldLeak")
-    lateinit var context: Context
+    //@SuppressLint("StaticFieldLeak")
+    // val context = LocalContext.current//Context
     val headerText = mutableStateOf("None")
     val favourite = mutableStateOf("None")
     val state: State<ScheduleState> = _state
     val weekState: State<CurrentWeekState> = _wState
     val groupState: State<GroupState> = _grState
     val prepState: State<EmployeeState> = _prState
+
+    init {
+        getCurrentWeek()
+    }
 
     fun addEmployees(employee: EmployeeModel) {
         val prefs = context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
@@ -221,24 +227,27 @@ class ScheduleViewModel @Inject constructor(
 
     fun getCurrentWeek() {
         val prefs = context.getSharedPreferences(CURRENT_WEEK, Context.MODE_PRIVATE)
-        val wek = prefs.getInt(CURRENT_WEEK, 0)
-        if(wek != 0)
-            _wState.value = CurrentWeekState(week = wek)
-        else
-            _wState.value = CurrentWeekState(week = 1)
+
+
         getCurrentWeekUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _wState.value = CurrentWeekState(week = result.data)
                     prefs.edit().putInt(CURRENT_WEEK, _wState.value.week ?: 0).apply()
+                    Log.e("WEEEEK",_wState.value.week.toString())
                 }
 
                 is Resource.Error -> {
 
+                    Log.e("WEEEEKer",_wState.value.week.toString())
                 }
 
                 is Resource.Loading -> {
                     _wState.value = CurrentWeekState(isLoading = true)
+                    val wek = prefs.getInt(CURRENT_WEEK, 1)
+
+                        _wState.value = CurrentWeekState(week = wek)
+
                 }
             }
 

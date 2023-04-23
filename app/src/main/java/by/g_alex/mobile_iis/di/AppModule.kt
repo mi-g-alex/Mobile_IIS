@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import by.g_alex.mobile_iis.common.Constants
 import by.g_alex.mobile_iis.data.local.Converters
@@ -11,10 +12,13 @@ import by.g_alex.mobile_iis.data.repository.UserDataBaseRepositoryImpl
 import by.g_alex.mobile_iis.data.util.GsonParser
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
+import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.*
+import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -50,6 +54,27 @@ object AppModule {
     fun providerLoginPassRepository(api: IisApi): IisApiRepository =
         IisApiRepositoryImpl(api)
 
+
+    @Provides
+    @Singleton
+    fun provideScheduleViewModel(
+        @ApplicationContext context: Context,
+        getScheduleUseCase: GetScheduleUseCase,
+        getCurrentWeekUseCase: GetCurrentWeekUseCase,
+        getEmployeeScheduleUseCase: GetEmployeeScheduleUseCase,
+        getGroupsUseCase: GetGroupsUseCase,
+        getEmployeesListUseCase: GetEmployeesListUseCase,
+        db: UserDataBaseRepository
+    ): ScheduleViewModel {
+        return ScheduleViewModel(getScheduleUseCase = getScheduleUseCase,
+        getCurrentWeekUseCase = getCurrentWeekUseCase,
+            getEmployeeScheduleUseCase = getEmployeeScheduleUseCase,
+            getGroupsUseCase = getGroupsUseCase,
+            getEmployeesListUseCase = getEmployeesListUseCase,
+            db = db,
+            context = context
+            )
+    }
 
     @Provides
     @Singleton

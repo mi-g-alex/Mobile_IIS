@@ -49,6 +49,7 @@ fun DayDto.toLessonModel(weekDay: String, isGroup : Boolean): LessonModel {
         note = note,
         weekDay = weekDay,
         type = isGroup,
-        groupNum = notation.value//.toString().substring(1,studentGroups.toString().length-2)}
+        groupNum = notation.value,//.toString().substring(1,studentGroups.toString().length-2)}
+        dateEnd = endLessonDate
     )
 }

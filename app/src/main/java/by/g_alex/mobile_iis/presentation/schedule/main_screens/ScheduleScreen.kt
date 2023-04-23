@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.presentation.schedule.main_screens
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
@@ -27,7 +29,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ScheduleListScreen(
-    viewModel: ScheduleViewModel,
+    viewModel: ScheduleViewModel = hiltViewModel(),
     navController: NavController
 ) {
 
@@ -38,20 +40,20 @@ fun ScheduleListScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheetScaffold(
-    viewModel: ScheduleViewModel,
+    viewModel: ScheduleViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    val state = viewModel.state.value
-    val currentGroup = viewModel.headerText.value
+    val state = viewModel.state
+    val currentGroup = viewModel.headerText
     val scope = rememberCoroutineScope()
     val bottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-
+    Log.e("2HEAD",viewModel.headerText.value)
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             BottomSheet(
-                viewModel = viewModel,
+
                 navController = navController,
                 scope = scope,
                 bottomSheetState = bottomSheetState
@@ -65,7 +67,7 @@ fun BottomSheetScaffold(
                 TopAppBar(title = {
                     Row() {
                         Text(
-                            text = currentGroup,
+                            text = currentGroup.value,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -90,18 +92,18 @@ fun BottomSheetScaffold(
                     .padding(it)
                     .fillMaxSize()
             ) {
-                if (state.Days?.isNotEmpty() == true) {
+                if (state.value.Days?.isNotEmpty() == true) {
                     ScheduleColumn(viewModel = viewModel)
-                } else if (!state.isLoading) {
+                } else if (!state.value.isLoading) {
                     Text(
                         text = "No Schedule found((((....",
                         fontSize = 20.sp,
                         textAlign = TextAlign.Center
                     )
                 }
-                if (state.error.isNotBlank()) {
+                if (state.value.error.isNotBlank()) {
                     Text(
-                        text = state.error,
+                        text = state.value.error,
                         fontSize = 40.sp,
                         color = MaterialTheme.colorScheme.error,
                         textAlign = TextAlign.Center, modifier = Modifier
@@ -110,7 +112,7 @@ fun BottomSheetScaffold(
                             .padding(top = 70.dp)
                     )
                 }
-                if (state.isLoading) {
+                if (state.value.isLoading) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
