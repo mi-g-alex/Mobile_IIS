@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class RestorePasswordEnterLoginResponseDto(
     val contacts: List<Contact?>?,
     val employee: Boolean?, // false
-    val remainingAttempts: Int? // 4
+    val remainingAttempts: Int // 4
 ) {
     @Serializable
     data class Contact(

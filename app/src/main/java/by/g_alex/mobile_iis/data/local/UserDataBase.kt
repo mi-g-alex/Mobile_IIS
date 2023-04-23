@@ -15,11 +15,11 @@ import by.g_alex.mobile_iis.data.local.entity.*
         LoginAndPasswordEntity::class,
         LessonModel::class,
         GradeBookEntity::class,
-    MarkBookEntity::class
+        MarkBookEntity::class
     ],
     exportSchema = true,
     autoMigrations = [
-        AutoMigration (from = 8, to = 9)
+        AutoMigration(from = 8, to = 9)
     ]
 )
 @TypeConverters(Converters::class)
@@ -29,4 +29,5 @@ abstract class UserDataBase : RoomDatabase() {
     companion object {
         const val DATABASE_NAME = "user_db"
     }
+
 }

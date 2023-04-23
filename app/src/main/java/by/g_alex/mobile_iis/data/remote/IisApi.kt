@@ -10,6 +10,8 @@ import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
 import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
+import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordApplyDto
+import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordCheckSendDto
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
@@ -35,6 +37,15 @@ interface IisApi {
 
     @GET("api/v1/settings/masked-contacts?")
     fun restorePasswordEnterLogin(@Query("login") username: String): Call<RestorePasswordEnterLoginResponseDto>
+
+    @POST("api/v1/settings/contact/exist")
+    fun restorePasswordCheckExist(@Body request: RestorePasswordCheckSendDto): Call<RestorePasswordEnterLoginResponseDto>
+
+    @POST("api/v1/settings/password/reset")
+    fun restorePasswordGetCode(@Body request: RestorePasswordCheckSendDto) : Call<Any>
+
+    @POST("api/v1/settings/password/new")
+    fun restorePasswordApply(@Body request: RestorePasswordApplyDto) : Call<Any>
 
     // User Info
     @GET("api/v1/profiles/personal-cv") // Инфомарция о профиле / Главный экран
@@ -72,10 +83,10 @@ interface IisApi {
     suspend fun getAnnouncements(@Header("Cookie") cookieValue: String): List<AnnouncemntDto>
 
     @GET("api/v1/dormitory-queue-application")
-    suspend fun getDormitory(@Header("Cookie") cookieValue: String):List<DormitoryDto>
+    suspend fun getDormitory(@Header("Cookie") cookieValue: String): List<DormitoryDto>
 
     @GET("api/v1/dormitory-queue-application/premium-penalty")
-    suspend fun getPenalty(@Header("Cookie") cookieValue: String):List<PenaltyDto>
+    suspend fun getPenalty(@Header("Cookie") cookieValue: String): List<PenaltyDto>
     // For all
 
     @GET("api/v1/schedule?") // Расписание группы

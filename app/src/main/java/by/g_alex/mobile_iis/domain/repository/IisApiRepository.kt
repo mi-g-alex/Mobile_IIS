@@ -15,6 +15,7 @@ import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkMode
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import retrofit2.Call
+import java.util.SimpleTimeZone
 
 interface IisApiRepository {
 
@@ -27,6 +28,12 @@ interface IisApiRepository {
     suspend fun logout(token: String)
 
     suspend fun restorePasswordEnterLogin(username: String) : RestorePasswordEnterLoginResponseDto?
+
+    suspend fun restorePasswordCheckExist(login : String, contactValue : String) : RestorePasswordEnterLoginResponseDto?
+
+    suspend fun restorePasswordEnterLogin(login : String, contactValue : String)
+
+    suspend fun restorePasswordCheckExist(login: String, password: String, contactValue: String, code: String) : Boolean
 
     // For USER
     suspend fun getProfilePersonalCV(token: String): PersonalCVDto

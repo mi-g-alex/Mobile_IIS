@@ -11,7 +11,7 @@ import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
-class RestorePasswordEnterLoginUseCase @Inject constructor(
+class RestorePasswordGetCodeUseCase @Inject constructor(
     private val api_repository: IisApiRepository
 ) {
     operator fun invoke(

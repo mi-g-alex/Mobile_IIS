@@ -11,15 +11,16 @@ import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
-class RestorePasswordEnterLoginUseCase @Inject constructor(
+class RestorePasswordCheckExistUseCase @Inject constructor(
     private val api_repository: IisApiRepository
 ) {
     operator fun invoke(
-        username: String
+        login: String,
+        contactValue: String
     ): Flow<Resource<RestorePasswordEnterLoginResponseDto>> = flow {
         try {
             emit(Resource.Loading<RestorePasswordEnterLoginResponseDto>())
-            val resp = api_repository.restorePasswordEnterLogin(username)
+            val resp = api_repository.restorePasswordCheckExist(login, contactValue)
             if (resp != null)
                 emit(Resource.Success<RestorePasswordEnterLoginResponseDto>(resp))
             else emit(Resource.Error<RestorePasswordEnterLoginResponseDto>("Не найдено"))

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 8,
-    "identityHash": "ba7e8d609ca1652aa4b96524f342c601",
+    "identityHash": "c2eade47310a77016725c595ae95e588",
     "entities": [
       {
         "tableName": "ProfilePersonalCVEntity",
@@ -198,7 +198,7 @@
       },
       {
         "tableName": "LessonModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`key` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id` TEXT NOT NULL, `auditories` TEXT, `endLessonTime` TEXT, `lessonTypeAbbrev` TEXT, `numSubgroup` INTEGER NOT NULL, `startLessonTime` TEXT, `subject` TEXT, `subjectFullName` TEXT, `weekNumber` TEXT, `fio` TEXT, `note` TEXT, `weekDay` TEXT, `type` INTEGER NOT NULL, `groupNum` TEXT NOT NULL, `dateEnd` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`key` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id` TEXT NOT NULL, `auditories` TEXT, `endLessonTime` TEXT, `lessonTypeAbbrev` TEXT, `numSubgroup` INTEGER NOT NULL, `startLessonTime` TEXT, `subject` TEXT, `subjectFullName` TEXT, `weekNumber` TEXT, `fio` TEXT, `note` TEXT, `weekDay` TEXT, `type` INTEGER NOT NULL, `groupNum` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "key",
@@ -289,12 +289,6 @@
             "columnName": "groupNum",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "dateEnd",
-            "columnName": "dateEnd",
-            "affinity": "TEXT",
-            "notNull": false
           }
         ],
         "primaryKey": {
@@ -494,7 +488,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ba7e8d609ca1652aa4b96524f342c601')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c2eade47310a77016725c595ae95e588')"
     ]
   }
 }

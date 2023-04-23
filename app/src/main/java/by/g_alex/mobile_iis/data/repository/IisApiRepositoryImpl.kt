@@ -11,6 +11,8 @@ import by.g_alex.mobile_iis.data.remote.dto.grade_book.toGradeBookLessonModel
 import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
+import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordApplyDto
+import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordCheckSendDto
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.toListMarkBookMarkModel
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
@@ -47,12 +49,39 @@ class IisApiRepositoryImpl @Inject constructor(
         api.logout(token)
     }
 
-    override suspend fun restorePasswordEnterLogin(username: String) : RestorePasswordEnterLoginResponseDto? {
+    override suspend fun restorePasswordEnterLogin(username: String): RestorePasswordEnterLoginResponseDto? {
         val s = api.restorePasswordEnterLogin(username).awaitResponse()
-        if(s.isSuccessful) {
+        if (s.isSuccessful) {
             return s.body()
         }
         return null
+    }
+
+    override suspend fun restorePasswordCheckExist(
+        login: String,
+        contactValue: String
+    ): RestorePasswordEnterLoginResponseDto? {
+        val s = api.restorePasswordCheckExist(RestorePasswordCheckSendDto(login, contactValue))
+            .awaitResponse()
+        if (s.isSuccessful) {
+            return s.body()
+        }
+        return null
+    }
+
+    override suspend fun restorePasswordEnterLogin(login: String, contactValue: String) {
+        api.restorePasswordGetCode(RestorePasswordCheckSendDto(login, contactValue)).awaitResponse()
+    }
+
+    override suspend fun restorePasswordCheckExist(
+        login: String,
+        password: String,
+        contactValue: String,
+        code: String
+    ): Boolean {
+        val s = api.restorePasswordApply(RestorePasswordApplyDto(login, contactValue, password, code)).awaitResponse()
+        Log.e("~~~", s.code().toString())
+        return s.isSuccessful
     }
 
     override suspend fun getProfilePersonalCV(token: String): PersonalCVDto {
@@ -83,6 +112,7 @@ class IisApiRepositoryImpl @Inject constructor(
     override suspend fun getPenalty(token: String): List<PenaltyDto> {
         return api.getPenalty(token)
     }
+
     override suspend fun getOmissionsByStudent(token: String): List<OmissionsByStudentDto> {
         return api.getOmissionsByStudent(token)
     }

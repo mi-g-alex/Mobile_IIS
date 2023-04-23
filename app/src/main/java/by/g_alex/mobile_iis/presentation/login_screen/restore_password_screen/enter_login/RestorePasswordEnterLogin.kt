@@ -44,13 +44,16 @@ fun RestorePasswordEnterLogin(
     val state = viewModel.state.value
     val loginText = remember { mutableStateOf(TextFieldValue()) }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val content = LocalContext.current
+    val cnt = LocalContext.current
 
-    LaunchedEffect(state.information) {
+    LaunchedEffect(state) {
         if (state.information != null) {
             val jsonData = Json.encodeToString(state.information)
             //Log.e("~~~", jsonData.toString())
-           navController.navigate("restorePasswordSelect/${jsonData}")
+           navController.navigate("restorePasswordSelect/${jsonData}/${loginText.value.text}")
+        }
+        if(state.error.isNotBlank()) {
+            Toast.makeText(cnt, "Не найдено", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -78,7 +81,7 @@ fun RestorePasswordEnterLogin(
 
             OutlinedTextField(
                 value = loginText.value,
-                label = { androidx.compose.material3.Text(text = "Логин") },
+                label = { Text(text = "Логин") },
                 onValueChange = { loginText.value = it },
                 modifier = Modifier
                     .fillMaxWidth()

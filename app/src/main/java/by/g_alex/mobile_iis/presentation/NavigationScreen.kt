@@ -34,6 +34,7 @@ import by.g_alex.mobile_iis.presentation.fines_screen.FinesScreen
 import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
 import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.enter_login.RestorePasswordEnterLogin
+import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.restore_end.RestorePasswordEndScreen
 import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.select_how_restore.RestorePasswordSelect
 import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
 import by.g_alex.mobile_iis.presentation.omissions_screen.OmissionsScreen
@@ -132,12 +133,31 @@ fun NavigationScreen() {
                             RestorePasswordEnterLogin(navController = navController)
                         }
                         composable(
-                            route = "restorePasswordSelect/{data}"
+                            route = "restorePasswordSelect/{data}/{login}"
                         ) { backStackEntry ->
                             val dataRow = backStackEntry.arguments?.getString("data") ?: ""
                             val data =
                                 Json.decodeFromString<RestorePasswordEnterLoginResponseDto>(dataRow)
-                            RestorePasswordSelect(navController = navController, data = data)
+                            val loginRow = backStackEntry.arguments?.getString("login") ?: ""
+                            RestorePasswordSelect(
+                                navController = navController,
+                                data = data,
+                                login = loginRow
+                            )
+                        }
+
+                        composable(
+                            route = "restorePasswordEnd/{data}/{login}"
+                        ) { backStackEntry ->
+                            val dataRow = backStackEntry.arguments?.getString("data") ?: ""
+                            val data =
+                                Json.decodeFromString<RestorePasswordEnterLoginResponseDto>(dataRow)
+                            val loginRow = backStackEntry.arguments?.getString("login") ?: ""
+                            RestorePasswordEndScreen(
+                                navController = navController,
+                                data = data,
+                                login = loginRow
+                            )
                         }
                     }
                     navigation(startDestination = "mark_bookHome", route = "mark_book") {
@@ -162,10 +182,10 @@ fun NavigationScreen() {
                     composable(route = "announcements") {
                         AnnouncementScreen()
                     }
-                    composable(route = "dormitory"){
+                    composable(route = "dormitory") {
                         DormitoryScreen()
                     }
-                    composable(route = "fines"){
+                    composable(route = "fines") {
                         FinesScreen()
                     }
                 }
@@ -214,7 +234,7 @@ fun BottomMenuMore(
             R.drawable.baseline_watch_later_24
         ),
 
-    )
+        )
     Box(
         Modifier
             .background(MaterialTheme.colorScheme.background)
