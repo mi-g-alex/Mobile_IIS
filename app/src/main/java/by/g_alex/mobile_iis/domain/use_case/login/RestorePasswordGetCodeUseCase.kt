@@ -11,31 +11,18 @@ import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
+
 class RestorePasswordGetCodeUseCase @Inject constructor(
     private val api_repository: IisApiRepository
 ) {
     operator fun invoke(
-        username: String
-    ): Flow<Resource<RestorePasswordEnterLoginResponseDto>> = flow {
+        login: String,
+        contactValue: String
+    ): Flow<Resource<Any>> = flow {
         try {
-            emit(Resource.Loading<RestorePasswordEnterLoginResponseDto>())
-            val resp = api_repository.restorePasswordEnterLogin(username)
-            if (resp != null)
-                emit(Resource.Success<RestorePasswordEnterLoginResponseDto>(resp))
-            else emit(Resource.Error<RestorePasswordEnterLoginResponseDto>("Не найдено"))
-        } catch (e: HttpException) {
-            emit(
-                Resource.Error<RestorePasswordEnterLoginResponseDto>(
-                    e.localizedMessage ?: "An unexpected error occurred"
-                )
-            )
-        } catch (e: IOException) {
-            emit(
-                Resource.Error<RestorePasswordEnterLoginResponseDto>(
-                    "Couldn't Find Account"
-                )
-            )
+            api_repository.restorePasswordGetCode(login, contactValue)
+        } catch (_: HttpException) {
         }
     }
-
 }
+

@@ -69,18 +69,22 @@ class IisApiRepositoryImpl @Inject constructor(
         return null
     }
 
-    override suspend fun restorePasswordEnterLogin(login: String, contactValue: String) {
+    override suspend fun restorePasswordGetCode(login: String, contactValue: String) {
         api.restorePasswordGetCode(RestorePasswordCheckSendDto(login, contactValue)).awaitResponse()
     }
 
-    override suspend fun restorePasswordCheckExist(
+    override suspend fun restorePasswordApply(
         login: String,
         password: String,
         contactValue: String,
         code: String
     ): Boolean {
-        val s = api.restorePasswordApply(RestorePasswordApplyDto(login, contactValue, password, code)).awaitResponse()
+        val s =
+            api.restorePasswordApply(RestorePasswordApplyDto(login, contactValue, code, password))
+                .awaitResponse()
         Log.e("~~~", s.code().toString())
+        Log.e("~~~", s.toString())
+        Log.e("~~~", "$login|$contactValue|$password|$code")
         return s.isSuccessful
     }
 

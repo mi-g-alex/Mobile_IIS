@@ -31,9 +31,9 @@ interface IisApiRepository {
 
     suspend fun restorePasswordCheckExist(login : String, contactValue : String) : RestorePasswordEnterLoginResponseDto?
 
-    suspend fun restorePasswordEnterLogin(login : String, contactValue : String)
+    suspend fun restorePasswordGetCode(login : String, contactValue : String)
 
-    suspend fun restorePasswordCheckExist(login: String, password: String, contactValue: String, code: String) : Boolean
+    suspend fun restorePasswordApply(login: String, password: String, contactValue: String, code: String) : Boolean
 
     // For USER
     suspend fun getProfilePersonalCV(token: String): PersonalCVDto

@@ -145,7 +145,6 @@ fun NavigationScreen() {
                                 login = loginRow
                             )
                         }
-
                         composable(
                             route = "restorePasswordEnd/{data}/{login}"
                         ) { backStackEntry ->

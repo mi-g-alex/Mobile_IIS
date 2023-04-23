@@ -11,28 +11,28 @@ import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
-class RestorePasswordCheckExistUseCase @Inject constructor(
+class RestorePasswordApplyUseCase @Inject constructor(
     private val api_repository: IisApiRepository
 ) {
     operator fun invoke(
         login: String,
-        contactValue: String
-    ): Flow<Resource<RestorePasswordEnterLoginResponseDto>> = flow {
+        password: String,
+        contactValue: String,
+        code: String
+    ): Flow<Resource<Boolean>> = flow {
         try {
-            emit(Resource.Loading<RestorePasswordEnterLoginResponseDto>())
-            val resp = api_repository.restorePasswordCheckExist(login, contactValue)
-            if (resp != null)
-                emit(Resource.Success<RestorePasswordEnterLoginResponseDto>(resp))
-            else emit(Resource.Error<RestorePasswordEnterLoginResponseDto>("Не найдено"))
+            emit(Resource.Loading<Boolean>())
+            val resp = api_repository.restorePasswordApply(login, password, contactValue, code)
+            emit(Resource.Success<Boolean>(resp))
         } catch (e: HttpException) {
             emit(
-                Resource.Error<RestorePasswordEnterLoginResponseDto>(
+                Resource.Error<Boolean>(
                     e.localizedMessage ?: "An unexpected error occurred"
                 )
             )
         } catch (e: IOException) {
             emit(
-                Resource.Error<RestorePasswordEnterLoginResponseDto>(
+                Resource.Error<Boolean>(
                     "Couldn't Find Account"
                 )
             )

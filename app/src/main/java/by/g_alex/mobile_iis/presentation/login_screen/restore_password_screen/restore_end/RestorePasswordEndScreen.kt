@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.restore_end
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.select_how_restore.components.RestorePasswordSelectDialog
@@ -43,7 +46,8 @@ import kotlin.time.Duration.Companion.seconds
 fun RestorePasswordEndScreen(
     navController: NavController,
     data: RestorePasswordEnterLoginResponseDto,
-    login: String
+    login: String,
+    viewModel: RestorePasswordEndViewModel = hiltViewModel()
 ) {
 
     val inputText = remember { mutableStateOf(TextFieldValue("")) }
@@ -53,6 +57,8 @@ fun RestorePasswordEndScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
     val cnt = LocalContext.current
 
+    val state = viewModel.state
+
     val ticks = remember { mutableStateOf(0) }
     LaunchedEffect(ticks.value) {
         while (ticks.value > 0) {
@@ -61,6 +67,14 @@ fun RestorePasswordEndScreen(
         }
     }
 
+    LaunchedEffect(state.value.information) {
+        if(state.value.information == true) {
+            Log.e("~~~", "ALL GOOD")
+            navController.navigate("login")
+        } else {
+            Toast.makeText(cnt, "Error", Toast.LENGTH_LONG).show()
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -123,8 +137,17 @@ fun RestorePasswordEndScreen(
                     onClick = {
                         ticks.value = 120
                         countOfTry.value--
+                        data.contacts?.get(0)?.contactValue?.let {
+                            viewModel.restorePasswordGetCode(
+                                login,
+                                it
+                            )
+                        }
                     },
-                    modifier = Modifier.padding(end = 60.dp).align(CenterVertically).weight(0.5f),
+                    modifier = Modifier
+                        .padding(end = 60.dp)
+                        .align(CenterVertically)
+                        .weight(0.5f),
                     enabled = ticks.value == 0,
                 ) {
                     if (ticks.value == 0) Text("Получить\nкод", textAlign = TextAlign.Center)
@@ -137,7 +160,12 @@ fun RestorePasswordEndScreen(
             )
             Button(
                 onClick = {
-
+                    data.contacts?.get(0)?.contactValue?.let {
+                        viewModel.restorePasswordApply(
+                            login, inputText.value.text,
+                            it, inputText2.value.text
+                        )
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
