@@ -2,6 +2,7 @@ package by.g_alex.mobile_iis.data.remote
 
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
@@ -11,6 +12,7 @@ import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
+import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
@@ -69,6 +71,11 @@ interface IisApi {
     @GET("api/v1/announcements") // Обьявления
     suspend fun getAnnouncements(@Header("Cookie") cookieValue: String): List<AnnouncemntDto>
 
+    @GET("api/v1/dormitory-queue-application")
+    suspend fun getDormitory(@Header("Cookie") cookieValue: String):List<DormitoryDto>
+
+    @GET("api/v1/dormitory-queue-application/premium-penalty")
+    suspend fun getPenalty(@Header("Cookie") cookieValue: String):List<PenaltyDto>
     // For all
 
     @GET("api/v1/schedule?") // Расписание группы
@@ -85,5 +92,6 @@ interface IisApi {
 
     @GET("api/v1/employees/all") // Список преподавателей
     suspend fun getEmployeesList(): List<EmployeeListItemDto>
+
 
 }

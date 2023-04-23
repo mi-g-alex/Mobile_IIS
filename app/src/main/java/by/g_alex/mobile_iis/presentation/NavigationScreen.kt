@@ -29,6 +29,8 @@ import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
+import by.g_alex.mobile_iis.presentation.dormitory_screen.DormitoryScreen
+import by.g_alex.mobile_iis.presentation.fines_screen.FinesScreen
 import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
 import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.enter_login.RestorePasswordEnterLogin
@@ -160,7 +162,12 @@ fun NavigationScreen() {
                     composable(route = "announcements") {
                         AnnouncementScreen()
                     }
-
+                    composable(route = "dormitory"){
+                        DormitoryScreen()
+                    }
+                    composable(route = "fines"){
+                        FinesScreen()
+                    }
                 }
             }
         }
@@ -196,6 +203,17 @@ fun BottomMenuMore(
             "Объявления",
             R.drawable.baseline_watch_later_24
         ),
+        BaseNavItem(
+            "dormitory",
+            "Общежитие",
+            R.drawable.baseline_home_work_24
+        ),
+        BaseNavItem(
+            "fines",
+            "Взыскания",
+            R.drawable.baseline_watch_later_24
+        ),
+
     )
     Box(
         Modifier

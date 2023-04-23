@@ -5,6 +5,7 @@ import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.toEmployeeModel
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.toGradeBookLessonModel
 import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
@@ -12,6 +13,7 @@ import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.toListMarkBookMarkModel
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
+import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
@@ -74,6 +76,13 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getUserGroup(token)
     }
 
+    override suspend fun getDormitory(token: String): List<DormitoryDto> {
+        return api.getDormitory(token)
+    }
+
+    override suspend fun getPenalty(token: String): List<PenaltyDto> {
+        return api.getPenalty(token)
+    }
     override suspend fun getOmissionsByStudent(token: String): List<OmissionsByStudentDto> {
         return api.getOmissionsByStudent(token)
     }
