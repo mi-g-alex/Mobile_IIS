@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.data.remote
 
+import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
@@ -15,7 +16,9 @@ import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface IisApi {
@@ -28,6 +31,10 @@ interface IisApi {
     @GET("api/v1/auth/logout") // Выход
     suspend fun logout(@Header("Cookie") cookieValue: String)
 
+    @GET("api/v1/settings/masked-contacts?")
+    fun restorePasswordEnterLogin(@Query("login") username: String): Call<RestorePasswordEnterLoginResponseDto>
+
+    // User Info
     @GET("api/v1/profiles/personal-cv") // Инфомарция о профиле / Главный экран
     suspend fun getProfilePersonCV(@Header("Cookie") cookieValue: String): PersonalCVDto
 

@@ -2,7 +2,6 @@ package by.g_alex.mobile_iis.domain.use_case.schedule_use_cases
 
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

@@ -3,6 +3,7 @@ package by.g_alex.mobile_iis.data.repository
 import android.util.Log
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
+import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.toEmployeeModel
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.toGradeBookLessonModel
@@ -14,14 +15,18 @@ import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
+import by.g_alex.mobile_iis.data.util.JsonParser
+import by.g_alex.mobile_iis.domain.model.profile.Skill
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
+import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
+import retrofit2.awaitResponse
 import javax.inject.Inject
 
 class IisApiRepositoryImpl @Inject constructor(
@@ -36,6 +41,18 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.loginToAccount(a)
     }
 
+    override suspend fun logout(token: String) {
+        api.logout(token)
+    }
+
+    override suspend fun restorePasswordEnterLogin(username: String) : RestorePasswordEnterLoginResponseDto? {
+        val s = api.restorePasswordEnterLogin(username).awaitResponse()
+        if(s.isSuccessful) {
+            return s.body()
+        }
+        return null
+    }
+
     override suspend fun getProfilePersonalCV(token: String): PersonalCVDto {
         return api.getProfilePersonCV(token)
     }
@@ -43,10 +60,6 @@ class IisApiRepositoryImpl @Inject constructor(
     override suspend fun updatePhoto(request: String, token: String): Call<String> {
         val requestBody = request.toRequestBody("text/plain".toMediaType())
         return api.updatePhoto(requestBody, token)
-    }
-
-    override suspend fun logout(token: String) {
-        api.logout(token)
     }
 
     override suspend fun getGradeBook(cookie: String): List<GradeBookLessonModel> {
@@ -66,7 +79,6 @@ class IisApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getStudy(token: String): StudyDto {
-        Log.e("12", "2134567")
         return StudyDto(
             api.getStudyApplications(token),
             api.getStudyCertificate(token),

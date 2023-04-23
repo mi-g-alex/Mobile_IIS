@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.domain.repository
 
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
+import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
@@ -21,13 +22,16 @@ interface IisApiRepository {
         password: String
     ): Call<LoginResponseDto>
 
+    suspend fun logout(token: String)
+
+    suspend fun restorePasswordEnterLogin(username: String) : RestorePasswordEnterLoginResponseDto?
+
+    // For USER
     suspend fun getProfilePersonalCV(token: String): PersonalCVDto
 
     suspend fun updatePhoto(request: String, token: String): Call<String>
 
     suspend fun getGradeBook(cookie: String): List<GradeBookLessonModel>
-
-    suspend fun logout(token: String)
 
     suspend fun getMarkBook(token: String): List<MarkBookMarkModel>
 
@@ -38,8 +42,8 @@ interface IisApiRepository {
     suspend fun getStudy(token: String): StudyDto
 
     suspend fun getAnnouncements(token:String):List<AnnouncemntDto>
-    // For All
 
+    // For All
     suspend fun getSchedule(groupNum: String): List<LessonModel>?
 
     suspend fun getCurrentWeek(): Int

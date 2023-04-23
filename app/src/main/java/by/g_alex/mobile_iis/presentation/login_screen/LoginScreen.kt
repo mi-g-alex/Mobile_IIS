@@ -1,8 +1,7 @@
 package by.g_alex.mobile_iis.presentation.login_screen
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -13,11 +12,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -79,7 +78,6 @@ fun LoginScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
                 ),
-
             )
 
             OutlinedTextField(
@@ -123,6 +121,15 @@ fun LoginScreen(
                 )
             }
         }
+        Text(
+            modifier = Modifier
+                .align(BottomCenter)
+                .padding(bottom = 15.dp)
+                .clickable {
+                    navController.navigate("restorePassword")
+                },
+            text = "Забыли пароль?"
+        )
     }
 }
 

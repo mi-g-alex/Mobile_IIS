@@ -27,9 +27,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
+import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
 import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
+import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.enter_login.RestorePasswordEnterLogin
+import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.select_how_restore.RestorePasswordSelect
 import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
 import by.g_alex.mobile_iis.presentation.omissions_screen.OmissionsScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
@@ -38,6 +41,8 @@ import by.g_alex.mobile_iis.presentation.study_screen.StudyScreen
 import by.g_alex.mobile_iis.presentation.user_group.UserGroupScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -119,6 +124,19 @@ fun NavigationScreen() {
                         ) {
                             LoginScreen(navController = navController)
                         }
+                        composable(
+                            route = "restorePassword"
+                        ) {
+                            RestorePasswordEnterLogin(navController = navController)
+                        }
+                        composable(
+                            route = "restorePasswordSelect/{data}"
+                        ) { backStackEntry ->
+                            val dataRow = backStackEntry.arguments?.getString("data") ?: ""
+                            val data =
+                                Json.decodeFromString<RestorePasswordEnterLoginResponseDto>(dataRow)
+                            RestorePasswordSelect(navController = navController, data = data)
+                        }
                     }
                     navigation(startDestination = "mark_bookHome", route = "mark_book") {
                         composable(route = "mark_bookHome") {
@@ -139,7 +157,7 @@ fun NavigationScreen() {
                     composable(route = "studyHome") {
                         StudyScreen()
                     }
-                    composable(route = "announcements"){
+                    composable(route = "announcements") {
                         AnnouncementScreen()
                     }
 
@@ -214,7 +232,7 @@ fun BottomMenuMore(
                             painter = painterResource(id = listOfItems[i].icon),
                             contentDescription = listOfItems[i].title,
 
-                        )
+                            )
                         Text(text = listOfItems[i].title, fontSize = 12.sp)
                     }
                 }

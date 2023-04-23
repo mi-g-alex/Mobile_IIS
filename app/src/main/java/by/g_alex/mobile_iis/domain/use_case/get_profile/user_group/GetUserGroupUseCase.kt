@@ -1,7 +1,6 @@
 package by.g_alex.mobile_iis.domain.use_case.get_profile.user_group
 
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
