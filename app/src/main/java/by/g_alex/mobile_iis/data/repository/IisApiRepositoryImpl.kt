@@ -12,12 +12,13 @@ import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
 import by.g_alex.mobile_iis.data.remote.dto.login.*
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.toListMarkBookMarkModel
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
-import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
+import by.g_alex.mobile_iis.data.remote.dto.penalty.toPenltyModel
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
+import by.g_alex.mobile_iis.domain.model.profile.penalty_model.PenaltyModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
@@ -110,8 +111,12 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getDormitory(token)
     }
 
-    override suspend fun getPenalty(token: String): List<PenaltyDto> {
-        return api.getPenalty(token)
+    override suspend fun getPenalty(token: String): List<PenaltyModel> {
+        val list = mutableListOf<PenaltyModel>()
+        api.getPenalty(token).onEach {
+            list.add(it.toPenltyModel())
+        }
+        return list
     }
 
     override suspend fun getOmissionsByStudent(token: String): List<OmissionsByStudentDto> {

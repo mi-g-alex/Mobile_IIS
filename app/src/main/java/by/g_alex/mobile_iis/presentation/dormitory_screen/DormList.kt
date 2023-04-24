@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,6 +18,8 @@ fun DormList(
     viewModel: DormitoryViewModel = hiltViewModel()
 ){
     Column(modifier = Modifier.fillMaxSize()) {
+        if(viewModel.state.value.dormState?.isEmpty() == true)
+            Text("Пусто...",fontSize=20.sp, modifier = Modifier.fillMaxSize().padding(10.dp), textAlign = TextAlign.Center)
         for (n in viewModel.state.value.dormState ?: emptyList()) {
             Card(
                 modifier = Modifier
@@ -30,7 +33,7 @@ fun DormList(
                             .fillMaxWidth()
                             .padding(5.dp), Arrangement.Center
                     ) {
-                        Text(n.status ?: "нихуя", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        Text(n.status ?: "", fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     }
                     Row(modifier = Modifier.padding(horizontal = 10.dp)) {
                         Text(text = "Дата подачи: ")

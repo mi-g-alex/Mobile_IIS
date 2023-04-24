@@ -17,10 +17,8 @@ import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DormitoryScreen(
-    viewModel: DormitoryViewModel = hiltViewModel()
-){
-    val titles = mutableListOf("Заселение","Льготы")
+fun DormitoryScreen() {
+    val titles = mutableListOf("Заселение", "Льготы")
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -28,19 +26,20 @@ fun DormitoryScreen(
             )
         }
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(it)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(it)
+        ) {
             val pagerState: PagerState =
-                rememberPagerState(initialPage = titles.size - 1)
+                rememberPagerState(0)
             val coroutineScope = rememberCoroutineScope()
             TabRow(
                 selectedTabIndex = pagerState.currentPage
             ) {
-                // Add tabs for all of our pages
                 titles.forEachIndexed { index, title ->
                     Tab(
-                        text = { Text(title.toString()) },
+                        text = { Text(title) },
                         selected = pagerState.currentPage == index,
                         onClick = {
                             coroutineScope.launch {
@@ -48,7 +47,7 @@ fun DormitoryScreen(
                             }
                         },
 
-                    )
+                        )
                 }
             }
             HorizontalPager(
@@ -57,9 +56,9 @@ fun DormitoryScreen(
                 beyondBoundsPageCount = 2,
                 modifier = Modifier.fillMaxSize()
             ) { page: Int ->
-                when(page){
-                    0-> DormList()
-                    1-> PrivilegeList()
+                when (page) {
+                    0 -> DormList()
+                    1 -> PrivilegeList()
                 }
             }
 

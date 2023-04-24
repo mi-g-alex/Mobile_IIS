@@ -1,7 +1,7 @@
 package by.g_alex.mobile_iis.domain.use_case.get_profile.penalty
 
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
+import by.g_alex.mobile_iis.domain.model.profile.penalty_model.PenaltyModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import kotlinx.coroutines.flow.Flow
@@ -14,16 +14,16 @@ class GetPenaltyUseCase@Inject constructor(
     private val api_repository: IisApiRepository,
     private val db_repository: UserDataBaseRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<PenaltyDto>>> = flow {
+    operator fun invoke(): Flow<Resource<List<PenaltyModel>>> = flow {
         try {
-            emit(Resource.Loading<List<PenaltyDto>>())
+            emit(Resource.Loading<List<PenaltyModel>>())
             val cookie = db_repository.getCookie()
             if (cookie == null) {
-                emit(Resource.Error<List<PenaltyDto>>("LessCookie"))
+                emit(Resource.Error<List<PenaltyModel>>("LessCookie"))
             }
             if (cookie != null) {
                 val data = api_repository.getPenalty(cookie)
-                emit(Resource.Success<List<PenaltyDto>>(data))
+                emit(Resource.Success<List<PenaltyModel>>(data))
             }
         } catch (e: HttpException) {
 

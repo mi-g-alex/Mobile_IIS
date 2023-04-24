@@ -33,7 +33,7 @@ class DormitoryViewModel @Inject constructor(
         getDormitoryUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = DormitoryState(dormState = result.data?: emptyList())
+                    _state.value = DormitoryState(dormState = result.data ?: emptyList())
                 }
 
                 is Resource.Loading -> {
@@ -48,11 +48,12 @@ class DormitoryViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
     fun getPrivileges() {
         getPrivilegesUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    pr_state.value = PrivilegesState(privilegeState = result.data?: emptyList())
+                    pr_state.value = PrivilegesState(privilegeState = result.data ?: emptyList())
                 }
 
                 is Resource.Loading -> {

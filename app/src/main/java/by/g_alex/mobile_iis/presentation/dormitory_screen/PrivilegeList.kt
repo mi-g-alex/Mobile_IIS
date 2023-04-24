@@ -6,6 +6,7 @@ import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,18 +14,32 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun PrivilegeList(
     viewModel: DormitoryViewModel = hiltViewModel()
-){
+) {
     Column(modifier = Modifier.fillMaxSize()) {
-        if(viewModel.prState.value
+        if (viewModel.prState.value
                 .privilegeState?.isEmpty() == true
         )
-            Text(text = "Привилегий нет")
-        for(n in viewModel.prState.value.privilegeState?: emptyList()){
-            Card(modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)) {
+            Text(
+                "Льгот нет",
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(20.dp),
+                textAlign = TextAlign.Center
+            )
+        for (n in viewModel.prState.value.privilegeState ?: emptyList()) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Row(modifier = Modifier.fillMaxWidth().padding(top=10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
                         Text(
                             text = n.dormitoryPrivilegeCategoryName,
                             modifier = Modifier.padding(horizontal = 15.dp),
@@ -38,7 +53,10 @@ fun PrivilegeList(
                         )
 
                     }
-                    Text(text = n.dormitoryPrivilegeName, modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp))
+                    Text(
+                        text = n.dormitoryPrivilegeName,
+                        modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)
+                    )
                 }
             }
         }

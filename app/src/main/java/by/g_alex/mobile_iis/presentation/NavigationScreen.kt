@@ -30,7 +30,7 @@ import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
 import by.g_alex.mobile_iis.presentation.dormitory_screen.DormitoryScreen
-import by.g_alex.mobile_iis.presentation.fines_screen.FinesScreen
+import by.g_alex.mobile_iis.presentation.penalty_screen.FinesScreen
 import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
 import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.enter_login.RestorePasswordEnterLogin

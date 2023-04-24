@@ -7,12 +7,12 @@ import by.g_alex.mobile_iis.data.remote.dto.dormitory.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
-import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
+import by.g_alex.mobile_iis.domain.model.profile.penalty_model.PenaltyModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import retrofit2.Call
@@ -54,7 +54,7 @@ interface IisApiRepository {
     suspend fun getAnnouncements(token:String):List<AnnouncemntDto>
 
     suspend fun getDormitory(token:String):List<DormitoryDto>
-    suspend fun getPenalty(token:String):List<PenaltyDto>
+    suspend fun getPenalty(token:String):List<PenaltyModel>
     // For All
     suspend fun getSchedule(groupNum: String): List<LessonModel>?
 
