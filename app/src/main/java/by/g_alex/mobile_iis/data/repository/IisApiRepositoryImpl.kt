@@ -3,30 +3,24 @@ package by.g_alex.mobile_iis.data.repository
 import android.util.Log
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
-import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
+import by.g_alex.mobile_iis.data.remote.dto.dormitory.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.toEmployeeModel
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.toGradeBookLessonModel
 import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
-import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
-import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
-import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordApplyDto
-import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordCheckSendDto
+import by.g_alex.mobile_iis.data.remote.dto.login.*
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.toListMarkBookMarkModel
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
-import by.g_alex.mobile_iis.data.util.JsonParser
-import by.g_alex.mobile_iis.domain.model.profile.Skill
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
-import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -57,6 +51,9 @@ class IisApiRepositoryImpl @Inject constructor(
         return null
     }
 
+    override suspend fun getPrivileges(token: String): List<PrivilegesDto> {
+        return api.getPrivileges(token)
+    }
     override suspend fun restorePasswordCheckExist(
         login: String,
         contactValue: String

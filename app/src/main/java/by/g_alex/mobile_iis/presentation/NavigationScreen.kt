@@ -230,7 +230,7 @@ fun BottomMenuMore(
         BaseNavItem(
             "fines",
             "Взыскания",
-            R.drawable.baseline_watch_later_24
+            R.drawable.baseline_report_gmailerrorred_24
         ),
 
         )

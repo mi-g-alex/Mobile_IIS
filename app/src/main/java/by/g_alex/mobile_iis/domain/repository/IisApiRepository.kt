@@ -1,10 +1,11 @@
 package by.g_alex.mobile_iis.domain.repository
 
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
-import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
+import by.g_alex.mobile_iis.data.remote.dto.dormitory.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
+import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
@@ -15,7 +16,6 @@ import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkMode
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import retrofit2.Call
-import java.util.SimpleTimeZone
 
 interface IisApiRepository {
 
@@ -44,6 +44,7 @@ interface IisApiRepository {
 
     suspend fun getMarkBook(token: String): List<MarkBookMarkModel>
 
+    suspend fun getPrivileges(token:String):List<PrivilegesDto>
     suspend fun getUserGroup(token: String): UserGroupDto
 
     suspend fun getOmissionsByStudent(token: String): List<OmissionsByStudentDto>

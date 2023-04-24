@@ -1,28 +1,23 @@
 package by.g_alex.mobile_iis.data.remote
 
-import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
-import by.g_alex.mobile_iis.data.remote.dto.login.LoginAndPasswordDto
-import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
-import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
-import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
-import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
+import by.g_alex.mobile_iis.data.remote.dto.dormitory.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
-import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordApplyDto
-import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordCheckSendDto
+import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
+import by.g_alex.mobile_iis.data.remote.dto.login.*
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
+import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
+import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 interface IisApi {
@@ -75,6 +70,9 @@ interface IisApi {
 
     @GET("api/v1/lms/application-history") // ДОТ
     suspend fun getStudyApplications(@Header("Cookie") cookieValue: String): List<StudyApplicationsDto>
+
+    @GET("api/v1/dormitory-queue-application/privileges")
+    suspend fun getPrivileges(@Header("Cookie") cookieValue: String): List<PrivilegesDto>
 
     @GET("api/v1/library/debts") // Задолженности библиотека
     suspend fun getStudyLibDebts(@Header("Cookie") cookieValue: String): List<String>
