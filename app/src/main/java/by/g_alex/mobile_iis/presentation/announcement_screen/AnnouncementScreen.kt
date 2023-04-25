@@ -2,8 +2,10 @@ package by.g_alex.mobile_iis.presentation.announcement_screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,7 +46,10 @@ fun AnnouncementScreen(
                     Card(
                         modifier = Modifier
                             .padding(horizontal = 10.dp, vertical = 5.dp)
-                            .fillMaxWidth()
+                            .fillMaxWidth(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                        )
                     ) {
                         Column(
                             modifier = Modifier

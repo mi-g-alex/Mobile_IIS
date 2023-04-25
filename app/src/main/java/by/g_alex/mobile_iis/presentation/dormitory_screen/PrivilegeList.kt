@@ -3,6 +3,7 @@ package by.g_alex.mobile_iis.presentation.dormitory_screen
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,7 +34,10 @@ fun PrivilegeList(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp)
+                    .padding(10.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                )
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Row(

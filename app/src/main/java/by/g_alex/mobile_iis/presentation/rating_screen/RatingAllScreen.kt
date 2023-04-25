@@ -36,7 +36,7 @@ fun RatingAllScreen(
 ) {
     val years = mutableListOf<String>()
     val expandedYears = remember { mutableStateOf(false) }
-    val selectedYearsText = remember { mutableStateOf("") }
+    val selectedYearsText = remember { mutableStateOf("2022") }
 
     val faculties = viewModel.state.value.FacultiesState?: emptyList()
     val expandedFaculties = remember { mutableStateOf(false) }
@@ -78,7 +78,7 @@ fun RatingAllScreen(
                         readOnly = true,
                         modifier = Modifier
                             .menuAnchor()
-                            .width(150.dp),//.fillMaxWidth(),
+                            .width(150.dp).padding(end = 5.dp),//.fillMaxWidth(),
                         value = selectedYearsText.value,
                         onValueChange = { },
                         label = { Text("Год") },

@@ -103,7 +103,10 @@ fun StudyScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .wrapContentHeight()
-                                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                                    .padding(horizontal = 10.dp, vertical = 5.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                                )
                             ) {
                                 Column(Modifier.padding(10.dp)) {
                                     Text(
@@ -145,7 +148,10 @@ private fun CertificationItem(it: StudyCertificationsDto) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(horizontal = 10.dp, vertical = 5.dp)
+            .padding(horizontal = 10.dp, vertical = 5.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.inverseOnSurface
+        )
     ) {
         Column(Modifier.padding(10.dp)) {
             var t = ""

@@ -55,7 +55,10 @@ fun TabLayout(
                         openDialog.value = true
                         dialogTitle.value = dicipline.nameAbbv
                         diciplineObject.value = dicipline
-                    }
+                    },
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                )
             )
             {
                 Text(

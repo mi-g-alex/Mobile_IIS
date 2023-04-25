@@ -31,6 +31,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedSuggestionChip
@@ -106,7 +107,10 @@ fun ProfileCVScreen(
                         .wrapContentSize(Alignment.TopCenter)
                         .fillMaxWidth(1f)
                         .padding(end = 10.dp, top = 0.dp, start = 10.dp, bottom = 10.dp),
-                    shape = RoundedCornerShape(bottomEnd = 35.dp, bottomStart = 35.dp)
+                    shape = RoundedCornerShape(bottomEnd = 35.dp, bottomStart = 35.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                    )
                 ) {
                     Column(
                         modifier = Modifier,
@@ -184,7 +188,10 @@ fun ProfileCVScreen(
                         .wrapContentSize(Alignment.TopCenter)
                         .fillMaxWidth(1f)
                         .padding(10.dp),
-                    shape = RoundedCornerShape(35.dp)
+                    shape = RoundedCornerShape(35.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                    )
                 ) {
                     Column(
                         modifier = Modifier.padding(20.dp),

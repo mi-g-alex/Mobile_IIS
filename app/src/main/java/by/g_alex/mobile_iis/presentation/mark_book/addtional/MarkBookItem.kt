@@ -2,6 +2,7 @@ package by.g_alex.mobile_iis.presentation.mark_book.addtional
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,7 +20,10 @@ fun MarkBookItem(mark: MarkBookMarkModel,currentPage:Int) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .padding(horizontal = 10.dp, vertical = 5.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.inverseOnSurface
+            )
         ) {
             Column(modifier = Modifier.padding(10.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
