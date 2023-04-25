@@ -23,8 +23,8 @@ import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
+import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import okhttp3.RequestBody
-import okhttp3.Response
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -135,4 +135,11 @@ interface IisApi {
     @GET("api/v1/rating/studentRating")
     suspend fun getPersonalRating(@Query("studentCardNumber") numb:String):PersonalRatingDto
 
+    @PUT("api/v1/profiles/personal-cv-searching-job")
+    suspend fun putJob(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+
+    @PUT("api/v1/profiles/personal-cv-rating")
+    suspend fun putRating(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+    @PUT("/api/v1/profiles/personal-cv-published")
+    suspend fun putPublished(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
 }

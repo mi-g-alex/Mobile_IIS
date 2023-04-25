@@ -58,7 +58,7 @@ fun NavigationScreen() {
         BaseNavItem("schedule", "Расписание", R.drawable.schedule_icon),
         BaseNavItem("mark_book", "Зачётка", R.drawable.baseline_book_24),
         BaseNavItem("profile", "Профиль", R.drawable.icon_profile),
-        BaseNavItem("grade_book", "Рейтинг", R.drawable.rating),
+        BaseNavItem("grade_book", "Оценки", R.drawable.baseline_menu_book_24),
         BaseNavItem("more", "Ещё", R.drawable.baseline_more_horiz_24),
     )
     val selectedItem = remember { mutableStateOf(0) }
@@ -191,6 +191,15 @@ fun NavigationScreen() {
                     composable(route = "fines") {
                         FinesScreen()
                     }
+                    navigation(startDestination = "all-ratingHome", route = "all-rating") {
+                        composable(route = "all-ratingHome") {
+                            RatingAllScreen(navController = navController)
+                        }
+                        composable(route = "personalRating/{number}") {
+                            val number = it.arguments?.getString("number") ?: ""
+                            PersonalRateScreen(navController = navController,number = number)
+                        }
+                    }
                     navigation(startDestination = "settingsHome", route = "settings") {
                         composable(route = "settingsHome") {
                             SettingsScreen(navController = navController)
@@ -201,15 +210,7 @@ fun NavigationScreen() {
                             ChangeEmailScreen(navController, email, id)
                         }
                     }
-                    navigation(startDestination = "all-ratingHome", route = "all-rating") {
-                        composable(route = "all-ratingHome") {
-                            RatingAllScreen(navController = navController)
-                        }
-                        composable(route = "personalRating/{number}") {
-                            val number = it.arguments?.getString("number") ?: ""
-                            PersonalRateScreen(navController = navController,number = number)
-                        }
-                    }
+
                 }
             }
         }
@@ -256,15 +257,16 @@ fun BottomMenuMore(
             R.drawable.baseline_report_gmailerrorred_24
         ),
         BaseNavItem(
-            "settings",
-            "Настройки",
-            R.drawable.baseline_settings_24
-        ),
-        BaseNavItem(
             "all-rating",
             "Рейтинг",
             R.drawable.rating
         ),
+        BaseNavItem(
+            "settings",
+            "Настройки",
+            R.drawable.baseline_settings_24
+        ),
+
         )
     Box(
         Modifier

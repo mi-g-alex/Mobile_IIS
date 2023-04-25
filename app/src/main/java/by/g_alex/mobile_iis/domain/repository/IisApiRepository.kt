@@ -17,6 +17,7 @@ import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
+import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
 import by.g_alex.mobile_iis.domain.model.profile.penalty_model.PenaltyModel
@@ -80,7 +81,12 @@ interface IisApiRepository {
 
     suspend fun confirmCodeForEmail(token: String, email: ConfirmEmailDto): Call<Any>
 
+    suspend fun putPublished(token:String,cvDto: PersonalCV)
 
+
+    suspend fun putJob(token:String,cvDto: PersonalCV)
+
+    suspend fun putRating(token:String,cvDto: PersonalCV)
     // For All
     suspend fun getSchedule(groupNum: String): List<LessonModel>?
 

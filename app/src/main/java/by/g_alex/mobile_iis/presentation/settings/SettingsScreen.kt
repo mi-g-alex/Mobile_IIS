@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -243,7 +242,9 @@ fun SettingsScreen(
                                 fontSize = 15.sp
                             )
                         }
-                        Switch(checked = true, onCheckedChange = {})
+                        Switch(checked = viewModel.rateCheck.value, onCheckedChange = {
+                            viewModel.putRating()
+                        })
                     }
                 }
 
@@ -269,7 +270,9 @@ fun SettingsScreen(
                                 fontSize = 15.sp
                             )
                         }
-                        Switch(checked = true, onCheckedChange = {})
+                        Switch(checked = viewModel.pubCheck.value, onCheckedChange = {
+                            viewModel.putPublished()
+                        })
                     }
                 }
 
@@ -295,7 +298,9 @@ fun SettingsScreen(
                                 fontSize = 15.sp
                             )
                         }
-                        Switch(checked = true, onCheckedChange = {})
+                        Switch(checked = viewModel.jobCheck.value, onCheckedChange = {
+                            viewModel.putSearchJob()
+                        })
                     }
                 }
 

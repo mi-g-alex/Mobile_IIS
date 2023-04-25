@@ -2,9 +2,7 @@ package by.g_alex.mobile_iis.domain.use_case.get_profile.settings
 
 import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ContactsDto
-import by.g_alex.mobile_iis.domain.model.profile.penalty_model.PenaltyModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +12,7 @@ import retrofit2.awaitResponse
 import java.io.IOException
 import javax.inject.Inject
 
-class GetSettingsUseCase@Inject constructor(
+class GetSettingsUseCase @Inject constructor(
     private val api_repository: IisApiRepository,
     private val db_repository: UserDataBaseRepository
 ) {

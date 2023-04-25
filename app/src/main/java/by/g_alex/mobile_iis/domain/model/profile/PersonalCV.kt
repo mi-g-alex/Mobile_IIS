@@ -13,15 +13,15 @@ data class PersonalCV(
     val officeEmail: String?, // 25350033@study.bsuir.by
     val officePassword: String?, // Qt5oCKKi
     val photoUrl: String?, // https://drive.google.com/uc?id=1yRyNQ0sEVx3gnnztawY1KBV_uxmKm2B3&export=download
-    val published: Boolean?, // true
+    var published: Boolean?, // true
     val rating: Int?, // 5
     val references: List<Reference>?,
-    val searchJob: Boolean?, // false
-    val showRating: Boolean?, // true
+    var searchJob: Boolean?, // false
+    var showRating: Boolean?, // true
     val skills: List<Skill>?,
     val speciality: String?, // ИиТП
     val studentGroup: String?, // 253501
-    val summary: String? // Text
+    var summary: String? // Text
 ) {
     fun toEntity(): ProfilePersonalCVEntity =
         ProfilePersonalCVEntity(
@@ -46,4 +46,21 @@ data class PersonalCV(
             studentGroup,
             summary
         )
+//    fun PersonalCV.toPersonalCVDto():PersonalCVDto{
+//        return PersonalCVDto(
+//            birthDate = birthDate,
+//            course = course,
+//            faculty = faculty,
+//            firstName = firstName,
+//            id = id,
+//            lastName = lastName,
+//            middleName = middleName,
+//            officeEmail = officeEmail,
+//            officePassword = officePassword,
+//            photoUrl = photoUrl,
+//            published = published,
+//            rating = rating,
+//            references = references.
+//        )
+//    }
 }
