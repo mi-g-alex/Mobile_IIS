@@ -164,7 +164,7 @@ fun RatingScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "Рейтинг", fontSize = 20.sp) }
+                title = { Text(text = "Оценки", fontSize = 20.sp) }
             )
         }
     ) {

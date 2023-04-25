@@ -39,6 +39,7 @@ import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.se
 import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
 import by.g_alex.mobile_iis.presentation.omissions_screen.OmissionsScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
+import by.g_alex.mobile_iis.presentation.rating_screen.RatingAllScreen
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleStartUp
 import by.g_alex.mobile_iis.presentation.study_screen.StudyScreen
 import by.g_alex.mobile_iis.presentation.user_group.UserGroupScreen
@@ -54,7 +55,7 @@ fun NavigationScreen() {
         BaseNavItem("schedule", "Расписание", R.drawable.schedule_icon),
         BaseNavItem("mark_book", "Зачётка", R.drawable.baseline_book_24),
         BaseNavItem("profile", "Профиль", R.drawable.icon_profile),
-        BaseNavItem("grade_book", "Рейтинг", R.drawable.rating),
+        BaseNavItem("grade_book", "Оценки", R.drawable.baseline_menu_book_24),
         BaseNavItem("more", "Ещё", R.drawable.baseline_more_horiz_24),
     )
     val selectedItem = remember { mutableStateOf(0) }
@@ -187,6 +188,9 @@ fun NavigationScreen() {
                     composable(route = "fines") {
                         FinesScreen()
                     }
+                    composable(route = "all-rating"){
+                        RatingAllScreen()
+                    }
                 }
             }
         }
@@ -231,6 +235,11 @@ fun BottomMenuMore(
             "fines",
             "Взыскания",
             R.drawable.baseline_report_gmailerrorred_24
+        ),
+        BaseNavItem(
+            "all-rating",
+            "Рейтинг",
+            R.drawable.rating
         ),
 
         )

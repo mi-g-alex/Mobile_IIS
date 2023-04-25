@@ -7,6 +7,7 @@ import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.toEmployeeModel
+import by.g_alex.mobile_iis.data.remote.dto.faculties.FacultiesDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.toGradeBookLessonModel
 import by.g_alex.mobile_iis.data.remote.dto.group.toGroupModel
 import by.g_alex.mobile_iis.data.remote.dto.login.*
@@ -14,6 +15,8 @@ import by.g_alex.mobile_iis.data.remote.dto.mark_book.toListMarkBookMarkModel
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.toPenltyModel
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
+import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
+import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
@@ -154,5 +157,17 @@ class IisApiRepositoryImpl @Inject constructor(
 
     override suspend fun getEmployees(): List<EmployeeModel> {
         return api.getEmployeesList().map { item -> item.toEmployeeModel() }
+    }
+
+    override suspend fun getFaculties(): List<FacultiesDto> {
+        return api.getFaculties()
+    }
+
+    override suspend fun getSpecialities(year: Int, id: Int): List<SpecialityDto> {
+        return api.getSpecialities(id,year)
+    }
+
+    override suspend fun getRating(year: Int, id: Int): List<RatingDto> {
+        return api.getRating(year,id)
     }
 }
