@@ -62,7 +62,6 @@ fun OmissionsScreen(
                     }
                 }
             }
-
             if (state.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
@@ -104,10 +103,7 @@ private fun Item(it: List<OmissionsByStudentDto>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
-                        .padding(8.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
-                    )
+                        .padding(8.dp)
                 ) {
                     Column(modifier = Modifier.padding(8.dp)) {
                         Text(

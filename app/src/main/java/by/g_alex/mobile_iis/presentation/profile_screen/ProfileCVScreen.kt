@@ -15,7 +15,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,16 +27,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ElevatedSuggestionChip
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -107,10 +97,7 @@ fun ProfileCVScreen(
                         .wrapContentSize(Alignment.TopCenter)
                         .fillMaxWidth(1f)
                         .padding(end = 10.dp, top = 0.dp, start = 10.dp, bottom = 10.dp),
-                    shape = RoundedCornerShape(bottomEnd = 35.dp, bottomStart = 35.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
-                    )
+                    shape = RoundedCornerShape(bottomEnd = 35.dp, bottomStart = 35.dp)
                 ) {
                     Column(
                         modifier = Modifier,
@@ -163,23 +150,12 @@ fun ProfileCVScreen(
                         )
                         Text(
                             modifier = Modifier
-                                .fillMaxWidth().padding(10.dp),
-
+                                .fillMaxWidth()
+                                .padding(bottom = 20.dp),
                             textAlign = TextAlign.Center,
                             text = "Курс " + profileInfo.course + ", " + profileInfo.faculty + ", " + profileInfo.speciality + ", " + profileInfo.studentGroup,
                             fontSize = 20.sp
                         )
-                        Row(modifier = Modifier.padding(bottom = 20.dp)){
-                           for(n in 1..5){
-                                   Icon(
-                                       painter =  painterResource(id = R.drawable.baseline_star_24),
-                                       contentDescription = "sdcscds",
-                                       tint =if((profileInfo.rating ?: 0) >= n) Color(0xffffbf00)
-                                   else MaterialTheme.colorScheme.onBackground
-                                   )
-
-                           }
-                        }
                     }
                 }
 
@@ -188,10 +164,7 @@ fun ProfileCVScreen(
                         .wrapContentSize(Alignment.TopCenter)
                         .fillMaxWidth(1f)
                         .padding(10.dp),
-                    shape = RoundedCornerShape(35.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
-                    )
+                    shape = RoundedCornerShape(35.dp)
                 ) {
                     Column(
                         modifier = Modifier.padding(20.dp),
@@ -285,20 +258,6 @@ fun ProfileCVScreen(
                         }
 
                     }
-                }
-
-                Button(
-                    onClick = {
-                        viewModel.logOut()
-                        navController.navigate("login")
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(end = 10.dp, top = 0.dp, start = 10.dp, bottom = 10.dp)
-                ) {
-                    Text(
-                        text = "LogOut"
-                    )
                 }
             }
         }

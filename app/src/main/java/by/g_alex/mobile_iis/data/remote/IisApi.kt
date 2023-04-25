@@ -15,12 +15,16 @@ import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
+import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
+import by.g_alex.mobile_iis.data.remote.dto.settings.ContactsDto
+import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import okhttp3.RequestBody
+import okhttp3.Response
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -89,8 +93,22 @@ interface IisApi {
 
     @GET("api/v1/dormitory-queue-application/premium-penalty")
     suspend fun getPenalty(@Header("Cookie") cookieValue: String): List<PenaltyDto>
-    // For all
 
+    //Настройки
+    @GET("api/v1/settings/contacts")
+    suspend fun getContacts(@Header("Cookie") cookieValue: String): ContactsDto
+
+    @POST("api/v1/settings/contact/update")
+    fun updateEmail(@Header("Cookie") cookieValue: String, @Body email : EmailChangeDto) : Call<Any?>
+
+    @POST("api/v1/settings/contact/send-confirm-message")
+    suspend fun getCodeForEmail(@Header("Cookie") cookieValue: String, @Body id : Int) : Call<Any>
+
+    @POST("api/v1/settings/contact/confirm")
+    suspend fun confirmCodeForEmail(@Header("Cookie") cookieValue: String, @Body email : ConfirmEmailDto) : Call<Any>
+
+
+    // For all
     @GET("api/v1/schedule?") // Расписание группы
     suspend fun getSchedule(@Query("studentGroup") groupNumber: String): MainDto
 

@@ -67,15 +67,16 @@ fun RestorePasswordEndScreen(
         }
     }
 
+
     LaunchedEffect(state.value.information) {
-        if(state.value.information == true) {
-            Log.e("~~~", "ALL GOOD")
-            navController.navigate("login")
-        } else {
+        Log.e("~~~~!", state.value.information.toString())
+        if (state.value.information == false) {
             Toast.makeText(cnt, "Error", Toast.LENGTH_LONG).show()
+        } else {
+            /*Log.e("~~~", "ALL GOOD")
+            navController.navigate("login")*/
         }
     }
-
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -90,7 +91,7 @@ fun RestorePasswordEndScreen(
                     .padding(60.dp, 5.dp, 60.dp, 5.dp),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
+                    keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
                 ),
                 visualTransformation = PasswordVisualTransformation()
@@ -104,7 +105,7 @@ fun RestorePasswordEndScreen(
                     .padding(60.dp, 5.dp, 60.dp, 5.dp),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
+                    keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
                 ),
                 visualTransformation = PasswordVisualTransformation()
@@ -135,7 +136,7 @@ fun RestorePasswordEndScreen(
 
                 Button(
                     onClick = {
-                        ticks.value = 120
+                        ticks.value = 90
                         countOfTry.value--
                         data.contacts?.get(0)?.contactValue?.let {
                             viewModel.restorePasswordGetCode(

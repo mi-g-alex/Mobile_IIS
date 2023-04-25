@@ -1,6 +1,9 @@
 package by.g_alex.mobile_iis.data.repository
 
 import android.util.Log
+import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
+import by.g_alex.mobile_iis.data.remote.dto.settings.ContactsDto
+import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
@@ -59,6 +62,7 @@ class IisApiRepositoryImpl @Inject constructor(
     override suspend fun getPrivileges(token: String): List<PrivilegesDto> {
         return api.getPrivileges(token)
     }
+
     override suspend fun restorePasswordCheckExist(
         login: String,
         contactValue: String
@@ -84,9 +88,6 @@ class IisApiRepositoryImpl @Inject constructor(
         val s =
             api.restorePasswordApply(RestorePasswordApplyDto(login, contactValue, code, password))
                 .awaitResponse()
-        Log.e("~~~", s.code().toString())
-        Log.e("~~~", s.toString())
-        Log.e("~~~", "$login|$contactValue|$password|$code")
         return s.isSuccessful
     }
 
@@ -139,6 +140,23 @@ class IisApiRepositoryImpl @Inject constructor(
     override suspend fun getAnnouncements(token: String): List<AnnouncemntDto> {
         return api.getAnnouncements(token)
     }
+
+    override suspend fun getEmail(token: String): ContactsDto {
+        return api.getContacts(token)
+    }
+
+    override suspend fun updateEmail(token: String, email: EmailChangeDto): Call<Any?> {
+        return api.updateEmail(token, email)
+    }
+
+    override suspend fun getCodeForEmail(token: String, id: Int): Call<Any> {
+        return api.getCodeForEmail(token, id)
+    }
+
+    override suspend fun confirmCodeForEmail(token: String, email: ConfirmEmailDto): Call<Any> {
+        return api.confirmCodeForEmail(token, email)
+    }
+
 
     override suspend fun getSchedule(groupNum: String): List<LessonModel> {
         return api.getSchedule(groupNum).toLessonList(true)

@@ -30,6 +30,7 @@ class LoginToAccountUseCase @Inject constructor(
             db_repository.setLoginAndPassword(username, password)
             emit(Resource.Success<Response<LoginResponseDto>>(responseFromLogin))
         } catch (e: HttpException) {
+            Log.e("~~~", e.toString())
             emit(
                 Resource.Error<Response<LoginResponseDto>>(
                     e.localizedMessage ?: "An unexpected error occurred"
