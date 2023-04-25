@@ -21,6 +21,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,6 +33,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
+import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.select_how_restore.components.RestorePasswordSelectDialog
+import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_bio.ChangeBioDialog
 
 @Composable
 fun SettingsScreen(
@@ -40,6 +44,7 @@ fun SettingsScreen(
     val state = viewModel.state.value
     var email = state.contacts?.contactDtoList?.get(0)?.contactValue ?: ""
     val id = state.contacts?.contactDtoList?.get(0)?.id ?: ""
+    val showDialog = remember { mutableStateOf(false) }
 
     LaunchedEffect(state.contacts) {
         email = state.contacts?.contactDtoList?.get(0)?.contactValue ?: ""
@@ -141,6 +146,9 @@ fun SettingsScreen(
                             modifier = Modifier
                                 .padding(vertical = 8.dp)
                                 .weight(1f)
+                                .clickable {
+                                    showDialog.value = true
+                                }
                         ) {
                             Text(
                                 modifier = Modifier,
@@ -307,8 +315,8 @@ fun SettingsScreen(
                 item {
                     Spacer(Modifier.height(10.dp))
                     OutlinedButton(onClick = {
-                        //   viewModel.logOut()
-                        //  navController.navigate("login")
+                           viewModel.logOut()
+                          navController.navigate("login")
                     }, modifier = Modifier.fillMaxWidth()) {
                         Text(text = "Выйти", textAlign = TextAlign.Center, fontSize = 18.sp)
                     }
@@ -332,4 +340,10 @@ fun SettingsScreen(
         }
 
     }
+    if (showDialog.value)
+        ChangeBioDialog(
+            setShowDialog = {
+                showDialog.value = it
+            }
+        )
 }

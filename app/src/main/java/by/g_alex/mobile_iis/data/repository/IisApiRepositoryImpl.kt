@@ -209,4 +209,8 @@ class IisApiRepositoryImpl @Inject constructor(
     override suspend fun putJob(token: String, cvDto: PersonalCV) {
         api.putJob(token,cvDto)
     }
+
+    override suspend fun putSummary(token: String, cvDto: PersonalCV) {
+        api.putSummary(token, cvDto)
+    }
 }

@@ -81,12 +81,14 @@ interface IisApiRepository {
 
     suspend fun confirmCodeForEmail(token: String, email: ConfirmEmailDto): Call<Any>
 
-    suspend fun putPublished(token:String,cvDto: PersonalCV)
+    suspend fun putPublished(token: String, cvDto: PersonalCV)
 
+    suspend fun putJob(token: String, cvDto: PersonalCV)
 
-    suspend fun putJob(token:String,cvDto: PersonalCV)
+    suspend fun putRating(token: String, cvDto: PersonalCV)
 
-    suspend fun putRating(token:String,cvDto: PersonalCV)
+    suspend fun putSummary(token: String, cvDto: PersonalCV)
+
     // For All
     suspend fun getSchedule(groupNum: String): List<LessonModel>?
 

@@ -107,6 +107,18 @@ interface IisApi {
     @POST("api/v1/settings/contact/confirm")
     suspend fun confirmCodeForEmail(@Header("Cookie") cookieValue: String, @Body email : ConfirmEmailDto) : Call<Any>
 
+    @PUT("api/v1/profiles/personal-cv-searching-job")
+    suspend fun putJob(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+
+    @PUT("api/v1/profiles/personal-cv-rating")
+    suspend fun putRating(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+
+    @PUT("/api/v1/profiles/personal-cv-published")
+    suspend fun putPublished(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+
+    @PUT("/api/v1/profiles/summary")
+    suspend fun putSummary(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+
 
     // For all
     @GET("api/v1/schedule?") // Расписание группы
@@ -134,12 +146,4 @@ interface IisApi {
 
     @GET("api/v1/rating/studentRating")
     suspend fun getPersonalRating(@Query("studentCardNumber") numb:String):PersonalRatingDto
-
-    @PUT("api/v1/profiles/personal-cv-searching-job")
-    suspend fun putJob(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
-
-    @PUT("api/v1/profiles/personal-cv-rating")
-    suspend fun putRating(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
-    @PUT("/api/v1/profiles/personal-cv-published")
-    suspend fun putPublished(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
 }
