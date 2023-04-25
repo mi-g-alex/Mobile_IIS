@@ -25,12 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RatingAllScreen(
-    viewModel: RatingAllViewModel = hiltViewModel()
+    viewModel: RatingAllViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val years = mutableListOf<String>()
     val expandedYears = remember { mutableStateOf(false) }
@@ -65,7 +67,7 @@ fun RatingAllScreen(
         }
     ) {
         Column(modifier = Modifier.padding(it).fillMaxSize() ) {
-            Row() {
+            Row(modifier = Modifier.padding(horizontal = 10.dp)) {
                 ExposedDropdownMenuBox(
                     expanded = expandedYears.value,
                     onExpandedChange = {
@@ -150,7 +152,7 @@ fun RatingAllScreen(
                 onExpandedChange = {
                     expandedSpecialities.value = !expandedSpecialities.value
                 }, modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth().padding(horizontal = 10.dp)
             ) {
                 OutlinedTextField(
                     readOnly = true,
@@ -188,7 +190,7 @@ fun RatingAllScreen(
             Box(modifier = Modifier.fillMaxSize()) {
                 if (viewModel.rState.value.isLoading)
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                RatingColumn(students = viewModel.rState.value.RatingState?.sortedByDescending {it.average})
+                RatingColumn(students = viewModel.rState.value.RatingState?.sortedByDescending {it.average}, navController = navController)
             }
 
         }

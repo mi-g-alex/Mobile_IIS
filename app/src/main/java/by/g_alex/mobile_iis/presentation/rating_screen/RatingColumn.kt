@@ -1,5 +1,7 @@
 package by.g_alex.mobile_iis.presentation.rating_screen
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,18 +15,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 
 @Composable
 fun RatingColumn(
-    students: List<RatingDto>?
+    students: List<RatingDto>?,
+    navController: NavController,
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
 
         if(!students.isNullOrEmpty()) {
             item {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(15.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(15.dp),
                     //horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     Text(text = "№", modifier = Modifier.weight(0.3f))
@@ -38,6 +45,7 @@ fun RatingColumn(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clickable { Log.e("AAAAAAAAA","BBBBBBBBBBB");navController.navigate("personalRating/${it.studentCardNumber}") }
                     .padding(15.dp),
                 //horizontalArrangement = Arrangement.SpaceAround
             ) {

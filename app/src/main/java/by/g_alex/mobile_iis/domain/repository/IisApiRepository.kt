@@ -8,6 +8,7 @@ import by.g_alex.mobile_iis.data.remote.dto.faculties.FacultiesDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
+import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
@@ -74,4 +75,6 @@ interface IisApiRepository {
     suspend fun getSpecialities(year:Int,id:Int):List<SpecialityDto>
 
     suspend fun getRating(year:Int,id:Int):List<RatingDto>
+
+    suspend fun getPersonalRating(number:String):PersonalRatingDto
 }

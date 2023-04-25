@@ -39,6 +39,7 @@ import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.se
 import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
 import by.g_alex.mobile_iis.presentation.omissions_screen.OmissionsScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
+import by.g_alex.mobile_iis.presentation.rating_screen.PersonalRateScreen
 import by.g_alex.mobile_iis.presentation.rating_screen.RatingAllScreen
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleStartUp
 import by.g_alex.mobile_iis.presentation.study_screen.StudyScreen
@@ -188,8 +189,14 @@ fun NavigationScreen() {
                     composable(route = "fines") {
                         FinesScreen()
                     }
-                    composable(route = "all-rating"){
-                        RatingAllScreen()
+                    navigation(startDestination = "all-ratingHome", route = "all-rating") {
+                        composable(route = "all-ratingHome") {
+                            RatingAllScreen(navController = navController)
+                        }
+                        composable(route = "personalRating/{number}") {
+                            val number = it.arguments?.getString("number") ?: ""
+                            PersonalRateScreen(navController = navController,number = number)
+                        }
                     }
                 }
             }

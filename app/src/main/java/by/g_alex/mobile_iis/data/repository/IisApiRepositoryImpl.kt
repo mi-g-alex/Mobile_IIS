@@ -14,6 +14,7 @@ import by.g_alex.mobile_iis.data.remote.dto.login.*
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.toListMarkBookMarkModel
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.toPenltyModel
+import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
@@ -169,5 +170,9 @@ class IisApiRepositoryImpl @Inject constructor(
 
     override suspend fun getRating(year: Int, id: Int): List<RatingDto> {
         return api.getRating(year,id)
+    }
+
+    override suspend fun getPersonalRating(number: String): PersonalRatingDto {
+        return api.getPersonalRating(number)
     }
 }

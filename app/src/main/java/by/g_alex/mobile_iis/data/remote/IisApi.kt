@@ -11,6 +11,7 @@ import by.g_alex.mobile_iis.data.remote.dto.login.*
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
+import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
@@ -112,5 +113,8 @@ interface IisApi {
     suspend fun getSpecialities(@Query("facultyId") id : Int, @Query("entryYear") year:Int):List<SpecialityDto>
     @GET("api/v1/rating")
     suspend fun getRating(@Query("year") year : Int, @Query("sdef") sdef:Int):List<RatingDto>
+
+    @GET("api/v1/rating/studentRating")
+    suspend fun getPersonalRating(@Query("studentCardNumber") numb:String):PersonalRatingDto
 
 }
