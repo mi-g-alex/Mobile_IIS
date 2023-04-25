@@ -15,6 +15,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,7 +28,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ElevatedSuggestionChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -150,12 +159,23 @@ fun ProfileCVScreen(
                         )
                         Text(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 20.dp),
+                                .fillMaxWidth().padding(10.dp),
+
                             textAlign = TextAlign.Center,
                             text = "Курс " + profileInfo.course + ", " + profileInfo.faculty + ", " + profileInfo.speciality + ", " + profileInfo.studentGroup,
                             fontSize = 20.sp
                         )
+                        Row(modifier = Modifier.padding(bottom = 20.dp)){
+                           for(n in 1..5){
+                                   Icon(
+                                       painter =  painterResource(id = R.drawable.baseline_star_24),
+                                       contentDescription = "sdcscds",
+                                       tint =if((profileInfo.rating ?: 0) >= n) Color(0xffffbf00)
+                                   else MaterialTheme.colorScheme.onBackground
+                                   )
+
+                           }
+                        }
                     }
                 }
 

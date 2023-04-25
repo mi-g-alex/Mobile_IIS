@@ -85,7 +85,7 @@ fun BottomSheet(
                                     .apply()
                                 viewModel.favourite.value = item
                             },
-                        tint = if(viewModel.favourite.value == item) Color.Yellow
+                        tint = if(viewModel.favourite.value == item) Color(0xffffbf00)
                     else MaterialTheme.colorScheme.inverseSurface
                     )
                     Image(
