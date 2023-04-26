@@ -15,10 +15,10 @@ data class PersonalCV(
     val photoUrl: String?, // https://drive.google.com/uc?id=1yRyNQ0sEVx3gnnztawY1KBV_uxmKm2B3&export=download
     var published: Boolean?, // true
     val rating: Int?, // 5
-    val references: List<Reference>?,
+    var references: List<Reference>?,
     var searchJob: Boolean?, // false
     var showRating: Boolean?, // true
-    val skills: List<Skill>?,
+    var skills: List<Skill>?,
     val speciality: String?, // ИиТП
     val studentGroup: String?, // 253501
     var summary: String? // Text

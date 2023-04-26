@@ -27,6 +27,8 @@ import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
+import by.g_alex.mobile_iis.domain.model.profile.Reference
+import by.g_alex.mobile_iis.domain.model.profile.Skill
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
 import by.g_alex.mobile_iis.domain.model.profile.penalty_model.PenaltyModel
@@ -212,5 +214,13 @@ class IisApiRepositoryImpl @Inject constructor(
 
     override suspend fun putSummary(token: String, cvDto: PersonalCV) {
         api.putSummary(token, cvDto)
+    }
+
+    override suspend fun putLinks(token: String, refs: List<Reference>) {
+        api.putLinks(token,refs)
+    }
+
+    override suspend fun postSkills(token: String, skills: List<Skill>) {
+        api.postSkills(token,skills)
     }
 }

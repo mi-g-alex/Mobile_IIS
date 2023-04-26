@@ -33,8 +33,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
-import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.select_how_restore.components.RestorePasswordSelectDialog
 import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_bio.ChangeBioDialog
+import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_links.LinksDialog
+import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_skills.ChangeSkillsDialog
 
 @Composable
 fun SettingsScreen(
@@ -45,7 +46,9 @@ fun SettingsScreen(
     var email = state.contacts?.contactDtoList?.get(0)?.contactValue ?: ""
     val id = state.contacts?.contactDtoList?.get(0)?.id ?: ""
     val showDialog = remember { mutableStateOf(false) }
-
+    val showLinksDialog = remember{ mutableStateOf(false) }
+    val showSkillsDialog = remember{ mutableStateOf(false) }
+    
     LaunchedEffect(state.contacts) {
         email = state.contacts?.contactDtoList?.get(0)?.contactValue ?: ""
     }
@@ -175,7 +178,11 @@ fun SettingsScreen(
                 item {
                     //Change Password
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                showSkillsDialog.value = true
+                            },
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -205,7 +212,11 @@ fun SettingsScreen(
                 item {
                     //Change Password
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                showLinksDialog.value = true
+                            },
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -346,4 +357,10 @@ fun SettingsScreen(
                 showDialog.value = it
             }
         )
+    if(showLinksDialog.value){
+        LinksDialog(setShowDialog = {showLinksDialog.value = it},)
+    }
+    if(showSkillsDialog.value){
+        ChangeSkillsDialog(setShowDialog ={showSkillsDialog.value = it} )
+    }
 }

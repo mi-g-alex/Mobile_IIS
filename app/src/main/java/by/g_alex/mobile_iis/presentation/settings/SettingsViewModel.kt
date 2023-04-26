@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
+import by.g_alex.mobile_iis.domain.model.profile.Reference
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import by.g_alex.mobile_iis.domain.use_case.get_profile.settings.GetSettingsUseCase
 import by.g_alex.mobile_iis.domain.use_case.get_profile.settings.PutJobUseCase
@@ -35,6 +36,7 @@ class SettingsViewModel @Inject constructor(
     val jobCheck = mutableStateOf(false)
     val pubCheck = mutableStateOf(false)
     val rateCheck = mutableStateOf(false)
+    var links = mutableListOf<Reference>()
 
     init {
         getEmail()
@@ -43,7 +45,7 @@ class SettingsViewModel @Inject constructor(
             jobCheck.value = CV?.searchJob ?: false
             pubCheck.value = CV?.published ?: false
             rateCheck.value = CV?.showRating ?: false
-
+            links = db.getProfilePersonalCV()?.references as MutableList<Reference>
         }
     }
 

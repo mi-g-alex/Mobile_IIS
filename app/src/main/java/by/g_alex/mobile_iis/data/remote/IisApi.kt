@@ -24,6 +24,8 @@ import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
+import by.g_alex.mobile_iis.domain.model.profile.Reference
+import by.g_alex.mobile_iis.domain.model.profile.Skill
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -113,12 +115,17 @@ interface IisApi {
     @PUT("api/v1/profiles/personal-cv-rating")
     suspend fun putRating(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
 
-    @PUT("/api/v1/profiles/personal-cv-published")
+    @PUT("api/v1/profiles/personal-cv-published")
     suspend fun putPublished(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
 
-    @PUT("/api/v1/profiles/summary")
+    @PUT("api/v1/profiles/summary")
     suspend fun putSummary(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
 
+    @PUT("api/v1/profiles/my-references")
+    suspend fun putLinks(@Header("Cookie") cookieValue:String,@Body refs:List<Reference>)
+
+    @POST("api/v1/profiles/my-skills")
+    suspend fun postSkills(@Header("Cookie") cookieValue:String,@Body refs:List<Skill>)
 
     // For all
     @GET("api/v1/schedule?") // Расписание группы
