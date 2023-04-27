@@ -1,7 +1,8 @@
 package by.g_alex.mobile_iis.presentation.settings.advance_screens.change_links
 
-import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,37 +11,49 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.domain.model.profile.Reference
 
 @Composable
 fun LinksDialog(
-    setShowDialog: (Boolean) -> Unit,
     viewModel: LinksViewModel = hiltViewModel(),
-    //references: MutableList<Reference>
+    navController: NavController
 ) {
 
     val inName = remember { mutableStateOf(TextFieldValue("")) }
     val inRef = remember { mutableStateOf(TextFieldValue("")) }
+
+    val showAddDialog = remember{mutableStateOf(false)}
 
     val links = remember {
         mutableStateOf((listOf<Reference>()))
@@ -51,12 +64,43 @@ fun LinksDialog(
     LaunchedEffect(Unit) {
         links.value = viewModel.getLinkFromDB().toMutableList()
     }
-    Dialog(onDismissRequest = { setShowDialog(false) }) {
-        Surface(
-            shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.height(350.dp)
+    Scaffold(
+        topBar = {
+            TopAppBar(title = {
+                Text(
+                    text = "Изменить ссылки",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    fontSize = 17.sp
+                )
+            },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.navigateUp()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Назад"
+                        )
+                    }
+                })
+        }, floatingActionButton = {
+            ExtendedFloatingActionButton(
+                icon = { Icon(Icons.Filled.Add, contentDescription = "Добавить") },
+                text = { Text("Добавить") },
+                onClick = { showAddDialog.value = true },
+                shape = RoundedCornerShape(40.dp)
+            )
+        }
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
         ) {
-            LazyColumn(modifier = Modifier.padding(10.dp).fillMaxSize()) {
+            LazyColumn(modifier = Modifier
+                .padding(10.dp)
+                .fillMaxSize()) {
                 items(links.value) { reference ->
                     val index = links.value.indexOf(reference)
                     Row(
@@ -67,7 +111,8 @@ fun LinksDialog(
                     ) {
                         Text(
                             text = reference.name, color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.weight(0.5f)
+                            modifier = Modifier.weight(0.5f),
+                            fontWeight = FontWeight.Bold
                         )
                         Text(
                             text = reference.reference,
@@ -89,40 +134,68 @@ fun LinksDialog(
                                         delInd.value.remove(delInd.value.indexOf(index))
                                     } else
                                         delInd.value.add(index)
+                                    val newLinks = mutableListOf<Reference>()
+                                    links.value.onEachIndexed { ind, ref ->
+                                        if (!delInd.value.contains(ind)) {
+                                            newLinks.add(ref)
+                                        }
+                                    }
+                                    viewModel.putLinks(newLinks)
+                                    links.value = newLinks
+                                    inName.value = TextFieldValue("");
+                                    inRef.value = TextFieldValue("")
                                 }
                                 .weight(0.2f),
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
-                    Divider(modifier = Modifier.padding(5.dp).height(1.dp).fillMaxWidth(), color = MaterialTheme.colorScheme.outline)
+                    Divider(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .height(1.dp)
+                            .fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.outline
+                    )
                 }
-                item {
-                    OutlinedTextField(value = inName.value, onValueChange = {
-                        inName.value = it
-                    }, label = { Text(text = "Name") },
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            textColor = MaterialTheme.colorScheme.onBackground,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    OutlinedTextField(
-                        value = inRef.value,
-                        onValueChange = { inRef.value = it },
-                        label = { Text(text = "Reference") },
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            textColor = MaterialTheme.colorScheme.onBackground,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Button(onClick = {
+            }
+        }
+    }
+    if(showAddDialog.value){
+        AlertDialog(
+            onDismissRequest = {
+                showAddDialog.value = false
+            },
+            title = { Text(text = "Добавить ссылку") },
+            text = { Column() {
+                OutlinedTextField(value = inName.value, onValueChange = {
+                    inName.value = it
+                }, label = { Text(text = "Название") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = MaterialTheme.colorScheme.onBackground,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(value = inRef.value, onValueChange = {
+                    inRef.value = it
+                }, label = { Text(text = "Ccылка") },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = MaterialTheme.colorScheme.onBackground,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            },
+            confirmButton = {
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = MaterialTheme.colorScheme.inverseSurface
+                    ),
+                    onClick = {
                         val newLinks = mutableListOf<Reference>()
-                        links.value.onEachIndexed { index, reference ->
-                            if (!delInd.value.contains(index)) {
-                                newLinks.add(reference)
-                            }
-                        }
+                        newLinks.addAll(links.value)
                         if (inName.value.text.isNotBlank() && inRef.value.text.isNotBlank())
                             newLinks.add(
                                 Reference(
@@ -131,17 +204,15 @@ fun LinksDialog(
                                     reference = inRef.value.text
                                 )
                             )
+                        links.value = newLinks
                         viewModel.putLinks(newLinks)
-                        Log.e("NewLInk", newLinks.toString())
-                        setShowDialog(false)
-                    },
-                    modifier = Modifier.fillMaxWidth()) {
-
-                        Text(text = "Cохранить", textAlign = TextAlign.Center,
-                        )
-                    }
+                        inName.value = TextFieldValue("")
+                        inRef.value = TextFieldValue("")
+                        showAddDialog.value = false
+                    }) {
+                    Text("Oк")
                 }
             }
-        }
+        )
     }
 }

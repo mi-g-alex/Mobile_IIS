@@ -44,6 +44,8 @@ import by.g_alex.mobile_iis.presentation.rating_screen.RatingAllScreen
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleStartUp
 import by.g_alex.mobile_iis.presentation.settings.SettingsScreen
 import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_email.ChangeEmailScreen
+import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_links.LinksDialog
+import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_skills.ChangeSkillsDialog
 import by.g_alex.mobile_iis.presentation.study_screen.StudyScreen
 import by.g_alex.mobile_iis.presentation.user_group.UserGroupScreen
 import kotlinx.coroutines.CoroutineScope
@@ -208,6 +210,12 @@ fun NavigationScreen() {
                             val email = backStackEntry.arguments?.getString("email") ?: ""
                             val id = backStackEntry.arguments?.getString("id")?.toInt() ?: 0
                             ChangeEmailScreen(navController, email, id)
+                        }
+                        composable(route = "changeSkills") {
+                            ChangeSkillsDialog(navController = navController)
+                        }
+                        composable(route = "changeLinks") {
+                            LinksDialog(navController = navController)
                         }
                     }
 
