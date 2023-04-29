@@ -20,6 +20,7 @@ import by.g_alex.mobile_iis.data.remote.dto.penalty.toPenltyModel
 import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
+import by.g_alex.mobile_iis.data.remote.dto.settings.ChangePassDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ContactsDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
@@ -92,7 +93,14 @@ class IisApiRepositoryImpl @Inject constructor(
         contactValue: String,
         code: String
     ): ResponseBody? {
-            return api.restorePasswordApply(RestorePasswordApplyDto(login, contactValue, code, password))
+        return api.restorePasswordApply(
+            RestorePasswordApplyDto(
+                login,
+                contactValue,
+                code,
+                password
+            )
+        )
     }
 
     override suspend fun getProfilePersonalCV(token: String): PersonalCVDto {
@@ -161,6 +169,9 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.confirmCodeForEmail(token, email)
     }
 
+    override suspend fun changePass(token: String, password: String, newPassword: String): ResponseBody? {
+        return api.changePass(token, ChangePassDto(password, newPassword))
+    }
 
     override suspend fun getSchedule(groupNum: String): List<LessonModel> {
         return api.getSchedule(groupNum).toLessonList(true)
@@ -187,27 +198,27 @@ class IisApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSpecialities(year: Int, id: Int): List<SpecialityDto> {
-        return api.getSpecialities(id,year)
+        return api.getSpecialities(id, year)
     }
 
     override suspend fun getRating(year: Int, id: Int): List<RatingDto> {
-        return api.getRating(year,id)
+        return api.getRating(year, id)
     }
 
     override suspend fun getPersonalRating(number: String): PersonalRatingDto {
         return api.getPersonalRating(number)
     }
 
-    override suspend fun putPublished(token:String,cvDto: PersonalCV){
-        api.putPublished(token,cvDto)
+    override suspend fun putPublished(token: String, cvDto: PersonalCV) {
+        api.putPublished(token, cvDto)
     }
 
     override suspend fun putRating(token: String, cvDto: PersonalCV) {
-        api.putRating(token,cvDto)
+        api.putRating(token, cvDto)
     }
 
     override suspend fun putJob(token: String, cvDto: PersonalCV) {
-        api.putJob(token,cvDto)
+        api.putJob(token, cvDto)
     }
 
     override suspend fun putSummary(token: String, cvDto: PersonalCV) {
@@ -215,10 +226,10 @@ class IisApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun putLinks(token: String, refs: List<Reference>) {
-        api.putLinks(token,refs)
+        api.putLinks(token, refs)
     }
 
     override suspend fun postSkills(token: String, skills: List<Skill>) {
-        api.postSkills(token,skills)
+        api.postSkills(token, skills)
     }
 }

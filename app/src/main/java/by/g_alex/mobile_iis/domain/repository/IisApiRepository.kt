@@ -11,6 +11,7 @@ import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
+import by.g_alex.mobile_iis.data.remote.dto.settings.ChangePassDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ContactsDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
@@ -27,6 +28,8 @@ import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.Header
 
 interface IisApiRepository {
 
@@ -83,6 +86,8 @@ interface IisApiRepository {
     suspend fun getCodeForEmail(token: String, id: Int): ResponseBody?
 
     suspend fun confirmCodeForEmail(token: String, email: ConfirmEmailDto): ResponseBody?
+
+    suspend fun changePass(token: String, password: String, newPassword: String): ResponseBody?
 
     suspend fun putPublished(token: String, cvDto: PersonalCV)
 

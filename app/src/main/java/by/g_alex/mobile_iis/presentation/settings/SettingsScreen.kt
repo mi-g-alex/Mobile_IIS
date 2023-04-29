@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.settings
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,7 +20,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_bio.ChangeBioDialog
+import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_password.ChangePasswordDialog
 
 @Composable
 fun SettingsScreen(
@@ -42,8 +41,8 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    val id = state.contacts?.contactDtoList?.get(0)?.id ?: ""
-    val showDialog = remember { mutableStateOf(false) }
+    val showDialogBio = remember { mutableStateOf(false) }
+    val showDialogPass = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -59,14 +58,14 @@ fun SettingsScreen(
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
-            if (state.contacts != null) LazyColumn(Modifier.padding(horizontal = 15.dp)) {
+            if (state.allGood != null) LazyColumn(Modifier.padding(horizontal = 15.dp)) {
                 item {
                     //Change Email
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                navController.navigate("changeEmail/$id")
+                                navController.navigate("changeEmail")
                             },
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
@@ -103,7 +102,11 @@ fun SettingsScreen(
                 item {
                     //Change Password
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                showDialogPass.value = true
+                            },
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -142,7 +145,7 @@ fun SettingsScreen(
                                 .padding(vertical = 8.dp)
                                 .weight(1f)
                                 .clickable {
-                                    showDialog.value = true
+                                    showDialogBio.value = true
                                 }
                         ) {
                             Text(
@@ -318,8 +321,8 @@ fun SettingsScreen(
                 item {
                     Spacer(Modifier.height(10.dp))
                     OutlinedButton(onClick = {
-                           viewModel.logOut()
-                          navController.navigate("login")
+                        viewModel.logOut()
+                        navController.navigate("login")
                     }, modifier = Modifier.fillMaxWidth()) {
                         Text(text = "Выйти", textAlign = TextAlign.Center, fontSize = 18.sp)
                     }
@@ -343,11 +346,19 @@ fun SettingsScreen(
         }
 
     }
-    if (showDialog.value)
+    if (showDialogBio.value)
         ChangeBioDialog(
             setShowDialog = {
-                showDialog.value = it
+                showDialogBio.value = it
             }
         )
+
+    if (showDialogPass.value)
+        ChangePasswordDialog(
+            setShowDialog = {
+                showDialogPass.value = it
+            }
+        )
+
 
 }

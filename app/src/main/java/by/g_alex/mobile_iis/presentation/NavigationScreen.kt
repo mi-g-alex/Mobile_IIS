@@ -223,9 +223,8 @@ fun NavigationScreen() {
                             SettingsScreen(navController = navController)
                             selectedItem.value = 4
                         }
-                        composable(route = "changeEmail/{id}") { backStackEntry ->
-                            val id = backStackEntry.arguments?.getString("id")?.toInt() ?: 0
-                            ChangeEmailScreen(navController, id)
+                        composable(route = "changeEmail") { backStackEntry ->
+                            ChangeEmailScreen(navController)
                             selectedItem.value = 4
                         }
                         composable(route = "changeSkills") {

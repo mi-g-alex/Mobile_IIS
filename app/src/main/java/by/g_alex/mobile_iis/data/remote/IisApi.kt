@@ -15,6 +15,7 @@ import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
+import by.g_alex.mobile_iis.data.remote.dto.settings.ChangePassDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ContactsDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
@@ -109,6 +110,9 @@ interface IisApi {
 
     @POST("api/v1/settings/contact/confirm")
     suspend fun confirmCodeForEmail(@Header("Cookie") cookieValue: String, @Body email : ConfirmEmailDto) : ResponseBody?
+
+    @POST("api/v1/settings/password/change")
+    suspend fun changePass(@Header("Cookie") cookieValue: String, @Body password : ChangePassDto) : ResponseBody?
 
     @PUT("api/v1/profiles/personal-cv-searching-job")
     suspend fun putJob(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)

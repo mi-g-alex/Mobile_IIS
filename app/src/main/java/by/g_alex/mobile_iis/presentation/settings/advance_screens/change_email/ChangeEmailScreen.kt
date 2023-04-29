@@ -36,7 +36,6 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun ChangeEmailScreen(
     navController: NavController,
-    id: Int,
     viewModel: ChangeEmailViewModel = hiltViewModel()
 ) {
 
@@ -121,16 +120,24 @@ fun ChangeEmailScreen(
                         onClick = {
                             ticks.value = 90
                             countOfTry.value
-                            viewModel.editEmailGetCode(id, emailText.value.text)
+                            viewModel.editEmailGetCode(viewModel.id.value, emailText.value.text)
                         },
                         modifier = Modifier
                             .padding(end = 60.dp)
                             .align(Alignment.CenterVertically)
                             .weight(0.5f),
-                        enabled = ticks.value == 0 && countOfTry.value != 0,
+                        enabled = ticks.value == 0 && countOfTry.value != 0 && viewModel.id.value != 0,
                     ) {
-                        if (ticks.value == 0) Text("Получить\nкод", textAlign = TextAlign.Center)
-                        else Text("${ticks.value}c.", textAlign = TextAlign.Center)
+                        if (viewModel.id.value == 0) {
+                            Text(text = "Ошибка")
+                        } else if (countOfTry.value == 0) {
+                            Text(text = "0 попыток")
+                        } else
+                            if (ticks.value == 0) Text(
+                                "Получить\nкод",
+                                textAlign = TextAlign.Center
+                            )
+                            else Text("${ticks.value}c.", textAlign = TextAlign.Center)
                     }
                 }
 
@@ -144,7 +151,7 @@ fun ChangeEmailScreen(
 
                 Button(
                     onClick = {
-                        viewModel.confirmEmailCode(id, codeText.value.text)
+                        viewModel.confirmEmailCode(viewModel.id.value, codeText.value.text)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -152,18 +159,20 @@ fun ChangeEmailScreen(
                     enabled = emailText.value.text != "" && codeText.value.text.length == 6 && regex.matches(
                         emailText.value.text
                     ) && ticks.value != 0
+                            && viewModel.id.value != 0
                 ) {
-                    if (!regex.matches(emailText.value.text)) {
+                    if (viewModel.id.value == 0) {
+                        Text(text = "Повторите позже")
+                    } else if (!regex.matches(emailText.value.text)) {
                         Text(text = "Неправильный формат почты")
+                    } else if (emailText.value.text == "" || codeText.value.text.length != 6) {
+                        Text(text = "Заполните все поля")
+                    } else if (ticks.value == 0) {
+                        Text(text = "Код не действителен")
                     } else {
-                        if (emailText.value.text == "" || codeText.value.text.length != 6) {
-                            Text(text = "Заполните все поля")
-                        } else if (ticks.value == 0) {
-                            Text(text = "Код не действителен")
-                        } else {
-                            Text(text = "Сохранить почту")
-                        }
+                        Text(text = "Сохранить почту")
                     }
+
                 }
             }
         }

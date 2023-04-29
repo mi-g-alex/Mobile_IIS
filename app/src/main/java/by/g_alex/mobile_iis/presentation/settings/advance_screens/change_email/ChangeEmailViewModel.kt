@@ -32,6 +32,7 @@ class ChangeEmailViewModel @Inject constructor(
 
     val email = mutableStateOf("Loading...")
     val count = mutableStateOf(0)
+    val id = mutableStateOf(0)
 
     init {
         getEmail()
@@ -43,6 +44,7 @@ class ChangeEmailViewModel @Inject constructor(
                 is Resource.Success -> {
                     email.value = result.data?.contactDtoList?.get(0)?.contactValue ?: "Error to load"
                     count.value = result.data?.numberOfAttempts ?: 0
+                    id.value = result.data?.contactDtoList?.get(0)?.id ?: 0
                     _state.value = ChangeEmailState()
                 }
 

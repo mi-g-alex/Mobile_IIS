@@ -53,25 +53,7 @@ class SettingsViewModel @Inject constructor(
                     pubCheck.value = CV?.published ?: false
                     rateCheck.value = CV?.showRating ?: false
                     links = db.getProfilePersonalCV()?.references as MutableList<Reference>
-                }
-
-                is Resource.Loading -> {
-                    _state.value = SettingsState(isLoading = true)
-                }
-
-                is Resource.Error -> {
-                    _state.value = SettingsState(
-                        error = result.message ?: "An unexpected error occured"
-                    )
-                }
-            }
-        }.launchIn(viewModelScope)
-
-
-        getSettingsUseCase().onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _state.value = SettingsState(contacts = result.data)
+                    _state.value = SettingsState(allGood = true)
                 }
 
                 is Resource.Loading -> {
