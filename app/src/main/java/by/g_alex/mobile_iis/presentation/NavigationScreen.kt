@@ -120,6 +120,7 @@ fun NavigationScreen() {
                             route = "scheduleHome",
                         ) {
                             ScheduleStartUp()
+                            selectedItem.value = 0;
                         }
                     }
                     navigation(startDestination = "profileHome", route = "profile") {
@@ -127,16 +128,19 @@ fun NavigationScreen() {
                             route = "profileHome",
                         ) {
                             ProfileCVScreen(navController)
+                            selectedItem.value = 2;
                         }
                         composable(
                             route = "login",
                         ) {
                             LoginScreen(navController = navController)
+                            selectedItem.value = 2;
                         }
                         composable(
                             route = "restorePassword"
                         ) {
                             RestorePasswordEnterLogin(navController = navController)
+                            selectedItem.value = 2;
                         }
                         composable(
                             route = "restorePasswordSelect/{data}/{login}"
@@ -150,6 +154,7 @@ fun NavigationScreen() {
                                 data = data,
                                 login = loginRow
                             )
+                            selectedItem.value = 2;
                         }
                         composable(
                             route = "restorePasswordEnd/{data}/{login}"
@@ -163,59 +168,74 @@ fun NavigationScreen() {
                                 data = data,
                                 login = loginRow
                             )
+                            selectedItem.value = 2;
                         }
                     }
                     navigation(startDestination = "mark_bookHome", route = "mark_book") {
                         composable(route = "mark_bookHome") {
                             MarkBookScreen()
+                            selectedItem.value = 1;
                         }
                     }
                     navigation(startDestination = "grade_bookHome", route = "grade_book") {
                         composable(route = "grade_bookHome") {
                             RatingScreen()
+                            selectedItem.value = 3;
                         }
                     }
                     composable(route = "groupHome") {
                         UserGroupScreen()
+                        selectedItem.value = 4;
                     }
                     composable(route = "omissionsHome") {
                         OmissionsScreen()
+                        selectedItem.value = 4;
                     }
                     composable(route = "studyHome") {
                         StudyScreen()
+                        selectedItem.value = 4;
                     }
                     composable(route = "announcements") {
                         AnnouncementScreen()
+                        selectedItem.value = 4;
                     }
                     composable(route = "dormitory") {
                         DormitoryScreen()
+                        selectedItem.value = 4;
                     }
                     composable(route = "fines") {
                         FinesScreen()
+                        selectedItem.value = 4;
                     }
                     navigation(startDestination = "all-ratingHome", route = "all-rating") {
                         composable(route = "all-ratingHome") {
                             RatingAllScreen(navController = navController)
+                            selectedItem.value = 4;
                         }
                         composable(route = "personalRating/{number}") {
                             val number = it.arguments?.getString("number") ?: ""
-                            PersonalRateScreen(navController = navController,number = number)
+                            PersonalRateScreen(navController = navController, number = number)
+                            selectedItem.value = 4;
                         }
                     }
                     navigation(startDestination = "settingsHome", route = "settings") {
                         composable(route = "settingsHome") {
                             SettingsScreen(navController = navController)
+                            selectedItem.value = 4;
                         }
                         composable(route = "changeEmail/{email}/{id}") { backStackEntry ->
                             val email = backStackEntry.arguments?.getString("email") ?: ""
                             val id = backStackEntry.arguments?.getString("id")?.toInt() ?: 0
                             ChangeEmailScreen(navController, email, id)
+                            selectedItem.value = 4;
                         }
                         composable(route = "changeSkills") {
                             ChangeSkillsDialog(navController = navController)
+                            selectedItem.value = 4;
                         }
                         composable(route = "changeLinks") {
                             LinksDialog(navController = navController)
+                            selectedItem.value = 4;
                         }
                     }
 
