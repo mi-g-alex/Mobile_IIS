@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.domain.model.profile.Reference
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
+import by.g_alex.mobile_iis.domain.use_case.get_profile.personal_cv.GetPersonalCVUseCase
 import by.g_alex.mobile_iis.domain.use_case.get_profile.settings.GetSettingsUseCase
 import by.g_alex.mobile_iis.domain.use_case.get_profile.settings.PutJobUseCase
 import by.g_alex.mobile_iis.domain.use_case.get_profile.settings.PutPublishedUseCase
@@ -21,6 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
+    private val getPersonalCVUseCase: GetPersonalCVUseCase,
     private val getSettingsUseCase: GetSettingsUseCase,
     private val putPublishedUseCase: PutPublishedUseCase,
     private val putJobUseCase: PutJobUseCase,
@@ -40,24 +42,42 @@ class SettingsViewModel @Inject constructor(
 
     init {
         getEmail()
-        viewModelScope.launch {
-            val CV = db.getProfilePersonalCV()
-            jobCheck.value = CV?.searchJob ?: false
-            pubCheck.value = CV?.published ?: false
-            rateCheck.value = CV?.showRating ?: false
-            links = db.getProfilePersonalCV()?.references as MutableList<Reference>
-        }
     }
 
     private fun getEmail() {
+        getPersonalCVUseCase().onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    val CV = db.getProfilePersonalCV()
+                    jobCheck.value = CV?.searchJob ?: false
+                    pubCheck.value = CV?.published ?: false
+                    rateCheck.value = CV?.showRating ?: false
+                    links = db.getProfilePersonalCV()?.references as MutableList<Reference>
+                }
+
+                is Resource.Loading -> {
+                    _state.value = SettingsState(isLoading = true)
+                }
+
+                is Resource.Error -> {
+                    _state.value = SettingsState(
+                        error = result.message ?: "An unexpected error occured"
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+
+
         getSettingsUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = SettingsState(contacts = result.data)
                 }
+
                 is Resource.Loading -> {
                     _state.value = SettingsState(isLoading = true)
                 }
+
                 is Resource.Error -> {
                     _state.value = SettingsState(
                         error = result.message ?: "An unexpected error occured"
@@ -66,11 +86,13 @@ class SettingsViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-    fun putSearchJob(){
+
+
+    fun putSearchJob() {
         viewModelScope.launch {
             val cvDto = db.getProfilePersonalCV()
-            if(cvDto!=null) {
-                Log.e("sdsd","dscsd")
+            if (cvDto != null) {
+                Log.e("sdsd", "dscsd")
                 cvDto.searchJob = !cvDto.searchJob!!
                 putJobUseCase.putJob(cvDto)
                 db.setProfilePersonalCV(cvDto)
@@ -78,11 +100,12 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
-    fun putRating(){
+
+    fun putRating() {
         viewModelScope.launch {
             val cvDto = db.getProfilePersonalCV()
-            if(cvDto!=null) {
-                Log.e("sdsd","dscsd")
+            if (cvDto != null) {
+                Log.e("sdsd", "dscsd")
                 cvDto.showRating = !cvDto.showRating!!
                 putRatingUseCase.putRating(cvDto)
                 db.setProfilePersonalCV(cvDto)
@@ -90,11 +113,12 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
-    fun putPublished(){
+
+    fun putPublished() {
         viewModelScope.launch {
             val cvDto = db.getProfilePersonalCV()
-            if(cvDto!=null) {
-                Log.e("sdsd","dscsd")
+            if (cvDto != null) {
+                Log.e("sdsd", "dscsd")
                 cvDto.published = !cvDto.published!!
                 putPublishedUseCase.putPublished(cvDto)
                 db.setProfilePersonalCV(cvDto)
@@ -102,6 +126,7 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
+
     fun logOut() {
         viewModelScope.launch {
             logOutUseCase.logOut()

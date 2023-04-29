@@ -27,6 +27,7 @@ import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.model.profile.Reference
 import by.g_alex.mobile_iis.domain.model.profile.Skill
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -101,13 +102,13 @@ interface IisApi {
     suspend fun getContacts(@Header("Cookie") cookieValue: String): ContactsDto
 
     @POST("api/v1/settings/contact/update")
-    fun updateEmail(@Header("Cookie") cookieValue: String, @Body email : EmailChangeDto) : Call<Any?>
+    suspend fun updateEmail(@Header("Cookie") cookieValue: String, @Body email : EmailChangeDto) : ResponseBody?
 
     @POST("api/v1/settings/contact/send-confirm-message")
-    suspend fun getCodeForEmail(@Header("Cookie") cookieValue: String, @Body id : Int) : Call<Any>
+    suspend fun getCodeForEmail(@Header("Cookie") cookieValue: String, @Body id : Int) : ResponseBody?
 
     @POST("api/v1/settings/contact/confirm")
-    suspend fun confirmCodeForEmail(@Header("Cookie") cookieValue: String, @Body email : ConfirmEmailDto) : Call<Any>
+    suspend fun confirmCodeForEmail(@Header("Cookie") cookieValue: String, @Body email : ConfirmEmailDto) : ResponseBody?
 
     @PUT("api/v1/profiles/personal-cv-searching-job")
     suspend fun putJob(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)

@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.presentation.settings.advance_screens.change_email
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,12 +46,21 @@ fun ChangeEmailScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
     val countOfTry = remember { mutableStateOf(4) }
     val cnt = LocalContext.current
+    val state = viewModel.state
 
     val ticks = remember { mutableStateOf(0) }
     LaunchedEffect(ticks.value) {
         while (ticks.value > 0) {
             delay(1.seconds)
             ticks.value--
+        }
+    }
+
+    LaunchedEffect(state.value) {
+        Log.e("!~~~!", "qwertyq | ${state.value.information}")
+        Log.e("!~~~!", "qwertyq | ${state.value.toString()}")
+        if(viewModel.state.value.error == "200") {
+            navController.navigateUp()
         }
     }
 
@@ -77,6 +87,7 @@ fun ChangeEmailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(60.dp, 5.dp, 60.dp, 5.dp),
+                    enabled = viewModel.state.value.information == null,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
@@ -110,7 +121,7 @@ fun ChangeEmailScreen(
 
                     Button(
                         onClick = {
-                            ticks.value = 0
+                            ticks.value = 90
                             countOfTry.value--
                             viewModel.editEmailGetCode(id, emailText.value.text)
                         },
@@ -135,7 +146,7 @@ fun ChangeEmailScreen(
 
                 Button(
                     onClick = {
-
+                        viewModel.confirmEmailCode(id, codeText.value.text)
                     },
                     modifier = Modifier
                         .fillMaxWidth()

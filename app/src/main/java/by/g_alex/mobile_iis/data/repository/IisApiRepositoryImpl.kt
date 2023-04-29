@@ -37,6 +37,7 @@ import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.awaitResponse
 import javax.inject.Inject
@@ -151,15 +152,15 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getContacts(token)
     }
 
-    override suspend fun updateEmail(token: String, email: EmailChangeDto): Call<Any?> {
+    override suspend fun updateEmail(token: String, email: EmailChangeDto): ResponseBody? {
         return api.updateEmail(token, email)
     }
 
-    override suspend fun getCodeForEmail(token: String, id: Int): Call<Any> {
+    override suspend fun getCodeForEmail(token: String, id: Int): ResponseBody? {
         return api.getCodeForEmail(token, id)
     }
 
-    override suspend fun confirmCodeForEmail(token: String, email: ConfirmEmailDto): Call<Any> {
+    override suspend fun confirmCodeForEmail(token: String, email: ConfirmEmailDto): ResponseBody? {
         return api.confirmCodeForEmail(token, email)
     }
 

@@ -3,6 +3,7 @@ package by.g_alex.mobile_iis.domain.use_case.get_profile.settings
 import android.util.Log
 import androidx.compose.animation.rememberSplineBasedDecay
 import by.g_alex.mobile_iis.common.Resource
+import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
@@ -18,11 +19,11 @@ import retrofit2.awaitResponse
 import java.io.IOException
 import javax.inject.Inject
 
-class GetCodeUseCase @Inject constructor(
+class ConfirmEmailCodeUseCase @Inject constructor(
     private val api_repository: IisApiRepository,
     private val db_repository: UserDataBaseRepository
 ) {
-    operator fun invoke(id: Int, value: String): Flow<Resource<Int>> = flow {
+    operator fun invoke(id : Int, code : String): Flow<Resource<Int>> = flow {
         try {
             emit(Resource.Loading<Int>())
             val cookie = db_repository.getCookie()
@@ -30,21 +31,21 @@ class GetCodeUseCase @Inject constructor(
                 emit(Resource.Error<Int>("LessCookie"))
             }
             if (cookie != null) {
-                val response = api_repository.updateEmail(cookie, EmailChangeDto(id, value))
-                Log.e("~~~", "Update | ${response?.string().toString()}")
-                if (response?.string()?.isEmpty() == true) {
-                    val response1 = api_repository.getCodeForEmail(cookie, id)
-                    Log.e("~~~", "Message send | ${response1?.string().toString()}")
-                    emit(Resource.Success<Int>(228))
+                val response = api_repository.confirmCodeForEmail(cookie, ConfirmEmailDto(id, code))
+                Log.e("~~~!", "qwerty | Start")
+                Log.e("~~~!", "CODE_QWERTY | ${response?.toString()} + ${response?.string()?.length.toString()}")
+                if(response?.string()?.isEmpty() == true) {
+                        Log.e("~~~", "Confirmed")
+                        emit(Resource.Success<Int>(200))
                 } else {
                     emit(Resource.Error<Int>("Error"))
                 }
             }
         } catch (e: HttpException) {
-            Log.e("~~~", "|HttpException|GetCode ${e.toString()}")
+            Log.e("~~~", "HttpException||||${e.toString()}")
         } catch (_: IOException) {
             Log.e("~~~", "IoException")
-        } catch (_: Exception) {
+        } catch(_ : Exception) {
             Log.e("~~~", "Other Ex");
         }
     }

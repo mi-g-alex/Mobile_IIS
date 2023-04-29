@@ -25,6 +25,7 @@ import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkMode
 import by.g_alex.mobile_iis.domain.model.profile.penalty_model.PenaltyModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
+import okhttp3.ResponseBody
 import retrofit2.Call
 
 interface IisApiRepository {
@@ -77,11 +78,11 @@ interface IisApiRepository {
 
     suspend fun getEmail(token: String): ContactsDto
 
-    suspend fun updateEmail(token: String, email: EmailChangeDto): Call<Any?>
+    suspend fun updateEmail(token: String, email: EmailChangeDto): ResponseBody?
 
-    suspend fun getCodeForEmail(token: String, id: Int): Call<Any>
+    suspend fun getCodeForEmail(token: String, id: Int): ResponseBody?
 
-    suspend fun confirmCodeForEmail(token: String, email: ConfirmEmailDto): Call<Any>
+    suspend fun confirmCodeForEmail(token: String, email: ConfirmEmailDto): ResponseBody?
 
     suspend fun putPublished(token: String, cvDto: PersonalCV)
 

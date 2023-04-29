@@ -5,6 +5,6 @@ import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginRespo
 
 data class ChangeEmailState(
     val isLoading: Boolean = false,
-    val information: Boolean? = null,
+    val information: Int? = null,
     val error: String = ""
 )
