@@ -51,7 +51,7 @@ interface IisApi {
     fun restorePasswordGetCode(@Body request: RestorePasswordCheckSendDto) : Call<Any>
 
     @POST("api/v1/settings/password/new")
-    fun restorePasswordApply(@Body request: RestorePasswordApplyDto) : Call<Any>
+    suspend fun restorePasswordApply(@Body request: RestorePasswordApplyDto) : ResponseBody?
 
     // User Info
     @GET("api/v1/profiles/personal-cv") // Инфомарция о профиле / Главный экран

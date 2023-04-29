@@ -23,7 +23,7 @@ class RestorePasswordApplyUseCase @Inject constructor(
         try {
             emit(Resource.Loading<Boolean>())
             val resp = api_repository.restorePasswordApply(login, password, contactValue, code)
-            emit(Resource.Success<Boolean>(resp))
+            emit(Resource.Success<Boolean>(resp?.string()?.isEmpty() == true))
         } catch (e: HttpException) {
             emit(
                 Resource.Error<Boolean>(

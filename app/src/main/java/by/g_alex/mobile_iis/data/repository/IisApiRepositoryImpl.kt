@@ -91,11 +91,8 @@ class IisApiRepositoryImpl @Inject constructor(
         password: String,
         contactValue: String,
         code: String
-    ): Boolean {
-        val s =
-            api.restorePasswordApply(RestorePasswordApplyDto(login, contactValue, code, password))
-                .awaitResponse()
-        return s.isSuccessful
+    ): ResponseBody? {
+            return api.restorePasswordApply(RestorePasswordApplyDto(login, contactValue, code, password))
     }
 
     override suspend fun getProfilePersonalCV(token: String): PersonalCVDto {

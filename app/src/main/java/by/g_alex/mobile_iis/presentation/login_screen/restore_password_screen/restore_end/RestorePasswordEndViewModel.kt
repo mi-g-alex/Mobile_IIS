@@ -27,7 +27,7 @@ class RestorePasswordEndViewModel @Inject constructor(
         restorePasswordGetCodeUseCase(login, contactValue).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    //_state.value = RestorePasswordEndState(information = result.data)
+                  //  _state.value = RestorePasswordEndState(information = result.data)
                 }
 
                 is Resource.Error -> {

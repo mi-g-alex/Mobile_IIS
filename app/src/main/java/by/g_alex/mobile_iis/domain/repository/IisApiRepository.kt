@@ -52,7 +52,7 @@ interface IisApiRepository {
         password: String,
         contactValue: String,
         code: String
-    ): Boolean
+    ): ResponseBody?
 
     // For USER
     suspend fun getProfilePersonalCV(token: String): PersonalCVDto

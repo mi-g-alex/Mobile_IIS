@@ -42,14 +42,8 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    var email = state.contacts?.contactDtoList?.get(0)?.contactValue ?: ""
     val id = state.contacts?.contactDtoList?.get(0)?.id ?: ""
     val showDialog = remember { mutableStateOf(false) }
-
-    
-    LaunchedEffect(state.contacts) {
-        email = state.contacts?.contactDtoList?.get(0)?.contactValue ?: ""
-    }
 
     Scaffold(
         topBar = {
@@ -72,7 +66,7 @@ fun SettingsScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                navController.navigate("changeEmail/$email/$id")
+                                navController.navigate("changeEmail/$id")
                             },
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
@@ -84,14 +78,14 @@ fun SettingsScreen(
                         ) {
                             Text(
                                 modifier = Modifier,
-                                text = email,
+                                text = "Почта",
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                                 fontSize = 25.sp
                             )
                             Text(
                                 modifier = Modifier,
-                                text = "Изменить почту",
+                                text = "Изменить почту, привязанную к аккаунту",
                                 fontSize = 15.sp
                             )
                         }

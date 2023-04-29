@@ -36,15 +36,14 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun ChangeEmailScreen(
     navController: NavController,
-    email: String,
     id: Int,
-    viewModel: ChangeEmailViewModel= hiltViewModel()
+    viewModel: ChangeEmailViewModel = hiltViewModel()
 ) {
 
     val emailText = remember { mutableStateOf(TextFieldValue("")) }
     val codeText = remember { mutableStateOf(TextFieldValue("")) }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val countOfTry = remember { mutableStateOf(4) }
+    val countOfTry = remember { mutableStateOf(0) }
     val cnt = LocalContext.current
     val state = viewModel.state
 
@@ -57,11 +56,10 @@ fun ChangeEmailScreen(
     }
 
     LaunchedEffect(state.value) {
-        Log.e("!~~~!", "qwertyq | ${state.value.information}")
-        Log.e("!~~~!", "qwertyq | ${state.value.toString()}")
-        if(viewModel.state.value.error == "200") {
+        if (viewModel.state.value.error == "200") {
             navController.navigateUp()
         }
+        countOfTry.value = viewModel.count.value
     }
 
     Scaffold(
@@ -82,7 +80,7 @@ fun ChangeEmailScreen(
             Column {
                 OutlinedTextField(
                     value = emailText.value,
-                    label = { Text(text = "Введите почту") },
+                    label = { Text(text = viewModel.email.value) },
                     onValueChange = { emailText.value = it },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -122,14 +120,14 @@ fun ChangeEmailScreen(
                     Button(
                         onClick = {
                             ticks.value = 90
-                            countOfTry.value--
+                            countOfTry.value
                             viewModel.editEmailGetCode(id, emailText.value.text)
                         },
                         modifier = Modifier
                             .padding(end = 60.dp)
                             .align(Alignment.CenterVertically)
                             .weight(0.5f),
-                        enabled = ticks.value == 0,
+                        enabled = ticks.value == 0 && countOfTry.value != 0,
                     ) {
                         if (ticks.value == 0) Text("Получить\nкод", textAlign = TextAlign.Center)
                         else Text("${ticks.value}c.", textAlign = TextAlign.Center)
@@ -151,13 +149,17 @@ fun ChangeEmailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 10.dp, horizontal = 60.dp),
-                    enabled = emailText.value.text != "" && codeText.value.text.length == 6 && regex.matches(emailText.value.text)
+                    enabled = emailText.value.text != "" && codeText.value.text.length == 6 && regex.matches(
+                        emailText.value.text
+                    ) && ticks.value != 0
                 ) {
                     if (!regex.matches(emailText.value.text)) {
                         Text(text = "Неправильный формат почты")
                     } else {
                         if (emailText.value.text == "" || codeText.value.text.length != 6) {
                             Text(text = "Заполните все поля")
+                        } else if (ticks.value == 0) {
+                            Text(text = "Код не действителен")
                         } else {
                             Text(text = "Сохранить почту")
                         }

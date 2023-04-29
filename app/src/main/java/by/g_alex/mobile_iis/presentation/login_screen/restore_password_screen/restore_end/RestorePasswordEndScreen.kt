@@ -72,9 +72,9 @@ fun RestorePasswordEndScreen(
         Log.e("~~~~!", state.value.information.toString())
         if (state.value.information == false) {
             Toast.makeText(cnt, "Error", Toast.LENGTH_LONG).show()
-        } else {
-            /*Log.e("~~~", "ALL GOOD")
-            navController.navigate("login")*/
+        } else if (state.value.information == true) {
+            Log.e("~~~", "ALL GOOD")
+            navController.navigate("login")
         }
     }
     Box(
