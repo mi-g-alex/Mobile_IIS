@@ -36,6 +36,15 @@ class RatingAllViewModel @Inject constructor(
     val rState: State<RatingState> = r_state
     val prState:State<PersonalRatingState> = pr_state
 
+    val expandedYears = mutableStateOf(false)
+    val selectedYearsText = mutableStateOf("2022")
+
+    val expandedFaculties = mutableStateOf(false)
+    val selectedFacultiesText = mutableStateOf("")
+
+    val expandedSpecialities = mutableStateOf(false)
+    val selectedSpecialityText = mutableStateOf("")
+
 
     init {
         getFaculties()

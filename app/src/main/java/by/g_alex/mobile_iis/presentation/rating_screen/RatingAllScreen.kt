@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
@@ -18,8 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,25 +25,24 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import java.time.LocalDate
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RatingAllScreen(
     viewModel: RatingAllViewModel = hiltViewModel(),
     navController: NavController
 ) {
+
     val years = mutableListOf<String>()
-    val expandedYears = remember { mutableStateOf(false) }
-    val selectedYearsText = remember { mutableStateOf("2022") }
+    val expandedYears = viewModel.expandedYears
+    val selectedYearsText = viewModel.selectedYearsText
 
     val faculties = viewModel.state.value.FacultiesState?: emptyList()
-    val expandedFaculties = remember { mutableStateOf(false) }
-    val selectedFacultiesText = remember { mutableStateOf("") }
+    val expandedFaculties = viewModel.expandedFaculties
+    val selectedFacultiesText = viewModel.selectedFacultiesText
 
 
     val specialities = viewModel.spState.value.SpecialState?: emptyList()
-    val expandedSpecialities = remember { mutableStateOf(false) }
-    val selectedSpecialityText = remember { mutableStateOf("") }
-
+    val expandedSpecialities = viewModel.expandedSpecialities
+    val selectedSpecialityText = viewModel.selectedSpecialityText
 
     val date = LocalDate.now()
     if (date.monthValue > 8) {
@@ -72,13 +68,13 @@ fun RatingAllScreen(
                     expanded = expandedYears.value,
                     onExpandedChange = {
                         expandedYears.value = !expandedYears.value
-                    },//.fillMaxWidth()
+                    },
                 ) {
                     OutlinedTextField(
                         readOnly = true,
                         modifier = Modifier
                             .menuAnchor()
-                            .width(150.dp).padding(end = 5.dp),//.fillMaxWidth(),
+                            .width(150.dp).padding(end = 5.dp),
                         value = selectedYearsText.value,
                         onValueChange = { },
                         label = { Text("Год") },
