@@ -175,7 +175,6 @@ fun RatingScreen(
                 .fillMaxSize()
         ) {
             if (state.gradeBookState != null) {
-
                 val pagerState: PagerState = rememberPagerState(initialPage = 0)
                 val coroutineScope = rememberCoroutineScope()
                 Column {

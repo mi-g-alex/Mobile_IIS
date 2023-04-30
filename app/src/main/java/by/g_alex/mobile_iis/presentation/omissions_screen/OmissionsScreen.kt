@@ -103,8 +103,10 @@ private fun Item(it: List<OmissionsByStudentDto>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
-                        .padding(8.dp)
-                ) {
+                        .padding(horizontal = 10.dp, vertical = 5.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                    )                ) {
                     Column(modifier = Modifier.padding(8.dp)) {
                         Text(
                             text = it[i].name,

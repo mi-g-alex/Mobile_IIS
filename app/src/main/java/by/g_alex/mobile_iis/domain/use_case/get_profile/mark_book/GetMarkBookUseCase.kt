@@ -24,6 +24,10 @@ class GetMarkBookUseCase @Inject constructor(
             }
             if (cookie != null) {
                 val data = api_repository.getMarkBook(cookie)
+                db_repository.deleteMarkBooks()
+                for (n in data) {
+                    db_repository.insertMarkBook(n)
+                }
                 emit(Resource.Success<List<MarkBookMarkModel>>(data))
             }
         } catch (e: HttpException) {
@@ -55,7 +59,8 @@ class GetMarkBookUseCase @Inject constructor(
                 }
             }
         } catch (_: IOException) {
-
+            val data = db_repository.getMarkBooks()
+            emit(Resource.Success<List<MarkBookMarkModel>>(data))
         }
     }
 }

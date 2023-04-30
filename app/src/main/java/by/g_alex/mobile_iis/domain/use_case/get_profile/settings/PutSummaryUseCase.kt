@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.domain.use_case.get_profile.settings
 
-import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
@@ -42,7 +41,7 @@ class PutSummaryUseCase @Inject constructor(
                             .awaitResponse()
                     val cookie = responseFromLogin.headers()["Set-Cookie"].toString()
                     db_repository.setCookie(cookie)
-                    val data = api_repository.putSummary(cookie, cvDto)
+                    api_repository.putSummary(cookie, cvDto)
                     db_repository.setProfilePersonalCV(cvDto)
                     emit(Resource.Success<PersonalCV>(cvDto))
                 } catch (e: HttpException) {
