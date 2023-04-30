@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,36 +28,67 @@ fun FinesScreen(
             )
         }
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)) {
-            if (viewModel.state.value.PenaltyState?.isEmpty() == true)
-                Text(
-                    "Нет взысканий((",
-                    fontSize = 20.sp,
+        Box(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize()
+        ) {
+            if (viewModel.state.value.PenaltyState != null) {
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(10.dp),
-                    textAlign = TextAlign.Center
-                )
-            viewModel.state.value.PenaltyState?.onEach { penal ->
-                Card(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
-                    )) {
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp)
-                    ) {
-                        Text(penal.penaltyType, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                        Text(penal.penaltyDate, fontSize = 20.sp)
+                ) {
+                    if (viewModel.state.value.PenaltyState?.isEmpty() == true)
+                        Text(
+                            "Нет взысканий",
+                            fontSize = 20.sp,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(10.dp),
+                            textAlign = TextAlign.Center
+                        )
+                    viewModel.state.value.PenaltyState?.onEach { penal ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(10.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                            )
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp)
+                            ) {
+                                Text(
+                                    penal.penaltyType,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
+                                Text(penal.penaltyDate, fontSize = 20.sp)
+                            }
+                            Text(penal.reason, modifier = Modifier.padding(10.dp))
+                        }
                     }
-                    Text(penal.reason, modifier = Modifier.padding(10.dp))
                 }
+            }
+            if (viewModel.state.value.error.isNotBlank()) {
+                if(viewModel.state.value.error == "LessCookie") {
+                    Box(modifier = Modifier.align(Alignment.Center)) {
+                        Column(modifier = Modifier) {
+                            Text(
+                                text = "Сначала войдите в аккаунт...",
+                                fontSize = 25.sp
+                            )
+                        }
+                    }
+                }
+            }
+
+            if (viewModel.state.value.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
     }

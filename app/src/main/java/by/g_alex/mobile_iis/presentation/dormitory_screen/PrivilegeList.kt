@@ -1,7 +1,7 @@
 package by.g_alex.mobile_iis.presentation.dormitory_screen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -24,7 +24,6 @@ fun PrivilegeList(
             Text(
                 "Льгот нет",
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.inverseSurface,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(20.dp),
