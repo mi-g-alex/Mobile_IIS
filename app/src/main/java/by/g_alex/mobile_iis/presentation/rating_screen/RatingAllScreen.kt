@@ -95,6 +95,8 @@ fun RatingAllScreen(
                                 onClick = {
                                     selectedYearsText.value = selectionOption
                                     expandedYears.value = false
+                                    selectedFacultiesText.value = ""
+                                    selectedSpecialityText.value = ""
                                 },
                                 text = { Text(text = selectionOption, modifier = Modifier.fillMaxWidth()) },
                                 modifier = Modifier.fillMaxWidth()
@@ -135,6 +137,7 @@ fun RatingAllScreen(
                                     selectedFacultiesText.value = selectionOption.text
                                     expandedFaculties.value = false
                                     viewModel.getSpecialities(selectionOption.id,selectedYearsText.value.toInt())
+                                    selectedSpecialityText.value = ""
                                 },
                                 text = { Text(text = selectionOption.text) },
                                 //modifier = Modifier.fillMaxWidth()

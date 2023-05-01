@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.presentation.rating_screen
 
-import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RatingColumn(
     students: List<RatingDto>?,
@@ -25,18 +27,19 @@ fun RatingColumn(
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
 
-        if(!students.isNullOrEmpty()) {
-            item {
+        if (!students.isNullOrEmpty()) {
+            stickyHeader {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background)
                         .padding(15.dp),
                     //horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     Text(text = "№", modifier = Modifier.weight(0.3f))
                     Text(text = "Студ. билет", modifier = Modifier.weight(1f))
-                    Text(text = "Cр. балл", modifier = Modifier.weight(1f))
-                    Text(text = "Часы", modifier = Modifier.weight(0.3f))
+                    Text(text = "Cр. балл", modifier = Modifier.weight(0.7f))
+                    Text(text = "Часы", modifier = Modifier.weight(0.4f))
                 }
             }
         }
@@ -44,17 +47,22 @@ fun RatingColumn(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { Log.e("AAAAAAAAA","BBBBBBBBBBB");navController.navigate("personalRating/${it.studentCardNumber}") }
+                    .clickable {
+                        navController.navigate("personalRating/${it.studentCardNumber}")
+                    }
                     .padding(15.dp),
                 //horizontalArrangement = Arrangement.SpaceAround
             ) {
-                Text(text = (students!!.indexOf(it) + 1).toString(), modifier = Modifier.weight(0.3f))
+                Text(
+                    text = (students!!.indexOf(it) + 1).toString(),
+                    modifier = Modifier.weight(0.3f)
+                )
 
                 Text(text = it.studentCardNumber.toString(), modifier = Modifier.weight(1f))
 
-                Text(text = it.average.toString(), modifier = Modifier.weight(1f))
+                Text(text = it.average.toString(), modifier = Modifier.weight(0.7f))
 
-                Text(text = it.hours.toString(), modifier = Modifier.weight(0.23f))
+                Text(text = it.hours.toString(), modifier = Modifier.weight(0.4f))
             }
             Divider(
                 color = MaterialTheme.colorScheme.inverseSurface, modifier = Modifier

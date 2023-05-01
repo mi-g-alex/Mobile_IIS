@@ -3,6 +3,7 @@ package by.g_alex.mobile_iis.presentation.login_screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,76 +51,78 @@ fun LoginScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
-        Column {
-            Spacer(modifier = Modifier.height(125.dp))
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "",
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(200.dp),
-                contentScale = ContentScale.Crop,
-            )
-        }
-        Column(
-            modifier = Modifier
-                .align(Alignment.Center),
-            horizontalAlignment = CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(125.dp))
-            OutlinedTextField(
-                value = loginText.value,
-                label = { Text(text = "Логин") },
-                onValueChange = { loginText.value = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(60.dp, 5.dp, 60.dp, 5.dp),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-            )
+        LazyColumn(modifier = Modifier
+            .fillMaxWidth()
+            .align(Center)) {
+            item {
+                Column(horizontalAlignment = CenterHorizontally) {
+                    Image(
+                        painter = painterResource(id = R.drawable.logo),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(200.dp),
+                        contentScale = ContentScale.Crop,
+                    )
+                    OutlinedTextField(
+                        value = loginText.value,
+                        label = { Text(text = "Логин") },
+                        onValueChange = { loginText.value = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(60.dp, 35.dp, 60.dp, 5.dp),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Next
+                        ),
+                    )
 
-            OutlinedTextField(
-                value = passText.value,
-                label = { Text(text = "Пароль") },
-                onValueChange = { passText.value = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(60.dp, 5.dp, 60.dp, 5.dp),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        keyboardController?.hide()
-                        viewModel.loginToAccount(loginText.value.text, passText.value.text)
+                    OutlinedTextField(
+                        value = passText.value,
+                        label = { Text(text = "Пароль") },
+                        onValueChange = { passText.value = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(60.dp, 5.dp, 60.dp, 5.dp),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Password,
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                keyboardController?.hide()
+                                viewModel.loginToAccount(loginText.value.text, passText.value.text)
+                            }
+                        ),
+                        visualTransformation = PasswordVisualTransformation()
+                    )
+
+                    Button(
+                        onClick = {
+                            keyboardController?.hide()
+                            viewModel.loginToAccount(loginText.value.text, passText.value.text)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(60.dp, 5.dp, 60.dp, 5.dp)
+                    ) {
+                        if (state.isLoading)
+                            Text(text = "Загрузка...")
+                        else
+                            Text(text = "Войти")
                     }
-                ),
-                visualTransformation = PasswordVisualTransformation()
-            )
-
-            Button(
-                onClick = {
-                    keyboardController?.hide()
-                    viewModel.loginToAccount(loginText.value.text, passText.value.text)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(60.dp, 5.dp, 60.dp, 5.dp)
-            ) {
-                if (state.isLoading)
-                    Text(text = "Загрузка...")
-                else
-                    Text(text = "Войти")
-            }
-            if (state.error.isNotBlank()) {
-                Text(
-                    text = state.error
-                )
+                    if (state.error.isNotBlank()) {
+                        Text(
+                            text = state.error
+                        )
+                    } else {
+                        Text(
+                            text = ""
+                        )
+                    }
+                }
             }
         }
         Text(
@@ -132,4 +136,3 @@ fun LoginScreen(
         )
     }
 }
-

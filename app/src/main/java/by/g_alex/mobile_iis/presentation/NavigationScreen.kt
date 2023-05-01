@@ -106,7 +106,7 @@ fun NavigationScreen() {
                                 )
                             },
                             label = {
-                                Text(text = item.title, fontSize = 11.sp)
+                                Text(text = item.title, fontSize = 9.sp)
                             }
                         )
                     }

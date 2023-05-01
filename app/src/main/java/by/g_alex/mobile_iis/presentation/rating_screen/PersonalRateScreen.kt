@@ -8,16 +8,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -169,7 +168,7 @@ fun PersonalRateScreen(
     Scaffold(
         topBar = {
             TopAppBar(title = {
-                androidx.compose.material3.Text(
+                Text(
                     text = "Рейтинг " + number,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -197,10 +196,7 @@ fun PersonalRateScreen(
                 val coroutineScope = rememberCoroutineScope()
                 Column {
                     TabRow(
-                        selectedTabIndex = pagerState.currentPage,
-                        contentColor = MaterialTheme.colorScheme.inverseSurface,
-                        backgroundColor = MaterialTheme.colorScheme.surface,
-
+                        selectedTabIndex = pagerState.currentPage
                     ) {
                         titlesForTab.forEachIndexed { index, title ->
                             Tab(
@@ -231,19 +227,6 @@ fun PersonalRateScreen(
                         }
                     }
 
-                }
-            }
-
-            if (viewModel.prState.value.error.isNotBlank()) {
-                if (viewModel.prState.value.error == "LessCookie") {
-                    Box(modifier = Modifier.align(Alignment.Center)) {
-                        Column(modifier = Modifier) {
-                            Text(
-                                text = "Сначала войдите в аккаунт...",
-                                fontSize = 25.sp
-                            )
-                        }
-                    }
                 }
             }
 
