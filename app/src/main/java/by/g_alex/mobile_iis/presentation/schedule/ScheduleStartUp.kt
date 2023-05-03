@@ -38,7 +38,7 @@ fun ScheduleStartUp(
 
 
     val specialSched = favouritePrefs.getString(FAVOURITE_SCHEDULE,"")
-    if((specialSched == null || specialSched == "")&&viewModel.headerText.value=="None") {
+    if((specialSched == null || specialSched == "" || specialSched == "Добавить")&&viewModel.headerText.value=="Добавить") {
         if (set?.isNotEmpty() == true) {
             viewModel.getSchedule(set.minOf { it })
             viewModel.headerText.value = set.minOf { it }
@@ -55,7 +55,7 @@ fun ScheduleStartUp(
             }
         }
     }
-    else if(viewModel.headerText.value=="None"){
+    else if(viewModel.headerText.value=="Добавить" && specialSched!="" &&specialSched != "Добавить"){
         if(specialSched!!.contains("."))
             viewModel.getEmployeeSchedule(specialSched)
         else viewModel.getSchedule(specialSched)

@@ -43,8 +43,8 @@ fun BottomSheet(
     scope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState,
 ) {
-    val groups = remember{ mutableStateOf(viewModel.getGroups())}
-    val employees = remember{ mutableStateOf(viewModel.getEmployees())}
+    val groups = remember { mutableStateOf(viewModel.getGroups()) }
+    val employees = remember { mutableStateOf(viewModel.getEmployees()) }
     Box(Modifier.background(MaterialTheme.colorScheme.background)) {
         LazyColumn(
             modifier = Modifier
@@ -63,15 +63,15 @@ fun BottomSheet(
                             .clickable {
                                 viewModel.getSchedule(item);
                                 viewModel.headerText.value = item
-                                Log.e("newHead",viewModel.headerText.value)
+                                Log.e("newHead", viewModel.headerText.value)
                                 scope.launch {
                                     bottomSheetState.hide()
                                 }
                             }
                     )
                     Icon(
-                        painter = if(viewModel.favourite.value == item)  painterResource(id = R.drawable.baseline_star_24)
-                                else painterResource(id = R.drawable.baseline_star_outline_24),
+                        painter = if (viewModel.favourite.value == item) painterResource(id = R.drawable.baseline_star_24)
+                        else painterResource(id = R.drawable.baseline_star_outline_24),
                         contentDescription = "sdcscds",
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
@@ -85,8 +85,8 @@ fun BottomSheet(
                                     .apply()
                                 viewModel.favourite.value = item
                             },
-                        tint = if(viewModel.favourite.value == item) Color(0xffffbf00)
-                    else MaterialTheme.colorScheme.inverseSurface
+                        tint = if (viewModel.favourite.value == item) Color(0xffffbf00)
+                        else MaterialTheme.colorScheme.inverseSurface
                     )
                     Image(
                         imageVector = ImageVector.vectorResource(R.drawable.baseline_delete_24),
@@ -96,14 +96,27 @@ fun BottomSheet(
                             .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
                             .align(Alignment.CenterVertically)
                             .clickable {
+                                if (viewModel.favourite.value == item) {
+                                    val preferences = viewModel.context.getSharedPreferences(
+                                        FAVOURITE_SCHEDULE, Context.MODE_PRIVATE
+                                    )
+                                    preferences
+                                        .edit()
+                                        .putString(FAVOURITE_SCHEDULE, "")
+                                        .apply()
+                                    viewModel.favourite.value = "Добавить"
+                                }
+                                viewModel.state.value.Days = null
                                 viewModel.deleteScheduleFromDb(item)
                                 groups.value = viewModel.getGroups()
+                                Log.e("EFWWEFW", groups.value.toString())
                                 if (groups.value.isNotEmpty()) {
                                     viewModel.headerText.value = groups.value.first()
                                     viewModel.getSchedule(groups.value.first())
                                 } else {
-                                    viewModel.headerText.value = "None"
+                                    viewModel.headerText.value = "Добавить"
                                 }
+
                             },
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface)
                     )
@@ -131,7 +144,7 @@ fun BottomSheet(
                                 }
                             })
                     Icon(
-                        painter = if(viewModel.favourite.value == item)  painterResource(id = R.drawable.baseline_star_24)
+                        painter = if (viewModel.favourite.value == item) painterResource(id = R.drawable.baseline_star_24)
                         else painterResource(id = R.drawable.baseline_star_outline_24),
                         contentDescription = "sdcscds",
                         modifier = Modifier
@@ -146,7 +159,7 @@ fun BottomSheet(
                                     .apply()
                                 viewModel.favourite.value = item
                             },
-                        tint = if(viewModel.favourite.value == item) Color.Yellow
+                        tint = if (viewModel.favourite.value == item) Color.Yellow
                         else MaterialTheme.colorScheme.inverseSurface
                     )
                     Image(
@@ -163,7 +176,7 @@ fun BottomSheet(
                                     viewModel.headerText.value = employees.value.first()
                                     viewModel.getSchedule(employees.value.first())
                                 } else {
-                                    viewModel.headerText.value = "None"
+                                    viewModel.headerText.value = "Добавить"
                                 }
                             },
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface)

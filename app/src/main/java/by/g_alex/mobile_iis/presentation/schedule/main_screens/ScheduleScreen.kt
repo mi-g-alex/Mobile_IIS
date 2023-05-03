@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.schedule.main_screens
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,7 +47,6 @@ fun BottomSheetScaffold(
     val scope = rememberCoroutineScope()
     val bottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-    Log.e("2HEAD",viewModel.headerText.value)
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
@@ -96,9 +94,10 @@ fun BottomSheetScaffold(
                     ScheduleColumn(viewModel = viewModel)
                 } else if (!state.value.isLoading) {
                     Text(
-                        text = "No Schedule found((((....",
+                        text = "Добавьте расписание...",
                         fontSize = 20.sp,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
                 if (state.value.error.isNotBlank()) {
