@@ -11,36 +11,37 @@ interface UserDataBaseRepository {
     // Cookie
     suspend fun getCookie(): String?
 
-    suspend fun setCookie(cookie : String?)
+    suspend fun setCookie(cookie: String?)
 
     suspend fun deleteCookie()
 
     // Login&Password
     suspend fun getLoginAndPassword(): LoginAndPasswordEntity?
 
-    suspend fun setLoginAndPassword(username : String, password : String)
+    suspend fun setLoginAndPassword(username: String, password: String)
 
     suspend fun deleteLoginAndPassword()
 
     // Profile/PersonalCV
     suspend fun getProfilePersonalCV(): PersonalCV?
 
-    suspend fun getMarkBooks():List<MarkBookMarkModel>
+    suspend fun getMarkBooks(): List<MarkBookMarkModel>
 
-    suspend fun insertMarkBook(markbook : MarkBookMarkModel)
+    suspend fun insertMarkBook(markbook: MarkBookMarkModel)
 
     suspend fun deleteMarkBooks()
 
-    suspend fun getGradeBook():List<GradeBookLessonModel>
+    suspend fun getGradeBook(): List<GradeBookLessonModel>
 
-    suspend fun insertGradeBook(gradebook:GradeBookLessonModel)
+    suspend fun insertGradeBook(gradebook: GradeBookLessonModel)
 
     suspend fun deleteGradeBooks()
     suspend fun setProfilePersonalCV(personalCV: PersonalCV)
 
     suspend fun deleteProfilePersonalCV()
 
-    suspend fun deleteSchedulebyName(name:String)
+    suspend fun deleteSchedulebyName(name: String)
+
     // Schedule
     suspend fun getSchedule(group: String): List<LessonModel>
 

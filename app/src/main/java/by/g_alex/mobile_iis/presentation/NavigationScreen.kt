@@ -29,6 +29,7 @@ import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
+import by.g_alex.mobile_iis.presentation.diciplines_screen.DiciplinesScreen
 import by.g_alex.mobile_iis.presentation.diploma_screen.DiplomaScreen
 import by.g_alex.mobile_iis.presentation.dormitory_screen.DormitoryScreen
 import by.g_alex.mobile_iis.presentation.penalty_screen.FinesScreen
@@ -208,6 +209,10 @@ fun NavigationScreen() {
                         FinesScreen()
                         selectedItem.value = 4
                     }
+                    composable(route = "diciplines") {
+                        DiciplinesScreen()
+                        selectedItem.value = 4
+                    }
                     composable(route = "diploma") {
                         DiplomaScreen()
                         selectedItem.value = 4
@@ -240,6 +245,7 @@ fun NavigationScreen() {
                             LinksDialog(navController = navController)
                             selectedItem.value = 4
                         }
+
                     }
 
                 }
@@ -288,9 +294,9 @@ fun BottomMenuMore(
             R.drawable.baseline_report_gmailerrorred_24
         ),
         BaseNavItem(
-            "diploma",
-            "Диплом",
-            R.drawable.diploma_contract_svgrepo_com
+            "all-rating",
+            "Рейтинг",
+            R.drawable.rating
         ),
         BaseNavItem(
             "settings",
@@ -298,10 +304,15 @@ fun BottomMenuMore(
             R.drawable.baseline_settings_24
         ),
         BaseNavItem(
-            "all-rating",
-            "Рейтинг",
-            R.drawable.rating
-        )
+            "diciplines",
+            "Дисциплины",
+            R.drawable.baseline_sticky_note_2_24
+        ),
+        BaseNavItem(
+        "diploma",
+        "Диплом",
+        R.drawable.diploma_contract_svgrepo_com
+    ),
     )
     Box(
         Modifier

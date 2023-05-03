@@ -3,6 +3,7 @@ package by.g_alex.mobile_iis.data.repository
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
@@ -179,7 +180,11 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.confirmCodeForEmail(token, email)
     }
 
-    override suspend fun changePass(token: String, password: String, newPassword: String): ResponseBody? {
+    override suspend fun changePass(
+        token: String,
+        password: String,
+        newPassword: String
+    ): ResponseBody? {
         return api.changePass(token, ChangePassDto(password, newPassword))
     }
 
@@ -241,5 +246,9 @@ class IisApiRepositoryImpl @Inject constructor(
 
     override suspend fun postSkills(token: String, skills: List<Skill>) {
         api.postSkills(token, skills)
+    }
+
+    override suspend fun getDiciplines(id: Int, year: Int): List<DiciplinesDto> {
+        return api.getDiciplines(year = year, sdef = id)
     }
 }

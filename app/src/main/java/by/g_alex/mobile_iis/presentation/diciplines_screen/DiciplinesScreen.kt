@@ -1,4 +1,4 @@
-package by.g_alex.mobile_iis.presentation.rating_screen
+package by.g_alex.mobile_iis.presentation.diciplines_screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,6 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,13 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import java.time.LocalDate
 
 @Composable
-fun RatingAllScreen(
-    viewModel: RatingAllViewModel = hiltViewModel(),
-    navController: NavController
+fun DiciplinesScreen(
+    viewModel: DiciplinesViewModel = hiltViewModel()
 ) {
 
     val years = mutableListOf<String>()
@@ -58,13 +55,15 @@ fun RatingAllScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "Рейтинг", fontSize = 20.sp) }
+                title = { androidx.compose.material3.Text(text = "Дисциплины", fontSize = 20.sp) }
             )
         }
     ) {
-        Column(modifier = Modifier
-            .padding(it)
-            .fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize()
+        ) {
             Row(modifier = Modifier.padding(horizontal = 10.dp)) {
                 ExposedDropdownMenuBox(
                     expanded = expandedYears.value,
@@ -80,7 +79,7 @@ fun RatingAllScreen(
                             .padding(end = 5.dp),
                         value = selectedYearsText.value,
                         onValueChange = { },
-                        label = { Text("Год") },
+                        label = { androidx.compose.material3.Text("Год") },
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
                             textColor = MaterialTheme.colorScheme.inverseSurface
@@ -102,7 +101,7 @@ fun RatingAllScreen(
                                     selectedSpecialityText.value = ""
                                 },
                                 text = {
-                                    Text(
+                                    androidx.compose.material3.Text(
                                         text = selectionOption,
                                         modifier = Modifier.fillMaxWidth()
                                     )
@@ -126,7 +125,7 @@ fun RatingAllScreen(
                             .fillMaxWidth(),
                         value = selectedFacultiesText.value,
                         onValueChange = { },
-                        label = { Text("Факультет") },
+                        label = { androidx.compose.material3.Text("Факультет") },
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
                             textColor = MaterialTheme.colorScheme.inverseSurface
@@ -150,7 +149,7 @@ fun RatingAllScreen(
                                     )
                                     selectedSpecialityText.value = ""
                                 },
-                                text = { Text(text = selectionOption.text) },
+                                text = { androidx.compose.material3.Text(text = selectionOption.text) },
                                 //modifier = Modifier.fillMaxWidth()
                             )
                         }
@@ -172,7 +171,7 @@ fun RatingAllScreen(
                         .fillMaxWidth(),
                     value = selectedSpecialityText.value,
                     onValueChange = { },
-                    label = { Text("Специальность") },
+                    label = { androidx.compose.material3.Text("Специальность") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         unfocusedBorderColor = MaterialTheme.colorScheme.primary,
                         textColor = MaterialTheme.colorScheme.inverseSurface
@@ -190,24 +189,21 @@ fun RatingAllScreen(
                             onClick = {
                                 selectedSpecialityText.value = selectionOption.text
                                 expandedSpecialities.value = false
-                                viewModel.getRating(
-                                    year = selectedYearsText.value.toInt(),
-                                    id = selectionOption.id
-                                )
+                                viewModel.getDiciplines(year = selectedYearsText.value.toInt(),id = selectionOption.id)
                             },
-                            text = { Text(text = selectionOption.text) },
+                            text = { androidx.compose.material3.Text(text = selectionOption.text) },
                             //modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }
             }
             Box(modifier = Modifier.fillMaxSize()) {
-                if (viewModel.rState.value.isLoading)
+                if (viewModel.disState.value.isLoading)
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                RatingColumn(
-                    students = viewModel.rState.value.RatingState?.sortedByDescending { it.average },
-                    navController = navController
-                )
+                else{
+                    DiciplineList(diciplines = viewModel.disState.value.diciplineState?: emptyList())
+                }
+
             }
 
         }

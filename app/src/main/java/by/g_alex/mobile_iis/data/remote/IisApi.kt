@@ -1,6 +1,7 @@
 package by.g_alex.mobile_iis.data.remote
 
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
@@ -101,10 +102,10 @@ interface IisApi {
     suspend fun getPenalty(@Header("Cookie") cookieValue: String): List<PenaltyDto>
 
     @GET("api/v1/diploma-topic-suggestion/topics") // Список дипломов
-    suspend fun getDiplomas(@Header("Cookie") cookieValue: String) : List<DiplomaDto>
+    suspend fun getDiplomas(@Header("Cookie") cookieValue: String): List<DiplomaDto>
 
     @GET("api/v1/practice")
-    suspend fun getPractice(@Header("Cookie") cookieValue: String) : List<PracticeDto>
+    suspend fun getPractice(@Header("Cookie") cookieValue: String): List<PracticeDto>
 
     //Настройки
     @GET("api/v1/settings/contacts")
@@ -180,4 +181,10 @@ interface IisApi {
 
     @GET("api/v1/rating/studentRating")
     suspend fun getPersonalRating(@Query("studentCardNumber") numb: String): PersonalRatingDto
+
+    @GET("api/v1/list-disciplines")
+    suspend fun getDiciplines(
+        @Query("id") sdef: Int,
+        @Query("year") year: Int
+    ): List<DiciplinesDto>
 }
