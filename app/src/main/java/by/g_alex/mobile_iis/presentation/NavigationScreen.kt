@@ -29,6 +29,7 @@ import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
+import by.g_alex.mobile_iis.presentation.department_schedule_screen.DepartmentScheduleScreen
 import by.g_alex.mobile_iis.presentation.diciplines_screen.DiciplinesScreen
 import by.g_alex.mobile_iis.presentation.diploma_screen.DiplomaScreen
 import by.g_alex.mobile_iis.presentation.dormitory_screen.DormitoryScreen
@@ -217,6 +218,10 @@ fun NavigationScreen() {
                         DiplomaScreen()
                         selectedItem.value = 4
                     }
+                    composable(route = "caf-schedule") {
+                        DepartmentScheduleScreen()
+                        selectedItem.value = 4
+                    }
                     navigation(startDestination = "all-ratingHome", route = "all-rating") {
                         composable(route = "all-ratingHome") {
                             RatingAllScreen(navController = navController)
@@ -309,10 +314,15 @@ fun BottomMenuMore(
             R.drawable.baseline_sticky_note_2_24
         ),
         BaseNavItem(
-        "diploma",
-        "Диплом",
-        R.drawable.diploma_contract_svgrepo_com
-    ),
+            "diploma",
+            "Диплом",
+            R.drawable.diploma_contract_svgrepo_com
+        ),
+        BaseNavItem(
+            "caf-schedule",
+            "Кафедры",
+            R.drawable.baseline_event_24
+        )
     )
     Box(
         Modifier

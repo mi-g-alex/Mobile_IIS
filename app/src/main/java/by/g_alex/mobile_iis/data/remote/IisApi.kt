@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.data.remote
 
+import by.g_alex.mobile_iis.data.remote.dto.department.DepartmentDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
@@ -187,4 +188,10 @@ interface IisApi {
         @Query("id") sdef: Int,
         @Query("year") year: Int
     ): List<DiciplinesDto>
+
+    @GET("api/v1/departments")
+    suspend fun getDepartment():List<DepartmentDto>
+
+    @GET("api/v1/announcements/departments")
+    suspend fun getDepartmentAnons(@Query("id") id : Int):List<AnnouncemntDto>
 }

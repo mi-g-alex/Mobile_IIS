@@ -3,6 +3,7 @@ package by.g_alex.mobile_iis.data.repository
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.department.DepartmentDto
 import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
@@ -250,5 +251,13 @@ class IisApiRepositoryImpl @Inject constructor(
 
     override suspend fun getDiciplines(id: Int, year: Int): List<DiciplinesDto> {
         return api.getDiciplines(year = year, sdef = id)
+    }
+
+    override suspend fun getDepartments(): List<DepartmentDto> {
+        return api.getDepartment()
+    }
+
+    override suspend fun getDepartmentAnons(id: Int): List<AnnouncemntDto> {
+        return api.getDepartmentAnons(id)
     }
 }

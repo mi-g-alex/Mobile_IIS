@@ -2,6 +2,7 @@ package by.g_alex.mobile_iis.domain.repository
 
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.department.DepartmentDto
 import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
@@ -124,4 +125,8 @@ interface IisApiRepository {
     suspend fun getPersonalRating(number: String): PersonalRatingDto
 
     suspend fun getDiciplines(id:Int,year:Int):List<DiciplinesDto>
+
+    suspend fun getDepartments():List<DepartmentDto>
+
+    suspend fun getDepartmentAnons(id:Int):List<AnnouncemntDto>
 }
