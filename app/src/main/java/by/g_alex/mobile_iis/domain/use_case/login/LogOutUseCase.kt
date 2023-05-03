@@ -10,15 +10,15 @@ class LogOutUseCase @Inject constructor(
 ) {
     suspend fun logOut(){
         try {
-            val cookie = db_repository.getCookie()
-            if (cookie != null) {
-                api_repository.logout(cookie)
-            }
             db_repository.deleteCookie()
             db_repository.deleteLoginAndPassword()
             db_repository.deleteProfilePersonalCV()
             db_repository.deleteGradeBooks()
             db_repository.deleteMarkBooks()
+            val cookie = db_repository.getCookie()
+            if (cookie != null) {
+                api_repository.logout(cookie)
+            }
         } catch (_: Exception) {}
     }
 }

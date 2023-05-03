@@ -1,6 +1,8 @@
 package by.g_alex.mobile_iis.data.remote
 
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
+import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
@@ -49,10 +51,10 @@ interface IisApi {
     fun restorePasswordCheckExist(@Body request: RestorePasswordCheckSendDto): Call<RestorePasswordEnterLoginResponseDto>
 
     @POST("api/v1/settings/password/reset")
-    fun restorePasswordGetCode(@Body request: RestorePasswordCheckSendDto) : Call<Any>
+    fun restorePasswordGetCode(@Body request: RestorePasswordCheckSendDto): Call<Any>
 
     @POST("api/v1/settings/password/new")
-    suspend fun restorePasswordApply(@Body request: RestorePasswordApplyDto) : ResponseBody?
+    suspend fun restorePasswordApply(@Body request: RestorePasswordApplyDto): ResponseBody?
 
     // User Info
     @GET("api/v1/profiles/personal-cv") // Инфомарция о профиле / Главный экран
@@ -83,54 +85,70 @@ interface IisApi {
     @GET("api/v1/lms/application-history") // ДОТ
     suspend fun getStudyApplications(@Header("Cookie") cookieValue: String): List<StudyApplicationsDto>
 
-    @GET("api/v1/dormitory-queue-application/privileges")
-    suspend fun getPrivileges(@Header("Cookie") cookieValue: String): List<PrivilegesDto>
-
     @GET("api/v1/library/debts") // Задолженности библиотека
     suspend fun getStudyLibDebts(@Header("Cookie") cookieValue: String): List<String>
 
     @GET("api/v1/announcements") // Обьявления
     suspend fun getAnnouncements(@Header("Cookie") cookieValue: String): List<AnnouncemntDto>
 
-    @GET("api/v1/dormitory-queue-application")
+    @GET("api/v1/dormitory-queue-application") // Общага / статус заселения
     suspend fun getDormitory(@Header("Cookie") cookieValue: String): List<DormitoryDto>
 
-    @GET("api/v1/dormitory-queue-application/premium-penalty")
+    @GET("api/v1/dormitory-queue-application/privileges") // Льготы
+    suspend fun getPrivileges(@Header("Cookie") cookieValue: String): List<PrivilegesDto>
+
+    @GET("api/v1/dormitory-queue-application/premium-penalty") // Взыскания
     suspend fun getPenalty(@Header("Cookie") cookieValue: String): List<PenaltyDto>
+
+    @GET("api/v1/diploma-topic-suggestion/topics") // Список дипломов
+    suspend fun getDiplomas(@Header("Cookie") cookieValue: String) : List<DiplomaDto>
+
+    @GET("api/v1/practice")
+    suspend fun getPractice(@Header("Cookie") cookieValue: String) : List<PracticeDto>
 
     //Настройки
     @GET("api/v1/settings/contacts")
     suspend fun getContacts(@Header("Cookie") cookieValue: String): ContactsDto
 
     @POST("api/v1/settings/contact/update")
-    suspend fun updateEmail(@Header("Cookie") cookieValue: String, @Body email : EmailChangeDto) : ResponseBody?
+    suspend fun updateEmail(
+        @Header("Cookie") cookieValue: String,
+        @Body email: EmailChangeDto
+    ): ResponseBody?
 
     @POST("api/v1/settings/contact/send-confirm-message")
-    suspend fun getCodeForEmail(@Header("Cookie") cookieValue: String, @Body id : Int) : ResponseBody?
+    suspend fun getCodeForEmail(@Header("Cookie") cookieValue: String, @Body id: Int): ResponseBody?
 
     @POST("api/v1/settings/contact/confirm")
-    suspend fun confirmCodeForEmail(@Header("Cookie") cookieValue: String, @Body email : ConfirmEmailDto) : ResponseBody?
+    suspend fun confirmCodeForEmail(
+        @Header("Cookie") cookieValue: String,
+        @Body email: ConfirmEmailDto
+    ): ResponseBody?
 
     @POST("api/v1/settings/password/change")
-    suspend fun changePass(@Header("Cookie") cookieValue: String, @Body password : ChangePassDto) : ResponseBody?
+    suspend fun changePass(
+        @Header("Cookie") cookieValue: String,
+        @Body password: ChangePassDto
+    ): ResponseBody?
 
     @PUT("api/v1/profiles/personal-cv-searching-job")
-    suspend fun putJob(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+    suspend fun putJob(@Header("Cookie") cookieValue: String, @Body cvDto: PersonalCV)
 
     @PUT("api/v1/profiles/personal-cv-rating")
-    suspend fun putRating(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+    suspend fun putRating(@Header("Cookie") cookieValue: String, @Body cvDto: PersonalCV)
 
     @PUT("api/v1/profiles/personal-cv-published")
-    suspend fun putPublished(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+    suspend fun putPublished(@Header("Cookie") cookieValue: String, @Body cvDto: PersonalCV)
 
     @PUT("api/v1/profiles/summary")
-    suspend fun putSummary(@Header("Cookie") cookieValue: String,@Body cvDto: PersonalCV)
+    suspend fun putSummary(@Header("Cookie") cookieValue: String, @Body cvDto: PersonalCV)
 
     @PUT("api/v1/profiles/my-references")
-    suspend fun putLinks(@Header("Cookie") cookieValue:String,@Body refs:List<Reference>)
+    suspend fun putLinks(@Header("Cookie") cookieValue: String, @Body refs: List<Reference>)
 
     @POST("api/v1/profiles/my-skills")
-    suspend fun postSkills(@Header("Cookie") cookieValue:String,@Body refs:List<Skill>)
+    suspend fun postSkills(@Header("Cookie") cookieValue: String, @Body refs: List<Skill>)
+
 
     // For all
     @GET("api/v1/schedule?") // Расписание группы
@@ -149,13 +167,17 @@ interface IisApi {
     suspend fun getEmployeesList(): List<EmployeeListItemDto>
 
     @GET("api/v1/schedule/faculties")
-    suspend fun getFaculties():List<FacultiesDto>
+    suspend fun getFaculties(): List<FacultiesDto>
 
     @GET("api/v1/rating/specialities")
-    suspend fun getSpecialities(@Query("facultyId") id : Int, @Query("entryYear") year:Int):List<SpecialityDto>
+    suspend fun getSpecialities(
+        @Query("facultyId") id: Int,
+        @Query("entryYear") year: Int
+    ): List<SpecialityDto>
+
     @GET("api/v1/rating")
-    suspend fun getRating(@Query("year") year : Int, @Query("sdef") sdef:Int):List<RatingDto>
+    suspend fun getRating(@Query("year") year: Int, @Query("sdef") sdef: Int): List<RatingDto>
 
     @GET("api/v1/rating/studentRating")
-    suspend fun getPersonalRating(@Query("studentCardNumber") numb:String):PersonalRatingDto
+    suspend fun getPersonalRating(@Query("studentCardNumber") numb: String): PersonalRatingDto
 }

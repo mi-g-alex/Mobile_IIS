@@ -2,6 +2,8 @@ package by.g_alex.mobile_iis.domain.repository
 
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
+import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
 import by.g_alex.mobile_iis.data.remote.dto.dormitory.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.faculties.FacultiesDto
@@ -66,9 +68,7 @@ interface IisApiRepository {
 
     suspend fun getMarkBook(token: String): List<MarkBookMarkModel>
 
-    suspend fun getPrivileges(token: String): List<PrivilegesDto>
     suspend fun getUserGroup(token: String): UserGroupDto
-
     suspend fun getOmissionsByStudent(token: String): List<OmissionsByStudentDto>
 
     suspend fun getStudy(token: String): StudyDto
@@ -77,7 +77,13 @@ interface IisApiRepository {
 
     suspend fun getDormitory(token: String): List<DormitoryDto>
 
+    suspend fun getPrivileges(token: String): List<PrivilegesDto>
+
     suspend fun getPenalty(token: String): List<PenaltyModel>
+
+    suspend fun getDiplomas(token: String) : List<DiplomaDto>
+
+    suspend fun getPractice(token: String) : List<PracticeDto>
 
     suspend fun getEmail(token: String): ContactsDto
 
