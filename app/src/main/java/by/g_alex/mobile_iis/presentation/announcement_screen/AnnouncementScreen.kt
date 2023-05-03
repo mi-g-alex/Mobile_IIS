@@ -57,7 +57,7 @@ fun AnnouncementScreen(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = it.content, fontWeight = FontWeight.Bold, modifier = Modifier
+                                text = it.content?:"", fontWeight = FontWeight.Bold, modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(5.dp), textAlign = TextAlign.Center, fontSize = 20.sp
                             )
@@ -68,7 +68,7 @@ fun AnnouncementScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(text = it.startTime + " - " + it.endTime)
-                                Text(text = it.date)
+                                Text(text = it.date?:"")
                             }
                             Row(
                                 modifier = Modifier
@@ -78,11 +78,11 @@ fun AnnouncementScreen(
                             ) {
 
                                 Text(
-                                    text = it.auditory
+                                    text = it.auditory?:""
                                 )
 
                                 Text(
-                                    text = it.employee
+                                    text = it.employee?:""
                                 )
                             }
                         }

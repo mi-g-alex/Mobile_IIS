@@ -130,7 +130,7 @@ fun DepartmentScheduleScreen(
                                 .padding(10.dp)
                         ) {
                             Text(
-                                text = it.content,
+                                text = it.content?:"",
                                 modifier = Modifier.align(Alignment.CenterHorizontally),
                                 fontWeight = FontWeight.Bold
                             )
@@ -139,13 +139,13 @@ fun DepartmentScheduleScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(text = it.startTime + "-" + it.endTime)
-                                Text(text = it.date)
+                                Text(text = it.date?:"")
                             }
-                            Text(text = it.auditory)
-                            Text(text = it.employee)
+                            Text(text = it.auditory?:"")
+                            Text(text = it.employee?:"")
                             Row() {
                                 it.studentGroups?.onEach {
-                                    Text(text = it.name)
+                                    Text(text = it.name+",")
                                 }
                             }
                         }

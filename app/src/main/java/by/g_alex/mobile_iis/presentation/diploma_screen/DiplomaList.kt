@@ -26,7 +26,7 @@ fun DiplomaList(
                 fontSize = 20.sp,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(10.dp),
+                    .padding(20.dp),
                 textAlign = TextAlign.Center
             )
         for (n in viewModel.state.value.diplomaState ?: emptyList()) {
