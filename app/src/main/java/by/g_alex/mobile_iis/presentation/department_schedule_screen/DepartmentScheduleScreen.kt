@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -100,8 +102,8 @@ fun DepartmentScheduleScreen(
             }
             Button(
                 onClick = {
-                    if(selectedText.value!="")
-                    clicked.value = true
+                    if (selectedText.value != "")
+                        clicked.value = true
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -118,35 +120,42 @@ fun DepartmentScheduleScreen(
                 Text(text = "Скачать расписание кафедры", color = MaterialTheme.colorScheme.surface)
             }
             if (anonses.isNotEmpty()) {
-                anonses.onEach {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp)
-                    ) {
-                        Column(
+                LazyColumn() {
+                    items(anonses) {
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(10.dp)
                         ) {
-                            Text(
-                                text = it.content?:"",
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
-                                fontWeight = FontWeight.Bold
-                            )
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp)
                             ) {
-                                Text(text = it.startTime + "-" + it.endTime)
-                                Text(text = it.date?:"")
-                            }
-                            Text(text = it.auditory?:"")
-                            Text(text = it.employee?:"")
-                            Row() {
-                                it.studentGroups?.onEach {
-                                    Text(text = it.name+",")
+                                Text(
+                                    text = it.content ?: "",
+                                    modifier = Modifier
+                                        .align(Alignment.CenterHorizontally)
+                                        .padding(bottom = 5.dp),
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(text = it.startTime + "-" + it.endTime)
+                                    Text(text = it.date ?: "")
                                 }
+                                Text(text = it.auditory ?: "")
+                                Text(text = it.employee ?: "")
+                                val groups = remember { mutableStateOf("") }
+                                groups.value = ""
+                                it.studentGroups?.onEach { group ->
+                                    groups.value += group.name + if (it.studentGroups.indexOf(group) != it.studentGroups.size - 1) ","
+                                    else "."
+                                }
+                                Text(text = groups.value)
                             }
                         }
                     }
