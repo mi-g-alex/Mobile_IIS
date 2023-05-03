@@ -29,6 +29,7 @@ import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
+import by.g_alex.mobile_iis.presentation.diploma_screen.DiplomaScreen
 import by.g_alex.mobile_iis.presentation.dormitory_screen.DormitoryScreen
 import by.g_alex.mobile_iis.presentation.penalty_screen.FinesScreen
 import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
@@ -207,12 +208,16 @@ fun NavigationScreen() {
                         FinesScreen()
                         selectedItem.value = 4
                     }
+                    composable(route = "diploma") {
+                        DiplomaScreen()
+                        selectedItem.value = 4
+                    }
                     navigation(startDestination = "all-ratingHome", route = "all-rating") {
                         composable(route = "all-ratingHome") {
                             RatingAllScreen(navController = navController)
                             selectedItem.value = 4
                         }
-                        composable(route = "personalRating/{number}") { it1->
+                        composable(route = "personalRating/{number}") { it1 ->
                             val number = it1.arguments?.getString("number") ?: ""
                             PersonalRateScreen(navController = navController, number = number)
                             selectedItem.value = 4
@@ -283,17 +288,21 @@ fun BottomMenuMore(
             R.drawable.baseline_report_gmailerrorred_24
         ),
         BaseNavItem(
-            "all-rating",
-            "Рейтинг",
-            R.drawable.rating
+            "diploma",
+            "Диплом",
+            R.drawable.diploma_contract_svgrepo_com
         ),
         BaseNavItem(
             "settings",
             "Настройки",
             R.drawable.baseline_settings_24
         ),
-
+        BaseNavItem(
+            "all-rating",
+            "Рейтинг",
+            R.drawable.rating
         )
+    )
     Box(
         Modifier
             .background(MaterialTheme.colorScheme.background)
