@@ -1,4 +1,4 @@
-package by.g_alex.mobile_iis.presentation.departments
+package by.g_alex.mobile_iis.presentation.departments.employees_list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -23,13 +23,13 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,19 +37,29 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DepartmentsScreen(
-    viewModel: DepartmentsViewModel = hiltViewModel(),
-    navController: NavController
+fun DepartmentsEmployeesListScreen(
+    navController: NavController,
+    id: Int,
+    name: String,
+    viewModel: DepartmentsEmployeesListViewModel = hiltViewModel()
 ) {
 
     val state = viewModel.state.value
     val searchText = remember { mutableStateOf(TextFieldValue("")) }
+    val a = true
+    remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(a) {
+        viewModel.getEmployees(id)
+    }
 
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "Подразделения", fontSize = 20.sp) }
+                title = { Text(text = name, fontSize = 20.sp) }
             )
         }
     ) {
@@ -58,14 +68,13 @@ fun DepartmentsScreen(
                 .padding(it)
                 .fillMaxSize()
         ) {
-            if (state.departmentState?.isNotEmpty() == true) {
+            if (state.employeesState?.isNotEmpty() == true) {
                 LazyColumn {
                     stickyHeader {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .background(MaterialTheme.colorScheme.background),
-                            //horizontalArrangement = Arrangement.SpaceAround
                         ) {
                             OutlinedTextField(
                                 value = searchText.value,
@@ -75,7 +84,12 @@ fun DepartmentsScreen(
                                 },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                                 singleLine = true,
-                                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search") },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Outlined.Search,
+                                        contentDescription = "Search"
+                                    )
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 10.dp, vertical = 10.dp)
@@ -84,36 +98,36 @@ fun DepartmentsScreen(
                         }
                     }
 
-                    items(state.departmentState.size) { i ->
-                        if (state.departmentState[i].code != null && state.departmentState[i].name != null) {
-                            if(state.departmentState[i].name?.lowercase()?.contains(searchText.value.text) == true)
-                            Card(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight()
-                                    .padding(horizontal = 10.dp, vertical = 5.dp),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.inverseOnSurface
-                                )
-                            ) {
-                                Row(
+                    items(state.employeesState.size) { i ->
+                        if (state.employeesState[i].lastName != null && state.employeesState[i].firstName != null) {
+                            if (
+                                (state.employeesState[i].lastName.toString().lowercase() + " " +
+                                        state.employeesState[i].firstName.toString().lowercase() + " " +
+                                        state.employeesState[i].middleName.toString().lowercase())
+                                    .contains(searchText.value.text.lowercase())
+                            )
+                                Card(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .wrapContentHeight()
-                                        .padding(10.dp)
+                                        .padding(horizontal = 10.dp, vertical = 5.dp),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                                    )
                                 ) {
-                                    Text(
-                                        text = state.departmentState[i].code + ".\t",
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-                                    Text(
-                                        text = state.departmentState[i].name.toString(),
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .wrapContentHeight()
+                                            .padding(10.dp)
+                                    ) {
+                                        Text(
+                                            text = state.employeesState[i].lastName.toString() + " " +
+                                                    state.employeesState[i].firstName.toString() + " " +
+                                                    state.employeesState[i].middleName.toString(),
+                                        )
+                                    }
                                 }
-                            }
                         }
                     }
                 }

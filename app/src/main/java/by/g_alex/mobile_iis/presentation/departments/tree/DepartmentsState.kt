@@ -1,4 +1,4 @@
-package by.g_alex.mobile_iis.presentation.departments
+package by.g_alex.mobile_iis.presentation.departments.tree
 
 import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentsTreeDto
 

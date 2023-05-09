@@ -202,7 +202,7 @@ interface IisApi {
     suspend fun getDepartmentsTree(): List<DepartmentsTreeDto>
 
     @GET("api/v1/departments/name")
-    suspend fun getDepartmentName(@Query("id") id: Int) : String?
+    suspend fun getDepartmentName(@Query("id") id: Int) : String
 
     @GET("api/v1/employees")
     suspend fun getDepartmentEmployees(@Query("departmentId") id: Int): List<DepartmentEmployeesDto>

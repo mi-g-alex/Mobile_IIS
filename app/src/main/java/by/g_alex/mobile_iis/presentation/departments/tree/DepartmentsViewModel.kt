@@ -1,4 +1,4 @@
-package by.g_alex.mobile_iis.presentation.departments
+package by.g_alex.mobile_iis.presentation.departments.tree
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
