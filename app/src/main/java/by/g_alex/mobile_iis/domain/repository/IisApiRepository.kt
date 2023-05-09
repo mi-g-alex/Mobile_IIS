@@ -3,6 +3,9 @@ package by.g_alex.mobile_iis.domain.repository
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.department.DepartmentDto
+import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentEmployeesDto
+import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentsTreeDto
+import by.g_alex.mobile_iis.data.remote.dto.departments.EmployeeDetailInfoDto
 import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
@@ -80,9 +83,9 @@ interface IisApiRepository {
 
     suspend fun getPenalty(token: String): List<PenaltyModel>
 
-    suspend fun getDiplomas(token: String) : List<DiplomaDto>
+    suspend fun getDiplomas(token: String): List<DiplomaDto>
 
-    suspend fun getPractice(token: String) : List<PracticeDto>
+    suspend fun getPractice(token: String): List<PracticeDto>
 
     suspend fun getEmail(token: String): ContactsDto
 
@@ -102,9 +105,10 @@ interface IisApiRepository {
 
     suspend fun putSummary(token: String, cvDto: PersonalCV)
 
-    suspend fun putLinks(token:String,refs:List<Reference>)
+    suspend fun putLinks(token: String, refs: List<Reference>)
 
-    suspend fun postSkills(token: String,skills:List<Skill>)
+    suspend fun postSkills(token: String, skills: List<Skill>)
+
     // For All
     suspend fun getSchedule(groupNum: String): List<LessonModel>?
 
@@ -124,9 +128,17 @@ interface IisApiRepository {
 
     suspend fun getPersonalRating(number: String): PersonalRatingDto
 
-    suspend fun getDiciplines(id:Int,year:Int):List<DiciplinesDto>
+    suspend fun getDiciplines(id: Int, year: Int): List<DiciplinesDto>
 
-    suspend fun getDepartments():List<DepartmentDto>
+    suspend fun getDepartments(): List<DepartmentDto>
 
-    suspend fun getDepartmentAnons(id:Int):List<AnnouncemntDto>
+    suspend fun getDepartmentAnons(id: Int): List<AnnouncemntDto>
+
+    suspend fun getDepartmentsTree(): List<DepartmentsTreeDto>
+
+    suspend fun getDepartmentName(id: Int): String?
+
+    suspend fun getDepartmentEmployees(id: Int): List<DepartmentEmployeesDto>
+
+    suspend fun getEmployeeDetailsInfo(id: String) : EmployeeDetailInfoDto
 }

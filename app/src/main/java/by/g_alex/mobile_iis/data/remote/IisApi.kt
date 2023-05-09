@@ -2,6 +2,9 @@ package by.g_alex.mobile_iis.data.remote
 
 import by.g_alex.mobile_iis.data.remote.dto.department.DepartmentDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentEmployeesDto
+import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentsTreeDto
+import by.g_alex.mobile_iis.data.remote.dto.departments.EmployeeDetailInfoDto
 import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
@@ -190,8 +193,20 @@ interface IisApi {
     ): List<DiciplinesDto>
 
     @GET("api/v1/departments")
-    suspend fun getDepartment():List<DepartmentDto>
+    suspend fun getDepartment(): List<DepartmentDto>
 
     @GET("api/v1/announcements/departments")
-    suspend fun getDepartmentAnons(@Query("id") id : Int):List<AnnouncemntDto>
+    suspend fun getDepartmentAnons(@Query("id") id: Int): List<AnnouncemntDto>
+
+    @GET("api/v1/departments/tree")
+    suspend fun getDepartmentsTree(): List<DepartmentsTreeDto>
+
+    @GET("api/v1/departments/name")
+    suspend fun getDepartmentName(@Query("id") id: Int) : String?
+
+    @GET("api/v1/employees")
+    suspend fun getDepartmentEmployees(@Query("departmentId") id: Int): List<DepartmentEmployeesDto>
+
+    @GET("api/v1/employees/details-url")
+    suspend fun getEmployeeDetailsInfo(@Query("urlId") id: String) : EmployeeDetailInfoDto
 }

@@ -30,6 +30,7 @@ import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
 import by.g_alex.mobile_iis.presentation.department_schedule_screen.DepartmentScheduleScreen
+import by.g_alex.mobile_iis.presentation.departments.DepartmentsScreen
 import by.g_alex.mobile_iis.presentation.diciplines_screen.DiciplinesScreen
 import by.g_alex.mobile_iis.presentation.diploma_screen.DiplomaScreen
 import by.g_alex.mobile_iis.presentation.dormitory_screen.DormitoryScreen
@@ -222,6 +223,12 @@ fun NavigationScreen() {
                         DepartmentScheduleScreen()
                         selectedItem.value = 4
                     }
+                    navigation(startDestination = "departmentsHome", route = "departments") {
+                        composable(route = "departmentsHome") {
+                            DepartmentsScreen(navController = navController)
+                            selectedItem.value = 4
+                        }
+                    }
                     navigation(startDestination = "all-ratingHome", route = "all-rating") {
                         composable(route = "all-ratingHome") {
                             RatingAllScreen(navController = navController)
@@ -322,6 +329,11 @@ fun BottomMenuMore(
             "caf-schedule",
             "Кафедры",
             R.drawable.baseline_event_24
+        ),
+        BaseNavItem(
+            "departments",
+            "Подразделения",
+            R.drawable.baseline_apartment_24
         )
     )
     Box(

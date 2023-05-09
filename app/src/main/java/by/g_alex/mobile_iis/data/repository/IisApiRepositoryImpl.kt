@@ -4,6 +4,9 @@ import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.department.DepartmentDto
+import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentEmployeesDto
+import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentsTreeDto
+import by.g_alex.mobile_iis.data.remote.dto.departments.EmployeeDetailInfoDto
 import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
@@ -259,5 +262,21 @@ class IisApiRepositoryImpl @Inject constructor(
 
     override suspend fun getDepartmentAnons(id: Int): List<AnnouncemntDto> {
         return api.getDepartmentAnons(id)
+    }
+
+    override suspend fun getDepartmentsTree(): List<DepartmentsTreeDto> {
+        return api.getDepartmentsTree()
+    }
+
+    override suspend fun getDepartmentName(id: Int): String? {
+        return api.getDepartmentName(id)
+    }
+
+    override suspend fun getDepartmentEmployees(id: Int): List<DepartmentEmployeesDto> {
+        return api.getDepartmentEmployees(id)
+    }
+
+    override suspend fun getEmployeeDetailsInfo(id: String): EmployeeDetailInfoDto {
+        return api.getEmployeeDetailsInfo(id)
     }
 }

@@ -9,7 +9,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetAnounsmentsByDepartment @Inject constructor(
+class GetAnnouncementsByDepartment @Inject constructor(
     private val api_repository: IisApiRepository
 ) {
     operator fun invoke(id: Int): Flow<Resource<List<AnnouncemntDto>>> = flow {
@@ -19,7 +19,7 @@ class GetAnounsmentsByDepartment @Inject constructor(
             val data = api_repository.getDepartmentAnons(id)
             emit(Resource.Success<List<AnnouncemntDto>>(data))
 
-        } catch (e: HttpException) {
+        } catch (_: HttpException) {
 
 
         } catch (_: IOException) {
