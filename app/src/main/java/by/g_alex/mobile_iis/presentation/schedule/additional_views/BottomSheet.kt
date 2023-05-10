@@ -61,7 +61,7 @@ fun BottomSheet(
                             .weight(0.7f)
                             //.fillMaxWidth()
                             .clickable {
-                                viewModel.getSchedule(item);
+                                viewModel.getSchedule(item)
                                 viewModel.headerText.value = item
                                 Log.e("newHead", viewModel.headerText.value)
                                 scope.launch {
@@ -125,7 +125,12 @@ fun BottomSheet(
 
             item {
                 if (viewModel.getEmployees().isNotEmpty() && viewModel.getGroups().isNotEmpty())
-                    Divider(Modifier.fillMaxWidth())
+                    Divider(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .height(1.dp)
+                            .fillMaxWidth(), color = MaterialTheme.colorScheme.outline
+                    )
             }
 
             items(viewModel.getEmployees()) { item ->
@@ -186,7 +191,12 @@ fun BottomSheet(
 
             item {
                 if (viewModel.getEmployees().isNotEmpty() && viewModel.getGroups().isNotEmpty())
-                    Divider(Modifier.fillMaxWidth())
+                    Divider(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .height(1.dp)
+                            .fillMaxWidth(), color = MaterialTheme.colorScheme.outline
+                    )
             }
 
             item {

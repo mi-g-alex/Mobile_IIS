@@ -5,7 +5,7 @@ data class EmployeeDetailInfoDto(
     val calendarId: String?, // 2he8md8im6mlfj0lrvdli82g08@group.calendar.google.com
     val degree: String?,
     val degreeAbbrev: String?,
-    val department: Any?, // null
+    val department: String?, // null
     val email: String?, // migalevich@bsuir.by
     val firstName: String?, // Сергей
     val id: Int?, // 500043
@@ -13,7 +13,7 @@ data class EmployeeDetailInfoDto(
     val lastName: String?, // Мигалевич
     val middleName: String?, // Александрович
     val photoLink: String?, // https://iis.bsuir.by/api/v1/employees/photo/500043
-    val profileLinks: List<ProfileLink?>?,
+    val profileLinks: List<ProfileLink?>,
     val rank: Any?, // null
     val readingCourses: List<String?>?,
     val urlId: String? // s-migalevich
