@@ -2,6 +2,7 @@ package by.g_alex.mobile_iis.presentation.departments.employees_list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -46,12 +47,12 @@ fun DepartmentsEmployeesListScreen(
 
     val state = viewModel.state.value
     val searchText = remember { mutableStateOf(TextFieldValue("")) }
-    val a = true
+
     remember {
         mutableStateOf("")
     }
 
-    LaunchedEffect(a) {
+    LaunchedEffect(Unit) {
         viewModel.getEmployees(id)
     }
 
@@ -102,14 +103,20 @@ fun DepartmentsEmployeesListScreen(
                         if (state.employeesState[i].lastName != null && state.employeesState[i].firstName != null) {
                             if (
                                 (state.employeesState[i].lastName.toString().lowercase() + " " +
-                                        state.employeesState[i].firstName.toString().lowercase() + " " +
+                                        state.employeesState[i].firstName.toString()
+                                            .lowercase() + " " +
                                         state.employeesState[i].middleName.toString().lowercase())
+                                    .contains(searchText.value.text.lowercase()) ||
+                                (state.employeesState[i].jobPositions.toString().lowercase())
                                     .contains(searchText.value.text.lowercase())
                             )
                                 Card(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .wrapContentHeight()
+                                        .clickable {
+                                            navController.navigate("departmentsEmployeeInfo/${state.employeesState[i].urlId.toString()}")
+                                        }
                                         .padding(horizontal = 10.dp, vertical = 5.dp),
                                     colors = CardDefaults.cardColors(
                                         containerColor = MaterialTheme.colorScheme.inverseOnSurface
@@ -131,6 +138,10 @@ fun DepartmentsEmployeesListScreen(
                         }
                     }
                 }
+            }
+
+            if (state.employeesState!!.isEmpty() && !state.isLoading && state.error.isBlank()) {
+                Text(text = "Тут никого нет(", fontSize = 25.sp, modifier = Modifier.align(Alignment.Center))
             }
             if (state.error.isNotBlank()) {
                 if (state.error == "LessCookie") {

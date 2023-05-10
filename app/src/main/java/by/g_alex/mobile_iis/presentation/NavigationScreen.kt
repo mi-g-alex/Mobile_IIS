@@ -30,6 +30,7 @@ import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
 import by.g_alex.mobile_iis.presentation.department_schedule_screen.DepartmentScheduleScreen
+import by.g_alex.mobile_iis.presentation.departments.employee_info.DepartmentsEmployeesInfoScreen
 import by.g_alex.mobile_iis.presentation.departments.employees_list.DepartmentsEmployeesListScreen
 import by.g_alex.mobile_iis.presentation.departments.tree.DepartmentsScreen
 import by.g_alex.mobile_iis.presentation.diciplines_screen.DiciplinesScreen
@@ -233,6 +234,11 @@ fun NavigationScreen() {
                             val number = it1.arguments?.getString("id")?.toInt() ?: 0
                             val name = it1.arguments?.getString("name") ?: ""
                             DepartmentsEmployeesListScreen(navController, number, name)
+                            selectedItem.value = 4
+                        }
+                        composable(route = "departmentsEmployeeInfo/{id}") { it1 ->
+                            val id = it1.arguments?.getString("id") ?: ""
+                            DepartmentsEmployeesInfoScreen(id)
                             selectedItem.value = 4
                         }
                     }

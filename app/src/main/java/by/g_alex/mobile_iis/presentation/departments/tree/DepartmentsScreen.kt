@@ -93,6 +93,8 @@ fun DepartmentsScreen(
                     items(state.departmentState.size) { i ->
                         if (state.departmentState[i].code != null && state.departmentState[i].name != null) {
                             if (state.departmentState[i].name!!.lowercase()
+                                    .contains(searchText.value.text.lowercase()) ||
+                                state.departmentState[i].abbrev!!.lowercase()
                                     .contains(searchText.value.text.lowercase())
                             )
                                 Card(
