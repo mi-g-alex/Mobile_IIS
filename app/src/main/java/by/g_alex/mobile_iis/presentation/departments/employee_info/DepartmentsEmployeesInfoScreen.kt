@@ -28,10 +28,6 @@ fun DepartmentsEmployeesInfoScreen(
     val state = viewModel.state.value
     remember { mutableStateOf(TextFieldValue("")) }
 
-    remember {
-        mutableStateOf("")
-    }
-
     LaunchedEffect(Unit) {
         viewModel.getEmployees(id)
     }
