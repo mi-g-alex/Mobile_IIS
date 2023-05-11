@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.schedule.additional_views
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -54,10 +53,8 @@ fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()) {
             var end = false
             txt =
                 month + " " + date.value.dayOfMonth.toString() + ", " + dayOfweek + ", week " + cnt.toString()
-            Log.e("DATE", date.value.toString())
 
             for (n in currentSchedule) {
-                Log.e("DATE2", n.dateEnd ?: "")
                 if (n.weekDay == downDate.value.dayOfWeek.toString() && ((n.weekNumber?.contains(
                         cnt
                     ) == true) || (n.weekNumber == null))

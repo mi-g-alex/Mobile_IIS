@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.data.repository
 
-import android.util.Log
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
@@ -268,9 +267,7 @@ class IisApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPhone(value: RequestDto): PhoneSearchDto? {
-        val shit = api.getPhoneNumber(value)
-        Log.e("FFFF",shit.toString())
-        return shit
+        return api.getPhoneNumber(value)
     }
     override suspend fun getDepartmentsTree(): List<DepartmentsTreeDto> {
         return api.getDepartmentsTree()

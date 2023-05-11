@@ -23,12 +23,8 @@ class PhoneBookViewModel @Inject constructor(
     val state: State<PhoneState> = _state
 
     val pageList = mutableListOf<PhoneSearchDto>()
-//    init {
-//        getPhoneBook()
-//    }
-
-    fun getPhoneBook(value:RequestDto) {
-        getPhoneBookUseCase(value) .onEach { result ->
+    fun getPhoneBook(value: RequestDto) {
+        getPhoneBookUseCase(value).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = PhoneState(PhoneState = result.data)

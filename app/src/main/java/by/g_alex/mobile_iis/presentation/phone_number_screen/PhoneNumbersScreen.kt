@@ -21,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,10 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import by.g_alex.mobile_iis.data.remote.dto.phone_book.RequestDto
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.launch
 
+@OptIn(FlowPreview::class)
 @Composable
 fun PhoneNumbersScreen(
     viewModel: PhoneBookViewModel = hiltViewModel()
@@ -42,9 +42,8 @@ fun PhoneNumbersScreen(
     }
 
     val res = remember { mutableStateOf(viewModel.pageList) }
-    val currentPage = remember{ mutableStateOf(0) }
-    val currentInd = remember{ mutableStateOf(0) }
-    val coroutine = rememberCoroutineScope()
+    val currentPage = remember { mutableStateOf(0) }
+    val currentInd = remember { mutableStateOf(0) }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -75,10 +74,18 @@ fun PhoneNumbersScreen(
                     leadingIcon = {
                         Icon(Icons.Outlined.Search, contentDescription = "Search")
                     },
-                    keyboardActions = KeyboardActions(onDone = {viewModel.getPhoneBook(RequestDto(searchValue = searchText.value, pageSize = 20, currentPage = 1))})
+                    keyboardActions = KeyboardActions(onDone = {
+                        viewModel.getPhoneBook(
+                            RequestDto(
+                                searchValue = searchText.value,
+                                pageSize = 20,
+                                currentPage = 1
+                            )
+                        )
+                    })
                 )
                 val lazyListState = rememberLazyListState()
-                LaunchedEffect(lazyListState){
+                LaunchedEffect(lazyListState) {
                     snapshotFlow {
                         lazyListState.firstVisibleItemIndex
                     }
@@ -87,27 +94,37 @@ fun PhoneNumbersScreen(
                             currentInd.value = it
                         }
                 }
-                if(currentInd.value>currentPage.value*20-10 && currentInd.value>0){
-                    viewModel.getPhoneBook(RequestDto(searchValue = searchText.value, currentPage = ++currentPage.value, pageSize = 20))
+                if (currentInd.value > currentPage.value * 20) {
+                    viewModel.getPhoneBook(
+                        RequestDto(
+                            searchValue = searchText.value,
+                            currentPage = ++currentPage.value,
+                            pageSize = 20
+                        )
+                    )
                 }
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     state = lazyListState
-                ){
-                    if(res.value.isNotEmpty()) {
+                ) {
+                    if (res.value.isNotEmpty()) {
                         viewModel.pageList.onEach {
-                            items(it.auditoryPhoneNumberDtoList) {item->
+                            items(it.auditoryPhoneNumberDtoList) { item ->
                                 PhoneListItem(item = item)
-                           }
+                            }
                         }
                     }
-                    if(viewModel.state.value.isLoading){
-
+                    if (viewModel.state.value.isLoading) {
                         item {
-                            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .padding(vertical = 10.dp)
+                                )
+                            }
                         }
 
-                        coroutine.launch { lazyListState.scrollToItem(currentInd.value+1)}
                     }
                 }
 
