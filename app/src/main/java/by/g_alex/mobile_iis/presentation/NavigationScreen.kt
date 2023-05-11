@@ -36,7 +36,6 @@ import by.g_alex.mobile_iis.presentation.departments.tree.DepartmentsScreen
 import by.g_alex.mobile_iis.presentation.diciplines_screen.DiciplinesScreen
 import by.g_alex.mobile_iis.presentation.diploma_screen.DiplomaScreen
 import by.g_alex.mobile_iis.presentation.dormitory_screen.DormitoryScreen
-import by.g_alex.mobile_iis.presentation.penalty_screen.FinesScreen
 import by.g_alex.mobile_iis.presentation.grade_book_screen.RatingScreen
 import by.g_alex.mobile_iis.presentation.login_screen.LoginScreen
 import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.enter_login.RestorePasswordEnterLogin
@@ -44,6 +43,7 @@ import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.re
 import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.select_how_restore.RestorePasswordSelect
 import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
 import by.g_alex.mobile_iis.presentation.omissions_screen.OmissionsScreen
+import by.g_alex.mobile_iis.presentation.penalty_screen.FinesScreen
 import by.g_alex.mobile_iis.presentation.phone_number_screen.PhoneNumbersScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
 import by.g_alex.mobile_iis.presentation.rating_screen.PersonalRateScreen
@@ -263,7 +263,7 @@ fun NavigationScreen() {
                             SettingsScreen(navController = navController)
                             selectedItem.value = 4
                         }
-                        composable(route = "changeEmail") { backStackEntry ->
+                        composable(route = "changeEmail") {
                             ChangeEmailScreen(navController)
                             selectedItem.value = 4
                         }
@@ -324,24 +324,14 @@ fun BottomMenuMore(
             R.drawable.baseline_report_gmailerrorred_24
         ),
         BaseNavItem(
-            "all-rating",
-            "Рейтинг",
-            R.drawable.rating
+            "diploma",
+            "Диплом",
+            R.drawable.diploma_contract_svgrepo_com
         ),
         BaseNavItem(
             "settings",
             "Настройки",
             R.drawable.baseline_settings_24
-        ),
-        BaseNavItem(
-            "diciplines",
-            "Дисциплины",
-            R.drawable.baseline_sticky_note_2_24
-        ),
-        BaseNavItem(
-            "diploma",
-            "Диплом",
-            R.drawable.diploma_contract_svgrepo_com
         ),
         BaseNavItem(
             "caf-schedule",
@@ -352,6 +342,16 @@ fun BottomMenuMore(
             "departments",
             "Подразделения",
             R.drawable.baseline_apartment_24
+        ),
+        BaseNavItem(
+            "all-rating",
+            "Рейтинг",
+            R.drawable.rating
+        ),
+        BaseNavItem(
+            "diciplines",
+            "Дисциплины",
+            R.drawable.baseline_sticky_note_2_24
         ),
         BaseNavItem(
             "phone-numbers",
@@ -393,7 +393,6 @@ fun BottomMenuMore(
                         Icon(
                             painter = painterResource(id = listOfItems[i].icon),
                             contentDescription = listOfItems[i].title,
-
                             )
                         Text(text = listOfItems[i].title, fontSize = 12.sp)
                     }
