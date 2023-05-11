@@ -44,6 +44,7 @@ import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.re
 import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.select_how_restore.RestorePasswordSelect
 import by.g_alex.mobile_iis.presentation.mark_book.MarkBookScreen
 import by.g_alex.mobile_iis.presentation.omissions_screen.OmissionsScreen
+import by.g_alex.mobile_iis.presentation.phone_number_screen.PhoneNumbersScreen
 import by.g_alex.mobile_iis.presentation.profile_screen.ProfileCVScreen
 import by.g_alex.mobile_iis.presentation.rating_screen.PersonalRateScreen
 import by.g_alex.mobile_iis.presentation.rating_screen.RatingAllScreen
@@ -225,6 +226,10 @@ fun NavigationScreen() {
                         DepartmentScheduleScreen()
                         selectedItem.value = 4
                     }
+                    composable(route = "phone-numbers"){
+                        PhoneNumbersScreen()
+                        selectedItem.value = 4
+                    }
                     navigation(startDestination = "departmentsHome", route = "departments") {
                         composable(route = "departmentsHome") {
                             DepartmentsScreen(navController = navController)
@@ -347,6 +352,11 @@ fun BottomMenuMore(
             "departments",
             "Подразделения",
             R.drawable.baseline_apartment_24
+        ),
+        BaseNavItem(
+            "phone-numbers",
+            "Справочник",
+            R.drawable.baseline_local_phone_24
         )
     )
     Box(

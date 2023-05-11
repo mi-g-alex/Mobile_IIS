@@ -19,6 +19,8 @@ import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
 import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
+import by.g_alex.mobile_iis.data.remote.dto.phone_book.PhoneSearchDto
+import by.g_alex.mobile_iis.data.remote.dto.phone_book.RequestDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 import by.g_alex.mobile_iis.data.remote.dto.schedule.MainDto
@@ -154,6 +156,9 @@ interface IisApi {
     @POST("api/v1/profiles/my-skills")
     suspend fun postSkills(@Header("Cookie") cookieValue: String, @Body refs: List<Skill>)
 
+    @POST("api/v1/phone-book")
+    suspend fun getPhoneNumber( @Body searchValue: RequestDto): PhoneSearchDto
+
 
     // For all
     @GET("api/v1/schedule?") // Расписание группы
@@ -209,4 +214,6 @@ interface IisApi {
 
     @GET("api/v1/employees/details-url")
     suspend fun getEmployeeDetailsInfo(@Query("urlId") id: String) : EmployeeDetailInfoDto
+
+
 }

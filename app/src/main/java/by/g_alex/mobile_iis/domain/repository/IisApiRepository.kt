@@ -16,6 +16,8 @@ import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
+import by.g_alex.mobile_iis.data.remote.dto.phone_book.PhoneSearchDto
+import by.g_alex.mobile_iis.data.remote.dto.phone_book.RequestDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
@@ -130,6 +132,7 @@ interface IisApiRepository {
 
     suspend fun getDiciplines(id: Int, year: Int): List<DiciplinesDto>
 
+    suspend fun getPhone(value: RequestDto): PhoneSearchDto?
     suspend fun getDepartments(): List<DepartmentDto>
 
     suspend fun getDepartmentAnons(id: Int): List<AnnouncemntDto>

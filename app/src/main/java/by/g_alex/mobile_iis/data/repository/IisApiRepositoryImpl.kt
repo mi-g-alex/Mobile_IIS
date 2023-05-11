@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.data.repository
 
+import android.util.Log
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
 import by.g_alex.mobile_iis.data.remote.IisApi
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
@@ -25,6 +26,8 @@ import by.g_alex.mobile_iis.data.remote.dto.mark_book.toListMarkBookMarkModel
 import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.toPenltyModel
 import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
+import by.g_alex.mobile_iis.data.remote.dto.phone_book.PhoneSearchDto
+import by.g_alex.mobile_iis.data.remote.dto.phone_book.RequestDto
 import by.g_alex.mobile_iis.data.remote.dto.profile.PersonalCVDto
 import by.g_alex.mobile_iis.data.remote.dto.rating.RatingDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ChangePassDto
@@ -264,6 +267,11 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getDepartmentAnons(id)
     }
 
+    override suspend fun getPhone(value: RequestDto): PhoneSearchDto? {
+        val shit = api.getPhoneNumber(value)
+        Log.e("FFFF",shit.toString())
+        return shit
+    }
     override suspend fun getDepartmentsTree(): List<DepartmentsTreeDto> {
         return api.getDepartmentsTree()
     }
