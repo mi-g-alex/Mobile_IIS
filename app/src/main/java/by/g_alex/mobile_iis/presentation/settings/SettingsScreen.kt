@@ -35,6 +35,7 @@ import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_bio.ChangeBioDialog
 import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_password.ChangePasswordDialog
+import by.g_alex.mobile_iis.presentation.settings.advance_screens.check_email.CheckEmailDialog
 
 @Composable
 fun SettingsScreen(
@@ -44,6 +45,7 @@ fun SettingsScreen(
     val state = viewModel.state.value
     val showDialogBio = remember { mutableStateOf(false) }
     val showDialogPass = remember { mutableStateOf(false) }
+    val showDialogEmail = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -355,6 +357,45 @@ fun SettingsScreen(
                 }
 
                 item {
+                    Divider(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .height(1.dp)
+                            .fillMaxWidth(), color = MaterialTheme.colorScheme.outline
+                    )
+                }
+
+                item {
+                    //Change Password
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                showDialogEmail.value = true
+                            },
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .padding(vertical = 8.dp)
+                                .weight(1f)
+                        ) {
+                            Text(modifier = Modifier, text = "Почта Outlook", fontSize = 25.sp)
+                            Text(
+                                modifier = Modifier,
+                                text = "Посмотреть логин и пароль",
+                                fontSize = 15.sp
+                            )
+                        }
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_navigate_next_24),
+                            contentDescription = null
+                        )
+                    }
+                }
+
+                item {
                     Spacer(Modifier.height(10.dp))
                     OutlinedButton(onClick = {
                         viewModel.logOut()
@@ -393,6 +434,13 @@ fun SettingsScreen(
         ChangePasswordDialog(
             setShowDialog = {
                 showDialogPass.value = it
+            }
+        )
+
+    if (showDialogEmail.value)
+        CheckEmailDialog(
+            setShowDialog = {
+                showDialogEmail.value = it
             }
         )
 
