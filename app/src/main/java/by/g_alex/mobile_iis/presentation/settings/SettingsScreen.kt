@@ -149,7 +149,11 @@ fun SettingsScreen(
                 item {
                     //Change Password
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                showDialogBio.value = true
+                            },
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -157,9 +161,7 @@ fun SettingsScreen(
                             modifier = Modifier
                                 .padding(vertical = 8.dp)
                                 .weight(1f)
-                                .clickable {
-                                    showDialogBio.value = true
-                                }
+
                         ) {
                             Text(
                                 modifier = Modifier,

@@ -14,7 +14,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Switch
+import androidx.compose.material3.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
@@ -215,6 +215,17 @@ fun StudentsScreen(
                                 }
                                 // modifier = Modifier.fillMaxWidth()
                             ) {
+                                DropdownMenuItem(
+                                    onClick = {
+                                        bufRequest.faculties = emptyList()
+                                        expandedFaculties.value = false
+                                        selectedFacultiesText.value = "Любой"
+                                        viewModel.pageList.clear()
+                                        currentPage.value = 1
+                                        viewModel.getprofiles(bufRequest)
+                                    },
+                                    text = { androidx.compose.material3.Text(text = "Любой") },
+                                )
                                 faculties.forEach { selectionOption ->
                                     DropdownMenuItem(
                                         onClick = {
@@ -281,13 +292,15 @@ fun StudentsScreen(
                             }
                         }
                         val checkedState = remember { mutableStateOf(bufRequest.searchJob) }
-                        Row() {
+                        Row(modifier = Modifier.padding(top = 5.dp)) {
                             Text(
                                 text = "Ищет работу",
                                 modifier = Modifier.align(Alignment.CenterVertically),
-                                color = MaterialTheme.colorScheme.inverseSurface
+                                color = MaterialTheme.colorScheme.inverseSurface,
+                                fontSize = 15.sp
                             )
                             Switch(
+                                modifier = Modifier.padding(start = 10.dp),
                                 checked = checkedState.value,
                                 onCheckedChange = {
                                     checkedState.value = it
@@ -310,7 +323,7 @@ fun StudentsScreen(
                             currentPage.value = 1
                             viewModel.getprofiles(bufRequest)
                         }) {
-                        androidx.compose.material3.Text("Oк")
+                        androidx.compose.material3.Text("Применить")
                     }
                 }
             )
