@@ -38,19 +38,7 @@ fun RatingColumn(
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         if (!students.isNullOrEmpty()) {
-            stickyHeader {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.background)
-                        .padding(15.dp),
-                    //horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    Text(text = "№", modifier = Modifier.weight(0.3f))
-                    Text(text = "Студ. билет", modifier = Modifier.weight(1f))
-                    Text(text = "Cр. балл", modifier = Modifier.weight(0.7f))
-                    Text(text = "Часы", modifier = Modifier.weight(0.4f))
-                }
+            item {
                 OutlinedTextField(
                     value = searchText.value,
                     shape = MaterialTheme.shapes.large,
@@ -70,6 +58,20 @@ fun RatingColumn(
                         .padding(horizontal = 10.dp, vertical = 10.dp)
 
                 )
+            }
+            stickyHeader {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background)
+                        .padding(15.dp),
+                ) {
+                    Text(text = "№", modifier = Modifier.weight(0.3f))
+                    Text(text = "Студ. билет", modifier = Modifier.weight(1f))
+                    Text(text = "Cр. балл", modifier = Modifier.weight(0.7f))
+                    Text(text = "Часы", modifier = Modifier.weight(0.4f))
+                }
+
             }
         }
         if (students != null) {

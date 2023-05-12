@@ -34,6 +34,8 @@ import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ContactsDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
+import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponceDto
+import by.g_alex.mobile_iis.data.remote.dto.students.StudentsRequestDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
@@ -277,6 +279,9 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getDepartmentName(id)
     }
 
+    override suspend fun getStudentProfiles(value: StudentsRequestDto): StudentResponceDto {
+        return api.getProfiles(value)
+    }
     override suspend fun getDepartmentEmployees(id: Int): List<DepartmentEmployeesDto> {
         return api.getDepartmentEmployees(id)
     }

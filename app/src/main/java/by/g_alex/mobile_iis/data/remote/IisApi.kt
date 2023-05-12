@@ -29,6 +29,8 @@ import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ContactsDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
+import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponceDto
+import by.g_alex.mobile_iis.data.remote.dto.students.StudentsRequestDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
@@ -156,6 +158,9 @@ interface IisApi {
     @POST("api/v1/profiles/my-skills")
     suspend fun postSkills(@Header("Cookie") cookieValue: String, @Body refs: List<Skill>)
 
+    @POST("api/v1/profiles")
+    suspend fun getProfiles( @Body searchValue: StudentsRequestDto): StudentResponceDto
+
     @POST("api/v1/phone-book")
     suspend fun getPhoneNumber( @Body searchValue: RequestDto): PhoneSearchDto
 
@@ -187,6 +192,7 @@ interface IisApi {
 
     @GET("api/v1/rating")
     suspend fun getRating(@Query("year") year: Int, @Query("sdef") sdef: Int): List<RatingDto>
+
 
     @GET("api/v1/rating/studentRating")
     suspend fun getPersonalRating(@Query("studentCardNumber") numb: String): PersonalRatingDto

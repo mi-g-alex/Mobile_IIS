@@ -53,6 +53,7 @@ import by.g_alex.mobile_iis.presentation.settings.SettingsScreen
 import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_email.ChangeEmailScreen
 import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_links.LinksDialog
 import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_skills.ChangeSkillsDialog
+import by.g_alex.mobile_iis.presentation.students_screen.StudentsScreen
 import by.g_alex.mobile_iis.presentation.study_screen.StudyScreen
 import by.g_alex.mobile_iis.presentation.user_group.UserGroupScreen
 import kotlinx.coroutines.CoroutineScope
@@ -230,6 +231,10 @@ fun NavigationScreen() {
                         PhoneNumbersScreen()
                         selectedItem.value = 4
                     }
+                    composable(route = "students"){
+                        StudentsScreen()
+                        selectedItem.value = 4
+                    }
                     navigation(startDestination = "departmentsHome", route = "departments") {
                         composable(route = "departmentsHome") {
                             DepartmentsScreen(navController = navController)
@@ -357,6 +362,11 @@ fun BottomMenuMore(
             "phone-numbers",
             "Справочник",
             R.drawable.baseline_local_phone_24
+        ),
+        BaseNavItem(
+            "students",
+            "Студенты",
+            R.drawable.baseline_person_24
         )
     )
     Box(
