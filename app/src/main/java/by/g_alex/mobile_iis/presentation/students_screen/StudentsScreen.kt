@@ -142,7 +142,7 @@ fun StudentsScreen(
                 ) {
                     Row() {
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_filter_alt_24),
+                            painter = painterResource(id = R.drawable.filter_icon),
                             modifier = Modifier
                                 .size(18.dp)
                                 .padding(end = 5.dp),

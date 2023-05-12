@@ -70,8 +70,8 @@ fun BottomSheet(
                             }
                     )
                     Icon(
-                        painter = if (viewModel.favourite.value == item) painterResource(id = R.drawable.baseline_star_24)
-                        else painterResource(id = R.drawable.baseline_star_outline_24),
+                        painter = if (viewModel.favourite.value == item) painterResource(id = R.drawable.star_icon)
+                        else painterResource(id = R.drawable.star_o_icon),
                         contentDescription = "sdcscds",
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
@@ -89,7 +89,7 @@ fun BottomSheet(
                         else MaterialTheme.colorScheme.inverseSurface
                     )
                     Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.baseline_delete_24),
+                        imageVector = ImageVector.vectorResource(R.drawable.delete_icon),
                         contentDescription = "Delete",
                         modifier = Modifier
                             .weight(0.1f)
@@ -149,8 +149,8 @@ fun BottomSheet(
                                 }
                             })
                     Icon(
-                        painter = if (viewModel.favourite.value == item) painterResource(id = R.drawable.baseline_star_24)
-                        else painterResource(id = R.drawable.baseline_star_outline_24),
+                        painter = if (viewModel.favourite.value == item) painterResource(id = R.drawable.star_icon)
+                        else painterResource(id = R.drawable.star_o_icon),
                         contentDescription = "sdcscds",
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
@@ -168,7 +168,7 @@ fun BottomSheet(
                         else MaterialTheme.colorScheme.inverseSurface
                     )
                     Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.baseline_delete_24),
+                        imageVector = ImageVector.vectorResource(R.drawable.delete_icon),
                         contentDescription = "Delete",
                         modifier = Modifier
                             .weight(0.1f)
@@ -209,7 +209,7 @@ fun BottomSheet(
                         }
                     }) {
                     Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.plus),
+                        imageVector = ImageVector.vectorResource(R.drawable.add_icon),
                         contentDescription = "Add",
                         modifier = Modifier
                             .height(70.dp)

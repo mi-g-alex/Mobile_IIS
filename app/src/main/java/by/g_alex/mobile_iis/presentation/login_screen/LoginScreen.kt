@@ -57,7 +57,7 @@ fun LoginScreen(
             item {
                 Column(horizontalAlignment = CenterHorizontally) {
                     Image(
-                        painter = painterResource(id = R.drawable.logo),
+                        painter = painterResource(id = R.drawable.logo_icon),
                         contentDescription = "",
                         modifier = Modifier
                             .clip(CircleShape)

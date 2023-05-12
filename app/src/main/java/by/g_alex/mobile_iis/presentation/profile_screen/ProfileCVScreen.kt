@@ -163,7 +163,7 @@ fun ProfileCVScreen(
                         Row(modifier = Modifier.padding(bottom = 20.dp)){
                             for(n in 1..5){
                                 Icon(
-                                    painter =  painterResource(id = R.drawable.baseline_star_24),
+                                    painter =  painterResource(id = R.drawable.star_icon),
                                     contentDescription = "sdcscds",
                                     tint =if((profileInfo.rating ?: 0) >= n) Color(0xffffbf00)
                                     else MaterialTheme.colorScheme.onBackground

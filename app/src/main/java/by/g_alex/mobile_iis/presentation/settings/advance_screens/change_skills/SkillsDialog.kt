@@ -109,7 +109,7 @@ fun ChangeSkillsDialog(
                             modifier = Modifier.weight(0.5f)
                         )
                         val res = remember {
-                            mutableStateOf(R.drawable.baseline_delete_outline_24)
+                            mutableStateOf(R.drawable.delete_o_icon)
                         }
                         Icon(
                             painter = painterResource(id = res.value),
@@ -117,8 +117,8 @@ fun ChangeSkillsDialog(
                             modifier = Modifier
                                 .clickable {
                                     res.value =
-                                        if (res.value == R.drawable.baseline_delete_outline_24) R.drawable.baseline_delete_sm
-                                        else R.drawable.baseline_delete_outline_24
+                                        if (res.value == R.drawable.delete_o_icon) R.drawable.delete_icon
+                                        else R.drawable.delete_o_icon
                                     if (delInd.value.contains(index)) {
                                         delInd.value.remove(delInd.value.indexOf(index))
                                     } else

@@ -1,7 +1,5 @@
 package by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.enter_login
 
-import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,9 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -49,7 +47,6 @@ fun RestorePasswordEnterLogin(
     LaunchedEffect(state) {
         if (state.information != null) {
             val jsonData = Json.encodeToString(state.information)
-            //Log.e("~~~", jsonData.toString())
            navController.navigate("restorePasswordSelect/${jsonData}/${loginText.value.text}")
             state.information = null;
         }

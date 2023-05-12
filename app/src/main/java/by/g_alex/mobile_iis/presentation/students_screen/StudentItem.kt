@@ -69,7 +69,7 @@ fun StudentItem(
                     if(item.showRating)
                     for (n in 1..5) {
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_star_24),
+                            painter = painterResource(id = R.drawable.star_icon),
                             modifier = Modifier.size(15.dp),
                             contentDescription = "sdcscds",
                             tint = if (item.rating >= n) Color(0xffffbf00)

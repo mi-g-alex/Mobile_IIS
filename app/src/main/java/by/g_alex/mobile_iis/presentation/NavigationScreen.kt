@@ -66,10 +66,10 @@ import kotlinx.serialization.json.Json
 fun NavigationScreen() {
     val tabsItems = listOf<BaseNavItem>(
         BaseNavItem("schedule", "Расписание", R.drawable.schedule_icon),
-        BaseNavItem("mark_book", "Зачётка", R.drawable.baseline_book_24),
-        BaseNavItem("profile", "Профиль", R.drawable.icon_profile),
-        BaseNavItem("grade_book", "Оценки", R.drawable.baseline_menu_book_24),
-        BaseNavItem("more", "Ещё", R.drawable.baseline_more_horiz_24),
+        BaseNavItem("mark_book", "Зачётка", R.drawable.mark_book_icon),
+        BaseNavItem("profile", "Профиль", R.drawable.profile_icon),
+        BaseNavItem("grade_book", "Оценки", R.drawable.grade_book_icon),
+        BaseNavItem("more", "Ещё", R.drawable.more_icon),
     )
     val selectedItem = remember { mutableStateOf(0) }
     val navController = rememberNavController()
@@ -306,67 +306,67 @@ fun BottomMenuMore(
         BaseNavItem(
             "omissionsHome",
             "Пропуски",
-            R.drawable.baseline_do_not_disturb_24
+            R.drawable.omissions_icon
         ),
         BaseNavItem(
             "studyHome",
             "Учёба",
-            R.drawable.baseline_school_24
+            R.drawable.study_icon
         ),
         BaseNavItem(
             "announcements",
             "Объявления",
-            R.drawable.baseline_watch_later_24
+            R.drawable.announcements_icon
         ),
         BaseNavItem(
             "dormitory",
             "Общежитие",
-            R.drawable.baseline_home_work_24
+            R.drawable.dormitory_icon
         ),
         BaseNavItem(
             "fines",
             "Взыскания",
-            R.drawable.baseline_report_gmailerrorred_24
+            R.drawable.fines_icon
         ),
         BaseNavItem(
             "diploma",
             "Диплом",
-            R.drawable.diploma_contract_svgrepo_com
+            R.drawable.diploma_icon
         ),
         BaseNavItem(
             "settings",
             "Настройки",
-            R.drawable.baseline_settings_24
+            R.drawable.settings_icon
         ),
         BaseNavItem(
             "caf-schedule",
             "Кафедры",
-            R.drawable.baseline_event_24
+            R.drawable.caf_schedule_icon
         ),
         BaseNavItem(
             "departments",
-            "Подразделения",
-            R.drawable.baseline_apartment_24
-        ),
-        BaseNavItem(
-            "all-rating",
-            "Рейтинг",
-            R.drawable.rating
-        ),
-        BaseNavItem(
-            "diciplines",
-            "Дисциплины",
-            R.drawable.baseline_sticky_note_2_24
-        ),
-        BaseNavItem(
-            "phone-numbers",
-            "Справочник",
-            R.drawable.baseline_local_phone_24
+            "Отделы",
+            R.drawable.departments_icon
         ),
         BaseNavItem(
             "students",
             "Студенты",
-            R.drawable.baseline_person_24
+            R.drawable.all_students_icon
+        ),
+        BaseNavItem(
+            "all-rating",
+            "Рейтинг",
+            R.drawable.all_rating_icon
+        ),
+        BaseNavItem(
+            "diciplines",
+            "Дисциплины",
+            R.drawable.disciplines_icon
+        ),
+        BaseNavItem(
+            "phone-numbers",
+            "Справочник",
+            R.drawable.phone_info_icon
         )
     )
     Box(
@@ -404,7 +404,7 @@ fun BottomMenuMore(
                             painter = painterResource(id = listOfItems[i].icon),
                             contentDescription = listOfItems[i].title,
                             )
-                        Text(text = listOfItems[i].title, fontSize = 12.sp)
+                        Text(text = listOfItems[i].title, fontSize = 10.sp)
                     }
                 }
             }

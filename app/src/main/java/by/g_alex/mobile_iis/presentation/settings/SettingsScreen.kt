@@ -92,7 +92,7 @@ fun SettingsScreen(
                             )
                         }
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_navigate_next_24),
+                            painter = painterResource(id = R.drawable.next_icon),
                             contentDescription = null
                         )
                     }
@@ -131,7 +131,7 @@ fun SettingsScreen(
                             )
                         }
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_navigate_next_24),
+                            painter = painterResource(id = R.drawable.next_icon),
                             contentDescription = null
                         )
                     }
@@ -173,7 +173,7 @@ fun SettingsScreen(
                             )
                         }
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_navigate_next_24),
+                            painter = painterResource(id = R.drawable.next_icon),
                             contentDescription = null
                         )
                     }
@@ -212,7 +212,7 @@ fun SettingsScreen(
                             )
                         }
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_navigate_next_24),
+                            painter = painterResource(id = R.drawable.next_icon),
                             contentDescription = null
                         )
                     }
@@ -251,7 +251,7 @@ fun SettingsScreen(
                             )
                         }
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_navigate_next_24),
+                            painter = painterResource(id = R.drawable.next_icon),
                             contentDescription = null
                         )
                     }
@@ -389,7 +389,7 @@ fun SettingsScreen(
                             )
                         }
                         Icon(
-                            painter = painterResource(id = R.drawable.baseline_navigate_next_24),
+                            painter = painterResource(id = R.drawable.next_icon),
                             contentDescription = null
                         )
                     }

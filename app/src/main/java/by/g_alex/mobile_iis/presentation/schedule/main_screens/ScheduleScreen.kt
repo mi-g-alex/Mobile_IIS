@@ -74,7 +74,7 @@ fun BottomSheetScaffold(
                 },
                     navigationIcon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.hide),
+                            painter = painterResource(id = R.drawable.hide_icon),
                             contentDescription = "Выбрать расписание"
                         )
                     },
