@@ -29,6 +29,7 @@ import androidx.navigation.navOptions
 import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.presentation.announcement_screen.AnnouncementScreen
+import by.g_alex.mobile_iis.presentation.bug_report.BugReportScreen
 import by.g_alex.mobile_iis.presentation.department_schedule_screen.DepartmentScheduleScreen
 import by.g_alex.mobile_iis.presentation.departments.employee_info.DepartmentsEmployeesInfoScreen
 import by.g_alex.mobile_iis.presentation.departments.employees_list.DepartmentsEmployeesListScreen
@@ -280,7 +281,10 @@ fun NavigationScreen() {
                             LinksDialog(navController = navController)
                             selectedItem.value = 4
                         }
-
+                        composable(route = "bug-report"){
+                            BugReportScreen()
+                            selectedItem.value = 4
+                        }
                     }
 
                 }
@@ -367,6 +371,11 @@ fun BottomMenuMore(
             "phone-numbers",
             "Справочник",
             R.drawable.phone_info_icon
+        ),
+        BaseNavItem(
+            "bug-report",
+            "Баг Репорт",
+            R.drawable.bug_icon
         )
     )
     Box(
