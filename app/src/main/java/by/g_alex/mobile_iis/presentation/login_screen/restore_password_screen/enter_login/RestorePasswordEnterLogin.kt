@@ -51,6 +51,7 @@ fun RestorePasswordEnterLogin(
             val jsonData = Json.encodeToString(state.information)
             //Log.e("~~~", jsonData.toString())
            navController.navigate("restorePasswordSelect/${jsonData}/${loginText.value.text}")
+            state.information = null;
         }
         if(state.error.isNotBlank()) {
             Toast.makeText(cnt, "Не найдено", Toast.LENGTH_LONG).show()

@@ -5,6 +5,6 @@ import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginRespo
 
 data class RestorePasswordEnterLoginState(
     val isLoading: Boolean = false,
-    val information: RestorePasswordEnterLoginResponseDto? = null,
+    var information: RestorePasswordEnterLoginResponseDto? = null,
     val error: String = ""
 )
