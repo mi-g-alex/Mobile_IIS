@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.study_screen.add_certificates
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -30,6 +29,7 @@ class AddCertificateViewModel @Inject constructor(
     val selectedPlace = mutableStateOf<CertificatePlacesDto.Place?>(null)
     val selectedText = mutableStateOf("")
     val commentText = mutableStateOf("")
+    val numberText = mutableStateOf("1")
 
     val isHerb = mutableStateOf(false)
 
@@ -64,13 +64,13 @@ class AddCertificateViewModel @Inject constructor(
         val placeOfCert =
             selectedText.value + (if (commentText.value.isNotBlank()) " (" + commentText.value + ")" else "")
         val resp = SendCertificateDto(
-            certificateCount = 1,
+            certificateCount = numberText.value.toInt(),
             certificateRequestDto = SendCertificateDto.CertificateRequestDto(
                 certificateType = typeOfCert,
                 provisionPlace = placeOfCert
             )
         )
-        Log.e("~~~", resp.toString())
+
         sendCertificateUseCase(resp).onEach { result ->
             when (result) {
                 is Resource.Success -> {

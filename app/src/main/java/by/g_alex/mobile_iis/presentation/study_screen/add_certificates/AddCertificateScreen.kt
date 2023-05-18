@@ -2,7 +2,6 @@ package by.g_alex.mobile_iis.presentation.study_screen.add_certificates
 
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,11 +13,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -43,6 +45,8 @@ fun AddCertificateScreen(
     navController: NavController,
     viewModel: AddCertificateViewModel = hiltViewModel()
 ) {
+
+    val checkString = listOf<String>("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
     val commentText = viewModel.commentText
 
     if ((viewModel.selectedPlace.value?.type ?: -1) > 0) {
@@ -50,7 +54,7 @@ fun AddCertificateScreen(
     }
 
     LaunchedEffect(viewModel.sendState.value) {
-        if(viewModel.sendState.value.success == true) {
+        if (viewModel.sendState.value.success == true) {
             navController.navigateUp()
         }
     }
@@ -71,31 +75,38 @@ fun AddCertificateScreen(
         ) {
             if (viewModel.state.value.listOfItems != null)
                 LazyColumn {
-                    stickyHeader {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.background),
-                        )
-                        { Text("Тип печати", fontSize = 26.sp) }
+                    item {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        MenuBox(a = viewModel.state.value.listOfItems!!, viewModel = viewModel)
                     }
 
                     item {
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 10.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(
                                 modifier = Modifier
-                                    .padding(vertical = 8.dp)
                                     .weight(1f)
                             ) {
-                                Text(modifier = Modifier, text = "Гербовая", fontSize = 25.sp)
+                                Text(
+                                    modifier = Modifier,
+                                    text = "Гербовая печать",
+                                    fontSize = 25.sp
+                                )
                                 Text(
                                     modifier = Modifier,
                                     text = "Иначе будет обычная.",
                                     fontSize = 15.sp
+                                )
+                            }
+                            if ((viewModel.selectedPlace.value?.type ?: 0) > 0) {
+                                Icon(
+                                    Icons.Outlined.Lock,
+                                    null
                                 )
                             }
                             Switch(
@@ -105,13 +116,9 @@ fun AddCertificateScreen(
                                     if ((viewModel.selectedPlace.value?.type ?: 0) == 0)
                                         viewModel.isHerb.value = it
                                 },
-                                enabled = (viewModel.selectedPlace.value?.type ?: -1) == 0
+                                //enabled = (viewModel.selectedPlace.value?.type ?: -1) == 0
                             )
                         }
-                    }
-                    item {
-                        Spacer(modifier = Modifier.height(10.dp))
-                        MenuBox(a = viewModel.state.value.listOfItems!!, viewModel = viewModel)
                     }
 
                     item {
@@ -122,12 +129,28 @@ fun AddCertificateScreen(
                                 commentText.value = newText
                             },
                             label = { Text(text = "Комментарий") },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             singleLine = true,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 10.dp),
                             enabled = (viewModel.selectedPlace.value?.type ?: -1) == 0
+                        )
+                    }
+
+                    item {
+                        OutlinedTextField(
+                            value = viewModel.numberText.value,
+                            shape = MaterialTheme.shapes.large,
+                            onValueChange = { newText ->
+                                viewModel.numberText.value = newText
+                            },
+                            label = { Text(text = "Количество (1-10)") },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 10.dp)
                         )
                     }
 
@@ -139,13 +162,17 @@ fun AddCertificateScreen(
                             onClick = {
                                 viewModel.sendCertificate()
                             },
-                            enabled = !viewModel.sendState.value.isLoading) {
-                            if(viewModel.sendState.value.success == null && !viewModel.sendState.value.isLoading && viewModel.sendState.value.error.isBlank())
-                                Text("Заказать")
-                            else if(viewModel.sendState.value.isLoading)
-                                Text("Загрузка...")
-                            else if(viewModel.sendState.value.isLoading)
-                                Text("Ошибка. Повторите попытку")
+                            enabled = !viewModel.sendState.value.isLoading && viewModel.numberText.value in checkString
+                        ) {
+                            if (viewModel.numberText.value !in checkString) {
+                                Text("Кол-во не от 1 до 10!")
+                            } else
+                                if (viewModel.sendState.value.success == null && !viewModel.sendState.value.isLoading && viewModel.sendState.value.error.isBlank())
+                                    Text("Заказать")
+                                else if (viewModel.sendState.value.isLoading)
+                                    Text("Загрузка...")
+                                else if (viewModel.sendState.value.isLoading)
+                                    Text("Ошибка. Повторите попытку")
                         }
                     }
                 }
@@ -179,6 +206,7 @@ fun MenuBox(a: List<CertificatePlacesDto>, viewModel: AddCertificateViewModel) {
             expandedPlaces.value = !expandedPlaces.value
         }, modifier = Modifier
             .fillMaxWidth()
+            .padding(vertical = 10.dp)
     ) {
         OutlinedTextField(
             readOnly = true,
