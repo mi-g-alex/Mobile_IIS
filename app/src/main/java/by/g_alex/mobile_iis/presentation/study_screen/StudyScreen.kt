@@ -1,16 +1,20 @@
 package by.g_alex.mobile_iis.presentation.study_screen
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +36,21 @@ fun StudyScreen(
     val state = viewModel.state.value
 
     val showDialog = remember { mutableStateOf(false) }
+
+    LaunchedEffect(viewModel.needUpdate.value) {
+        if (viewModel.needUpdate.value) {
+            navController.navigate("studyHome")
+            navController.backQueue.remove(navController.previousBackStackEntry)
+        }
+    }
+
+    val cnt = LocalContext.current
+
+    LaunchedEffect(viewModel.needShowError.value) {
+        if (viewModel.needShowError.value != null) {
+            Toast.makeText(cnt, viewModel.needShowError.value, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -85,7 +104,7 @@ fun StudyScreen(
                     }
                     state.studyAll?.certifications?.let {
                         items(it.size) {
-                            CertificationItem(state.studyAll.certifications[it])
+                            CertificationItem(state.studyAll.certifications[it], viewModel)
                         }
                     }
                 }
@@ -169,7 +188,7 @@ fun StudyScreen(
 }
 
 @Composable
-private fun CertificationItem(it: StudyCertificationsDto) {
+private fun CertificationItem(it: StudyCertificationsDto, viewModel: StudyViewModel) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -202,9 +221,29 @@ private fun CertificationItem(it: StudyCertificationsDto) {
             if (it.rejectionReason != null) {
                 Text(text = "Причина отказа: ${it.rejectionReason}", fontSize = 15.sp)
             }
+            if(it.status == 2) {
+                Divider(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .height(1.dp)
+                        .fillMaxWidth(), color = MaterialTheme.colorScheme.outline
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            it.id?.let { it1 -> viewModel.closeCert(it1) }
+                        },
+                    horizontalArrangement =  Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Отменить", fontSize = 20.sp)
+                }
+            }
         }
     }
 }
+
 
 @Composable
 private fun MarkSheetItem(it: StudyMarkSheetDto) {

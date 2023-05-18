@@ -28,7 +28,7 @@ class ProfileViewModel @Inject constructor(
         getProfileCV()
     }
 
-    fun getProfileCV() {
+    private fun getProfileCV() {
         getProfileCVUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {

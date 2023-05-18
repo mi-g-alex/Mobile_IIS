@@ -158,4 +158,6 @@ interface IisApiRepository {
         request: SendCertificateDto,
         token: String
     ): Call<List<StudyCertificationsDto>>
+
+    suspend fun closeCertificate(id: Int, token : String) : Any
 }

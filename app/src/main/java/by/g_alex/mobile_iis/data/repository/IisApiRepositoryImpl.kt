@@ -305,4 +305,8 @@ class IisApiRepositoryImpl @Inject constructor(
     ): Call<List<StudyCertificationsDto>> {
         return api.sendCertificate(request, token)
     }
+
+    override suspend fun closeCertificate(id: Int, token: String): Any {
+        return api.closeCertificate(id, token)
+    }
 }

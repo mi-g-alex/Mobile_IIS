@@ -232,5 +232,6 @@ interface IisApi {
         @Header("Cookie") cookieValue: String
     ): Call<List<StudyCertificationsDto>>
 
-
+    @GET("api/v1/certificate/close")
+    suspend fun closeCertificate(@Query("id") id: Int, @Header("Cookie") cookieValue: String) : Any
 }
