@@ -83,6 +83,17 @@ fun ProfileCVScreen(
         }
     }
 
+    val cnt = LocalContext.current
+
+    LaunchedEffect(viewModel.photoLinkUpdated.value) {
+        if (viewModel.photoLinkUpdated.value) {
+            Toast.makeText(cnt, "Updated", Toast.LENGTH_SHORT).show()
+            navController.navigate("profile")
+            navController.backQueue.remove(navController.previousBackStackEntry)
+            viewModel.photoLinkUpdated.value = false
+        }
+    }
+
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri -> selectedImageUri = uri }
@@ -121,7 +132,11 @@ fun ProfileCVScreen(
                                         .size(200.dp)
                                         .clip(CircleShape)
                                         .background(Color.Gray, shape = CircleShape)
-                                        .border(3.dp, MaterialTheme.colorScheme.outline, CircleShape)
+                                        .border(
+                                            3.dp,
+                                            MaterialTheme.colorScheme.outline,
+                                            CircleShape
+                                        )
                                         .clickable {
                                             singlePhotoPickerLauncher.launch(
                                                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -160,12 +175,12 @@ fun ProfileCVScreen(
                             text = "Курс " + profileInfo.course + ", " + profileInfo.faculty + ", " + profileInfo.speciality + ", " + profileInfo.studentGroup,
                             fontSize = 20.sp
                         )
-                        Row(modifier = Modifier.padding(bottom = 20.dp)){
-                            for(n in 1..5){
+                        Row(modifier = Modifier.padding(bottom = 20.dp)) {
+                            for (n in 1..5) {
                                 Icon(
-                                    painter =  painterResource(id = R.drawable.star_icon),
-                                    contentDescription = "sdcscds",
-                                    tint =if((profileInfo.rating ?: 0) >= n) Color(0xffffbf00)
+                                    painter = painterResource(id = R.drawable.star_icon),
+                                    contentDescription = "Избранное",
+                                    tint = if ((profileInfo.rating ?: 0) >= n) Color(0xffffbf00)
                                     else MaterialTheme.colorScheme.onBackground
                                 )
 
@@ -274,7 +289,6 @@ fun ProfileCVScreen(
                                 )
                             }
                         }
-
                     }
                 }
             }

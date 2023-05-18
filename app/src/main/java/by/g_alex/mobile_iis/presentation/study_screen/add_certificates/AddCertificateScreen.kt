@@ -1,7 +1,6 @@
 package by.g_alex.mobile_iis.presentation.study_screen.add_certificates
 
 import android.util.Log
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,7 +38,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.data.remote.dto.study.CertificatePlacesDto
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AddCertificateScreen(
     navController: NavController,
@@ -55,7 +53,9 @@ fun AddCertificateScreen(
 
     LaunchedEffect(viewModel.sendState.value) {
         if (viewModel.sendState.value.success == true) {
-            navController.navigateUp()
+            navController.navigate("studyHome")
+            navController.backQueue.remove(navController.previousBackStackEntry)
+            navController.backQueue.remove(navController.previousBackStackEntry)
         }
     }
     Scaffold(
@@ -162,7 +162,7 @@ fun AddCertificateScreen(
                             onClick = {
                                 viewModel.sendCertificate()
                             },
-                            enabled = !viewModel.sendState.value.isLoading && viewModel.numberText.value in checkString
+                            enabled = !viewModel.sendState.value.isLoading && viewModel.numberText.value in checkString && viewModel.selectedText.value.isNotEmpty()
                         ) {
                             if (viewModel.numberText.value !in checkString) {
                                 Text("Кол-во не от 1 до 10!")
