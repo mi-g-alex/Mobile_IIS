@@ -2,10 +2,7 @@ package by.g_alex.mobile_iis.domain.use_case.departments_list
 
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentEmployeesDto
-import by.g_alex.mobile_iis.data.remote.dto.phone_book.PhoneSearchDto
-import by.g_alex.mobile_iis.data.remote.dto.phone_book.RequestDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
-import by.g_alex.mobile_iis.domain.use_case.phone_book.getPhoneBookUseCase
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.jupiter.api.Assertions

@@ -3,8 +3,12 @@ package by.g_alex.mobile_iis.presentation.study_screen
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
@@ -14,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 
@@ -21,9 +26,12 @@ import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StudyScreen(
-    viewModel: StudyViewModel = hiltViewModel()
+    viewModel: StudyViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val state = viewModel.state.value
+
+    val showDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -32,6 +40,16 @@ fun StudyScreen(
                     Text("Учёба")
                 },
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { showDialog.value = true },
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Добавить"
+                )
+            }
         }
     ) { paddingValues ->
         Box(
@@ -140,6 +158,14 @@ fun StudyScreen(
             }
         }
     }
+
+    if (showDialog.value)
+        SelectCertificateOrMarkSheetDialog(
+            setShowDialog = {
+                showDialog.value = it
+            },
+            navController = navController
+        )
 }
 
 @Composable

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.data.remote.dto.phone_book.PhoneSearchDto
 import by.g_alex.mobile_iis.data.remote.dto.phone_book.RequestDto
-import by.g_alex.mobile_iis.domain.use_case.phone_book.getPhoneBookUseCase
+import by.g_alex.mobile_iis.domain.use_case.phone_book.GetPhoneBookUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PhoneBookViewModel @Inject constructor(
-    private val getPhoneBookUseCase: getPhoneBookUseCase
+    private val getPhoneBookUseCase: GetPhoneBookUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf<PhoneState>(PhoneState())

@@ -10,7 +10,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class getPhoneBookUseCase @Inject constructor(
+class GetPhoneBookUseCase @Inject constructor(
     private val api: IisApiRepository
 ) {
     operator fun invoke(value:RequestDto): Flow<Resource<PhoneSearchDto>> = flow {

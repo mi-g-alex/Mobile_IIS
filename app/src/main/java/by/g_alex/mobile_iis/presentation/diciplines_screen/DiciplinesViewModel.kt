@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.domain.use_case.get_diciplines_use_case.GetDiciplinesUseCase
+import by.g_alex.mobile_iis.domain.use_case.get_diciplines_use_case.GetDisciplinesUseCase
 import by.g_alex.mobile_iis.domain.use_case.rating_use_cases.GetFacultiesUseCase
 import by.g_alex.mobile_iis.domain.use_case.rating_use_cases.GetSpecialitiesUseCase
 import by.g_alex.mobile_iis.presentation.rating_screen.states.FacultiesState
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class DiciplinesViewModel @Inject constructor(
     private val getFacultiesUseCase: GetFacultiesUseCase,
     private val getSpecialitiesUseCase: GetSpecialitiesUseCase,
-    private val getDiciplinesUseCase: GetDiciplinesUseCase
+    private val getDisciplinesUseCase: GetDisciplinesUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf<FacultiesState>(FacultiesState())
@@ -87,7 +87,7 @@ class DiciplinesViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
     fun getDiciplines(id:Int,year: Int){
-        getDiciplinesUseCase(id = id, year).onEach { result ->
+        getDisciplinesUseCase(id = id, year).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _disState.value = DiciplinesState(diciplineState = result.data ?: emptyList())

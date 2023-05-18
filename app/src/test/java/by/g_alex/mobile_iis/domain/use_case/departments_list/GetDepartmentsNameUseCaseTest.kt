@@ -1,7 +1,6 @@
 package by.g_alex.mobile_iis.domain.use_case.departments_list
 
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentEmployeesDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -14,17 +13,17 @@ class GetDepartmentsNameUseCaseTest {
 
     @Test
     fun test1() = runBlocking {
-        val testAnnouncementsByDepartment = "sdcd"
+        val test = "sdcd"
 
-        Mockito.`when`(api_rep.getDepartmentName(23)).thenReturn(testAnnouncementsByDepartment)
+        Mockito.`when`(api_rep.getDepartmentName(23)).thenReturn(test)
 
         val useCase = GetDepartmentsNameUseCase(api_rep)
         val results = mutableListOf<Resource<String>>()
-        useCase.invoke(1).collect { value -> results.add(value) }
+        useCase.invoke(23).collect { value -> results.add(value) }
 
 
 
-        Assertions.assertEquals(testAnnouncementsByDepartment, results[1].data)
+        Assertions.assertEquals(test, results[1].data)
 
     }
 }

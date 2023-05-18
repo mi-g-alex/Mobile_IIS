@@ -31,6 +31,8 @@ import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
 import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponceDto
 import by.g_alex.mobile_iis.data.remote.dto.students.StudentsRequestDto
+import by.g_alex.mobile_iis.data.remote.dto.study.CertificatePlacesDto
+import by.g_alex.mobile_iis.data.remote.dto.study.SendCertificateDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
@@ -159,10 +161,10 @@ interface IisApi {
     suspend fun postSkills(@Header("Cookie") cookieValue: String, @Body refs: List<Skill>)
 
     @POST("api/v1/profiles")
-    suspend fun getProfiles( @Body searchValue: StudentsRequestDto): StudentResponceDto
+    suspend fun getProfiles(@Body searchValue: StudentsRequestDto): StudentResponceDto
 
     @POST("api/v1/phone-book")
-    suspend fun getPhoneNumber( @Body searchValue: RequestDto): PhoneSearchDto
+    suspend fun getPhoneNumber(@Body searchValue: RequestDto): PhoneSearchDto
 
 
     // For all
@@ -198,7 +200,7 @@ interface IisApi {
     suspend fun getPersonalRating(@Query("studentCardNumber") numb: String): PersonalRatingDto
 
     @GET("api/v1/list-disciplines")
-    suspend fun getDiciplines(
+    suspend fun getDisciplines(
         @Query("id") sdef: Int,
         @Query("year") year: Int
     ): List<DiciplinesDto>
@@ -213,13 +215,22 @@ interface IisApi {
     suspend fun getDepartmentsTree(): List<DepartmentsTreeDto>
 
     @GET("api/v1/departments/name")
-    suspend fun getDepartmentName(@Query("id") id: Int) : String
+    suspend fun getDepartmentName(@Query("id") id: Int): String
 
     @GET("api/v1/employees")
     suspend fun getDepartmentEmployees(@Query("departmentId") id: Int): List<DepartmentEmployeesDto>
 
     @GET("api/v1/employees/details-url")
-    suspend fun getEmployeeDetailsInfo(@Query("urlId") id: String) : EmployeeDetailInfoDto
+    suspend fun getEmployeeDetailsInfo(@Query("urlId") id: String): EmployeeDetailInfoDto
+
+    @GET("api/v1/certificate/places")
+    suspend fun getCertificatePlaces(): List<CertificatePlacesDto>
+
+    @POST("api/v1/certificate/register")
+    fun sendCertificate(
+        @Body request: SendCertificateDto,
+        @Header("Cookie") cookieValue: String
+    ): Call<List<StudyCertificationsDto>>
 
 
 }

@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.domain.use_case.get_profile.diploma
 
-import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository

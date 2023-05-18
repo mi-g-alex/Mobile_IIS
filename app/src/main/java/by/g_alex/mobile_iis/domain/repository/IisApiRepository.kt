@@ -26,6 +26,9 @@ import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
 import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponceDto
 import by.g_alex.mobile_iis.data.remote.dto.students.StudentsRequestDto
+import by.g_alex.mobile_iis.data.remote.dto.study.CertificatePlacesDto
+import by.g_alex.mobile_iis.data.remote.dto.study.SendCertificateDto
+import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
@@ -139,12 +142,20 @@ interface IisApiRepository {
 
     suspend fun getDepartmentAnons(id: Int): List<AnnouncemntDto>
 
-    suspend fun getStudentProfiles(value:StudentsRequestDto) : StudentResponceDto
+    suspend fun getStudentProfiles(value: StudentsRequestDto): StudentResponceDto
+
     suspend fun getDepartmentsTree(): List<DepartmentsTreeDto>
 
     suspend fun getDepartmentName(id: Int): String?
 
     suspend fun getDepartmentEmployees(id: Int): List<DepartmentEmployeesDto>
 
-    suspend fun getEmployeeDetailsInfo(id: String) : EmployeeDetailInfoDto
+    suspend fun getEmployeeDetailsInfo(id: String): EmployeeDetailInfoDto
+
+    suspend fun getCertificatePlaces(): List<CertificatePlacesDto>
+
+    suspend fun sendCertificate(
+        request: SendCertificateDto,
+        token: String
+    ): Call<List<StudyCertificationsDto>>
 }

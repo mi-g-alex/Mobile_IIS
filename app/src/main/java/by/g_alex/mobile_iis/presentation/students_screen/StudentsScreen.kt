@@ -15,7 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Switch
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.AlertDialog
@@ -82,7 +82,7 @@ fun StudentsScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { androidx.compose.material3.Text(text = "Студенты", fontSize = 20.sp) }
+                title = { Text(text = "Студенты", fontSize = 20.sp) }
             )
         }
     ) {
@@ -92,8 +92,8 @@ fun StudentsScreen(
                 lazyListState.firstVisibleItemIndex
             }
                 .debounce(200L)
-                .collectLatest {
-                    currentInd.value = it
+                .collectLatest { it1 ->
+                    currentInd.value = it1
                 }
         }
         if (currentInd.value >= currentPage.value / 10 && (currentPage.value < (viewModel.Sstate.value.StudentsState?.totalPages
@@ -140,7 +140,7 @@ fun StudentsScreen(
                     modifier = Modifier.padding(start = 10.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
-                    Row() {
+                    Row {
                         Icon(
                             painter = painterResource(id = R.drawable.filter_icon),
                             modifier = Modifier
@@ -153,8 +153,8 @@ fun StudentsScreen(
                 }
             }
             if (res.value.isNotEmpty()) {
-                res.value.onEach {
-                    items(it.cvs) { cv ->
+                res.value.onEach { it1 ->
+                    items(it1.cvs) { cv ->
                         StudentItem(item = cv)
                     }
                 }
@@ -167,7 +167,11 @@ fun StudentsScreen(
             if (viewModel.Sstate.value.isLoading) {
                 item {
                     Box(modifier = Modifier.fillMaxWidth()) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center).padding(10.dp))
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(10.dp)
+                        )
                     }
                 }
             }
@@ -187,7 +191,7 @@ fun StudentsScreen(
                     )
                 },
                 text = {
-                    Column() {
+                    Column {
                         ExposedDropdownMenuBox(
                             expanded = expandedFaculties.value,
                             onExpandedChange = {
@@ -202,7 +206,7 @@ fun StudentsScreen(
                                     .fillMaxWidth(),
                                 value = selectedFacultiesText.value,
                                 onValueChange = { },
-                                label = { androidx.compose.material3.Text("Факультет") },
+                                label = { Text("Факультет") },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     unfocusedBorderColor = MaterialTheme.colorScheme.primary,
                                     textColor = MaterialTheme.colorScheme.inverseSurface
@@ -224,7 +228,7 @@ fun StudentsScreen(
                                         currentPage.value = 1
                                         viewModel.getprofiles(bufRequest)
                                     },
-                                    text = { androidx.compose.material3.Text(text = "Любой") },
+                                    text = { Text(text = "Любой") },
                                 )
                                 faculties.forEach { selectionOption ->
                                     DropdownMenuItem(
@@ -236,7 +240,7 @@ fun StudentsScreen(
                                             currentPage.value = 1
                                             viewModel.getprofiles(bufRequest)
                                         },
-                                        text = { androidx.compose.material3.Text(text = selectionOption.text) },
+                                        text = { Text(text = selectionOption.text) },
                                     )
                                 }
                             }
@@ -255,7 +259,7 @@ fun StudentsScreen(
                                     .padding(end = 5.dp),
                                 value = selectedYearsText.value,
                                 onValueChange = { },
-                                label = { androidx.compose.material3.Text("Курс") },
+                                label = { Text("Курс") },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     unfocusedBorderColor = MaterialTheme.colorScheme.primary,
                                     textColor = MaterialTheme.colorScheme.inverseSurface
@@ -271,17 +275,16 @@ fun StudentsScreen(
                                 years.forEach { selectionOption ->
                                     DropdownMenuItem(
                                         onClick = {
-                                            if (selectionOption == "Любой"){
+                                            if (selectionOption == "Любой") {
                                                 bufRequest.course = emptyList()
-                                            }
-                                            else{
+                                            } else {
                                                 bufRequest.course = listOf(selectionOption)
                                             }
                                             selectedYearsText.value = selectionOption
                                             expandedYears.value = false
                                         },
                                         text = {
-                                            androidx.compose.material3.Text(
+                                            Text(
                                                 text = selectionOption,
                                                 modifier = Modifier.fillMaxWidth()
                                             )
@@ -302,9 +305,9 @@ fun StudentsScreen(
                             Switch(
                                 modifier = Modifier.padding(start = 10.dp),
                                 checked = checkedState.value,
-                                onCheckedChange = {
-                                    checkedState.value = it
-                                    bufRequest.searchJob = it
+                                onCheckedChange = {it1 ->
+                                    checkedState.value = it1
+                                    bufRequest.searchJob = it1
                                 }
                             )
                         }
@@ -323,7 +326,7 @@ fun StudentsScreen(
                             currentPage.value = 1
                             viewModel.getprofiles(bufRequest)
                         }) {
-                        androidx.compose.material3.Text("Применить")
+                        Text("Применить")
                     }
                 }
             )

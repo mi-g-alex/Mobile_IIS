@@ -36,6 +36,9 @@ import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
 import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponceDto
 import by.g_alex.mobile_iis.data.remote.dto.students.StudentsRequestDto
+import by.g_alex.mobile_iis.data.remote.dto.study.CertificatePlacesDto
+import by.g_alex.mobile_iis.data.remote.dto.study.SendCertificateDto
+import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
@@ -257,7 +260,7 @@ class IisApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getDiciplines(id: Int, year: Int): List<DiciplinesDto> {
-        return api.getDiciplines(year = year, sdef = id)
+        return api.getDisciplines(year = year, sdef = id)
     }
 
     override suspend fun getDepartments(): List<DepartmentDto> {
@@ -268,25 +271,38 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getDepartmentAnons(id)
     }
 
-    override suspend fun getPhone(value: RequestDto): PhoneSearchDto? {
+    override suspend fun getPhone(value: RequestDto): PhoneSearchDto {
         return api.getPhoneNumber(value)
     }
+
     override suspend fun getDepartmentsTree(): List<DepartmentsTreeDto> {
         return api.getDepartmentsTree()
     }
 
-    override suspend fun getDepartmentName(id: Int): String? {
+    override suspend fun getDepartmentName(id: Int): String {
         return api.getDepartmentName(id)
     }
 
     override suspend fun getStudentProfiles(value: StudentsRequestDto): StudentResponceDto {
         return api.getProfiles(value)
     }
+
     override suspend fun getDepartmentEmployees(id: Int): List<DepartmentEmployeesDto> {
         return api.getDepartmentEmployees(id)
     }
 
     override suspend fun getEmployeeDetailsInfo(id: String): EmployeeDetailInfoDto {
         return api.getEmployeeDetailsInfo(id)
+    }
+
+    override suspend fun getCertificatePlaces(): List<CertificatePlacesDto> {
+        return api.getCertificatePlaces()
+    }
+
+    override suspend fun sendCertificate(
+        request: SendCertificateDto,
+        token: String
+    ): Call<List<StudyCertificationsDto>> {
+        return api.sendCertificate(request, token)
     }
 }
