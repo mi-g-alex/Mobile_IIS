@@ -119,6 +119,7 @@ interface IisApiRepository {
     // For All
     suspend fun getSchedule(groupNum: String): List<LessonModel>?
 
+    suspend fun getExams(groupNum: String): List<LessonModel>?
     suspend fun getCurrentWeek(): Int
 
     suspend fun getGroups(): List<GroupModel>

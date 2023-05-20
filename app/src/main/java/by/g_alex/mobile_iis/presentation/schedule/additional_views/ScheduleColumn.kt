@@ -22,6 +22,7 @@ fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()) {
     val currentGroup = remember {
         mutableStateOf(viewModel.headerText.value)
     }
+   
     val currentSchedule = viewModel.state.value.Days ?: emptyList()
     LazyColumn(
         modifier = Modifier
@@ -59,6 +60,9 @@ fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()) {
                         cnt
                     ) == true) || (n.weekNumber == null))
                 ) {
+                    if(n.lessonTypeAbbrev == "Экзамен" || n.lessonTypeAbbrev == "Консультация"){
+                        continue
+                    }
                     if (!firstStep) {
                         items(mutableListOf(txt)) { itm ->
                             Text(

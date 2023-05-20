@@ -64,6 +64,7 @@ object AppModule {
         getEmployeeScheduleUseCase: GetEmployeeScheduleUseCase,
         getGroupsUseCase: GetGroupsUseCase,
         getEmployeesListUseCase: GetEmployeesListUseCase,
+        getExamsUseCase: GetExamsUseCase,
         db: UserDataBaseRepository
     ): ScheduleViewModel {
         return ScheduleViewModel(getScheduleUseCase = getScheduleUseCase,
@@ -72,7 +73,8 @@ object AppModule {
             getGroupsUseCase = getGroupsUseCase,
             getEmployeesListUseCase = getEmployeesListUseCase,
             db = db,
-            context = context
+            context = context,
+            getExamsUseCase = getExamsUseCase
             )
     }
 

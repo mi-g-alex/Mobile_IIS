@@ -15,7 +15,7 @@ data class DayDto(
     val subjectFullName: String,
     val weekNumber: List<Int>,
     val employees: List<EmployeeDto>?,
-    val dateLesson: Any?,
+    val dateLesson: String?,
     val startLessonDate: String,
     val endLessonDate: String,
     val announcementStart: Any,
@@ -50,6 +50,6 @@ fun DayDto.toLessonModel(weekDay: String, isGroup : Boolean): LessonModel {
         weekDay = weekDay,
         type = isGroup,
         groupNum = notation.value,//.toString().substring(1,studentGroups.toString().length-2)}
-        dateEnd = endLessonDate
+        dateEnd = dateLesson
     )
 }

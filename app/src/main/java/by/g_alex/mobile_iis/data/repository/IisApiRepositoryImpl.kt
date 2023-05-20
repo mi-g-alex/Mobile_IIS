@@ -203,6 +203,9 @@ class IisApiRepositoryImpl @Inject constructor(
         return api.getSchedule(groupNum).toLessonList(true)
     }
 
+    override suspend fun getExams(groupNum: String): List<LessonModel>? {
+        return api.getSchedule(groupNum).toExamList()
+    }
     override suspend fun getCurrentWeek(): Int {
         return api.getCurrentWeek()
     }

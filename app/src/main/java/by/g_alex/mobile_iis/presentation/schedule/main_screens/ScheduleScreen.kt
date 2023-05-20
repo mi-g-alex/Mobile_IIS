@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -63,13 +64,29 @@ fun BottomSheetScaffold(
         Scaffold(
             topBar = {
                 TopAppBar(title = {
-                    Row() {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Text(
                             text = currentGroup.value,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
+                            //if (viewModel.exams.isNotEmpty()) {
 
+                            Text(
+                                "ЭК",
+                                color = MaterialTheme.colorScheme.inverseSurface,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .clickable {
+                                        viewModel.getExams(viewModel.headerText.value)
+                                        navController.navigate("Exams")
+                                    }
+                                    .padding(end = 10.dp)
+                            )
+                        //}
                     }
                 },
                     navigationIcon = {

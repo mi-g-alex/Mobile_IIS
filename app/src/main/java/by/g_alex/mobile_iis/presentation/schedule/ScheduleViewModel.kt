@@ -16,10 +16,12 @@ import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetCurrentWeekUseCase
 import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetEmployeeScheduleUseCase
 import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetEmployeesListUseCase
+import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetExamsUseCase
 import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetGroupsUseCase
 import by.g_alex.mobile_iis.domain.use_case.schedule_use_cases.GetScheduleUseCase
 import by.g_alex.mobile_iis.presentation.schedule.states.CurrentWeekState
 import by.g_alex.mobile_iis.presentation.schedule.states.EmployeeState
+import by.g_alex.mobile_iis.presentation.schedule.states.ExamState
 import by.g_alex.mobile_iis.presentation.schedule.states.GroupState
 import by.g_alex.mobile_iis.presentation.schedule.states.ScheduleState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,10 +39,12 @@ class ScheduleViewModel @Inject constructor(
     private val getEmployeeScheduleUseCase: GetEmployeeScheduleUseCase,
     private val getGroupsUseCase: GetGroupsUseCase,
     private val getEmployeesListUseCase: GetEmployeesListUseCase,
+    private val getExamsUseCase: GetExamsUseCase,
     private val db: UserDataBaseRepository
 ) : ViewModel() {
 
     private val _state = mutableStateOf(ScheduleState())
+    private val _eState = mutableStateOf(ExamState())
     private val _wState = mutableStateOf(CurrentWeekState())
     private val _grState = mutableStateOf(GroupState())
     private val _prState = mutableStateOf(EmployeeState())
@@ -48,6 +52,7 @@ class ScheduleViewModel @Inject constructor(
     val headerText = mutableStateOf("Добавить")
     val favourite = mutableStateOf("Добавить")
     val state: State<ScheduleState> = _state
+    val exState: State<ExamState> = _eState
     val weekState: State<CurrentWeekState> = _wState
     val groupState: State<GroupState> = _grState
     val prepState: State<EmployeeState> = _prState
@@ -138,7 +143,44 @@ class ScheduleViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
+    fun getExams(grNum: String){
+        if(grNum == "Добавить")
+            return
+        viewModelScope.launch {
+            val schedules: List<LessonModel> = db.getSchedule(grNum+"exam")
+            if (schedules.isNotEmpty())
+                _eState.value = ExamState(exams = schedules)
+        }
+        getExamsUseCase(grNum).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    val stop = mutableStateOf(false)
+                    _eState.value = ExamState(exams = result.data)
+                    for (n in _eState.value.exams ?: emptyList()) {
+                        val bufList = db.getSchedule(grNum+"exam")
+                        for (m in bufList) {
+                            if (n == m) {
+                                stop.value = true
+                                break
+                            }
+                        }
+                        if (stop.value)
+                            break
+                        db.insertSchedule(n)
+                    }
+                }
 
+                is Resource.Error -> {
+
+                }
+
+                is Resource.Loading -> {
+                    _state.value = ScheduleState(isLoading = true)
+                }
+            }
+
+        }.launchIn(viewModelScope)
+    }
     fun getSchedule(grNum: String) {
         if(grNum == "Добавить")
             return
@@ -177,6 +219,7 @@ class ScheduleViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
+
 
     fun getEmployeeSchedule(fio: String) {
         val prefs =

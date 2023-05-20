@@ -10,7 +10,7 @@ data class MainDto(
     val employeeDto: EmployeeDto?,
     val studentGroupDto: StudentGroupDto?,
     val schedules: SchedulesDto?,
-    val exams: List<Any>
+    val exams: List<ExamDto>
 ) {
     fun toLessonList(type : Boolean): List<LessonModel> {
         val mo = mutableListOf<LessonModel>()
@@ -21,6 +21,13 @@ data class MainDto(
             this?.Thursday?.onEach { mnd -> mo.add(mnd.toLessonModel("THURSDAY",type)) }
             this?.Friday?.onEach { mnd -> mo.add(mnd.toLessonModel("FRIDAY",type)) }
             this?.Saturday?.onEach { mnd -> mo.add(mnd.toLessonModel("SATURDAY",type)) }
+        }
+        return mo.toList()
+    }
+    fun toExamList(): List<LessonModel> {
+        val mo = mutableListOf<LessonModel>()
+        exams.onEach {
+            mo.add(it.toLessonModel())
         }
         return mo.toList()
     }

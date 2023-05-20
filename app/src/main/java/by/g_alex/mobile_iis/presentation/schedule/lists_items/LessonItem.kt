@@ -73,6 +73,8 @@ fun LessonItem(
                 "ЛК" -> Color.Green
                 "ЛР" -> Color.Red
                 "ПЗ" -> Color.Yellow
+                "Экзамен" -> Color.Red
+                "Консультация" -> Color.Green
                 else -> Color.LightGray
             }
             Box(

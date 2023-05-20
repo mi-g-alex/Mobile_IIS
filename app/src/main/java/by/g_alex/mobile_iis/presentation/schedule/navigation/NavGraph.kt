@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.main_screens.AddNewScreen
+import by.g_alex.mobile_iis.presentation.schedule.main_screens.ExamsScreen
 import by.g_alex.mobile_iis.presentation.schedule.main_screens.ScheduleListScreen
 
 @Composable
@@ -16,10 +17,13 @@ fun SetUpNavGraph(
 ) {
     NavHost(navController = navController, startDestination = Screen.Home.route) {
         composable(Screen.Home.route) {
-            ScheduleListScreen( navController = navController)
+            ScheduleListScreen(viewModel, navController = navController)
         }
         composable(Screen.Search.route) {
             AddNewScreen(viewModel,navController)
+        }
+        composable(Screen.Exsam.route) {
+            ExamsScreen(viewModel = viewModel)
         }
     }
 }
