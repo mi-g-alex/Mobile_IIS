@@ -19,6 +19,7 @@ import by.g_alex.mobile_iis.presentation.schedule.lists_items.LessonItem
 fun ExamsScreen(
     viewModel: ScheduleViewModel
 ) {
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(

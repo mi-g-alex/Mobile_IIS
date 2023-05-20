@@ -132,6 +132,7 @@ fun NavigationScreen() {
                             ScheduleStartUp()
                             selectedItem.value = 0
                         }
+
                     }
                     navigation(startDestination = "profileHome", route = "profile") {
                         composable(

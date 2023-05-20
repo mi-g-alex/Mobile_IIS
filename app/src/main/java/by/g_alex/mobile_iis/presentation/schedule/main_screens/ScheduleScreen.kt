@@ -32,7 +32,7 @@ fun ScheduleListScreen(
     viewModel: ScheduleViewModel = hiltViewModel(),
     navController: NavController
 ) {
-
+    viewModel.getSchedule(viewModel.headerText.value)
     BottomSheetScaffold(viewModel, navController)
 }
 

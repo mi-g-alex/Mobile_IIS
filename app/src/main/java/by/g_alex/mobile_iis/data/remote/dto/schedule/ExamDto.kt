@@ -6,7 +6,7 @@ data class ExamDto(
     val announcement: Boolean?,
     val auditories: List<String>?,
     val dateLesson: String?,
-    val employees: List<Employee>?,
+    val employees: List<EmployeeDto>?,
     val endLessonDate: String?,
     val endLessonTime: String?,
     val lessonTypeAbbrev: String?,
@@ -21,6 +21,10 @@ data class ExamDto(
     val weekNumber: List<Int>?
 )
 fun ExamDto.toLessonModel(): LessonModel {
+    val str = if (employees?.isNotEmpty() == true)
+        employees[0].lastName + " " + employees[0].firstName[0] + "." + employees[0].middleName[0] + "."
+    else
+        ""
     return LessonModel(
         id = studentGroups?.get(0)?.name ?:"",
         auditories = auditories,
@@ -31,11 +35,11 @@ fun ExamDto.toLessonModel(): LessonModel {
         subject = subject,
         subjectFullName = subjectFullName,
         weekNumber = weekNumber,
-        fio = "",
+        fio = str,
         note = note,
         weekDay = "22",
-        type = false,
-        groupNum = "",//.toString().substring(1,studentGroups.toString().length-2)}
+        type = true,
+        groupNum = "",
         dateEnd = dateLesson
     )
 }

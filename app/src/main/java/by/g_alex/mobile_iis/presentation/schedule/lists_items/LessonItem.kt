@@ -115,7 +115,7 @@ fun LessonItem(
 
             val weeks = remember { mutableStateOf("") }
 
-            if (schedule.weekNumber != null) {
+            if (schedule.weekNumber != null && schedule.lessonTypeAbbrev != "Экзамен" && schedule.lessonTypeAbbrev != "Консультация") {
                 weeks.value = "Нед. "
                 if (schedule.weekNumber.size == 4) weeks.value = ""
                 else for (n in schedule.weekNumber) {
