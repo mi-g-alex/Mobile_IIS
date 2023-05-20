@@ -1,5 +1,7 @@
 package by.g_alex.mobile_iis.presentation.schedule.main_screens
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
+import by.g_alex.mobile_iis.common.Constants
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.additional_views.BottomSheet
 import by.g_alex.mobile_iis.presentation.schedule.additional_views.ScheduleColumn
@@ -32,7 +35,18 @@ fun ScheduleListScreen(
     viewModel: ScheduleViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    viewModel.getSchedule(viewModel.headerText.value)
+//    val prefer =
+//        viewModel.context.getSharedPreferences(Constants.ADDED_SCHEDULE, Context.MODE_PRIVATE)
+//    val prepSet = prefer.getString(viewModel.headerText.value, "")
+//    if (prepSet?.isNotEmpty() == true) {
+//        viewModel.getEmployeeSchedule(
+//            prepSet
+//        )
+//    }
+//    if(viewModel.headerText.value.contains("."))viewModel.getSchedule(viewModel.headerText.value)
+//    else {
+//        viewModel.getEmployeeSchedule(viewModel.headerText.value)
+//    }
     BottomSheetScaffold(viewModel, navController)
 }
 
@@ -73,19 +87,37 @@ fun BottomSheetScaffold(
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
-                            //if (viewModel.exams.isNotEmpty()) {
+                        //if (viewModel.exams.isNotEmpty()) {
 
-                            Text(
-                                "ЭК",
-                                color = MaterialTheme.colorScheme.inverseSurface,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier
-                                    .clickable {
+                        Text(
+                            "ЭК",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .clickable {
+
+                                    if (!viewModel.headerText.value.contains(".")) {
                                         viewModel.getExams(viewModel.headerText.value)
-                                        navController.navigate("Exams")
                                     }
-                                    .padding(end = 10.dp)
-                            )
+                                    else {
+                                        val prefer =
+                                            viewModel.context.getSharedPreferences(
+                                                Constants.ADDED_SCHEDULE,
+                                                Context.MODE_PRIVATE
+                                            )
+                                        val prepSet =
+                                            prefer.getString(viewModel.headerText.value, "")
+                                        Log.e("sdsdssd",prepSet?:"s");
+                                        viewModel.getExams(
+                                            prepSet ?: ""
+                                        )
+
+                                    }
+
+                                    navController.navigate("Exams")
+                                }
+                                .padding(end = 10.dp)
+                        )
                         //}
                     }
                 },

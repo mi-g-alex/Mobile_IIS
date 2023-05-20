@@ -146,28 +146,28 @@ class ScheduleViewModel @Inject constructor(
     fun getExams(grNum: String){
         if(grNum == "Добавить")
             return
-        viewModelScope.launch {
-            val schedules: List<LessonModel> = db.getSchedule(grNum+"exam")
-            if (schedules.isNotEmpty())
-                _eState.value = ExamState(exams = schedules)
-        }
+//        viewModelScope.launch {
+//            val schedules: List<LessonModel> = db.getSchedule(grNum+"exam")
+//            if (schedules.isNotEmpty())
+//                _eState.value = ExamState(exams = schedules)
+//        }
         getExamsUseCase(grNum).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     val stop = mutableStateOf(false)
                     _eState.value = ExamState(exams = result.data)
-                    for (n in _eState.value.exams ?: emptyList()) {
-                        val bufList = db.getSchedule(grNum+"exam")
-                        for (m in bufList) {
-                            if (n == m) {
-                                stop.value = true
-                                break
-                            }
-                        }
-                        if (stop.value)
-                            break
-                        db.insertSchedule(n)
-                    }
+//                    for (n in _eState.value.exams ?: emptyList()) {
+//                        val bufList = db.getSchedule(grNum+"exam")
+//                        for (m in bufList) {
+//                            if (n == m) {
+//                                stop.value = true
+//                                break
+//                            }
+//                        }
+//                        if (stop.value)
+//                            break
+//                        db.insertSchedule(n)
+//                    }
                 }
 
                 is Resource.Error -> {
@@ -175,7 +175,7 @@ class ScheduleViewModel @Inject constructor(
                 }
 
                 is Resource.Loading -> {
-                    _state.value = ScheduleState(isLoading = true)
+                    _eState.value = ExamState(isLoading = true)
                 }
             }
 

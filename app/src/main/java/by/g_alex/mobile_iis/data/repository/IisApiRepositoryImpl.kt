@@ -204,7 +204,12 @@ class IisApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getExams(groupNum: String): List<LessonModel>? {
-        return api.getSchedule(groupNum).toExamList()
+       if(groupNum[0].isDigit()) {
+           return api.getSchedule(groupNum).toExamList()
+       }
+        else{
+            return api.getEmployeeSchedule(groupNum)?.toExamList()
+       }
     }
     override suspend fun getCurrentWeek(): Int {
         return api.getCurrentWeek()
