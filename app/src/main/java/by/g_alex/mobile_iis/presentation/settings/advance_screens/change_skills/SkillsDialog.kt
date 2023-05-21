@@ -159,7 +159,7 @@ fun ChangeSkillsDialog(
                     inName.value = it
                 }, label = { Text(text = "Навык") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        textColor = MaterialTheme.colorScheme.onBackground,
+                        //textColor = MaterialTheme.colorScheme.onBackground,
                         unfocusedBorderColor = MaterialTheme.colorScheme.primary
                     ),
                     modifier = Modifier.fillMaxWidth()

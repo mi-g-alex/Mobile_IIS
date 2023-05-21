@@ -171,7 +171,7 @@ fun LinksDialog(
                     inName.value = it
                 }, label = { Text(text = "Название") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        textColor = MaterialTheme.colorScheme.onBackground,
+                        //textColor = MaterialTheme.colorScheme.onBackground,
                         unfocusedBorderColor = MaterialTheme.colorScheme.primary
                     ),
                     modifier = Modifier.fillMaxWidth()
@@ -180,7 +180,7 @@ fun LinksDialog(
                     inRef.value = it
                 }, label = { Text(text = "Ccылка") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        textColor = MaterialTheme.colorScheme.onBackground,
+                        //textColor = MaterialTheme.colorScheme.onBackground,
                         unfocusedBorderColor = MaterialTheme.colorScheme.primary
                     ),
                     modifier = Modifier.fillMaxWidth()

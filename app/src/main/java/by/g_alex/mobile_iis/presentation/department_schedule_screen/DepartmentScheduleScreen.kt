@@ -71,7 +71,7 @@ fun DepartmentScheduleScreen(
                     label = { Text("Кафедра") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                        textColor = MaterialTheme.colorScheme.inverseSurface
+                        /*textColor = MaterialTheme.colorScheme.inverseSurface*/
                     ),
                 )
                 ExposedDropdownMenu(

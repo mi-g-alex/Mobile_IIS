@@ -83,7 +83,7 @@ fun RatingAllScreen(
                         label = { Text("Год") },
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                            textColor = MaterialTheme.colorScheme.inverseSurface
+                   //         textColor = MaterialTheme.colorScheme.inverseSurface
                         ),
                     )
                     ExposedDropdownMenu(
@@ -129,7 +129,7 @@ fun RatingAllScreen(
                         label = { Text("Факультет") },
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                            textColor = MaterialTheme.colorScheme.inverseSurface
+                   //         textColor = MaterialTheme.colorScheme.inverseSurface
                         ),
                     )
                     ExposedDropdownMenu(
@@ -175,7 +175,7 @@ fun RatingAllScreen(
                     label = { Text("Специальность") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                        textColor = MaterialTheme.colorScheme.inverseSurface
+                //        textColor = MaterialTheme.colorScheme.inverseSurface
                     ),
                 )
                 ExposedDropdownMenu(

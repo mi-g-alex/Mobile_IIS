@@ -209,7 +209,7 @@ fun StudentsScreen(
                                 label = { Text("Факультет") },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                                    textColor = MaterialTheme.colorScheme.inverseSurface
+                        //            textColor = MaterialTheme.colorScheme.inverseSurface
                                 ),
                             )
                             ExposedDropdownMenu(
@@ -262,7 +262,7 @@ fun StudentsScreen(
                                 label = { Text("Курс") },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                                    textColor = MaterialTheme.colorScheme.inverseSurface
+                           //         textColor = MaterialTheme.colorScheme.inverseSurface
                                 ),
                             )
                             ExposedDropdownMenu(

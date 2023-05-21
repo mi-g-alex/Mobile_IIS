@@ -82,7 +82,7 @@ fun DiciplinesScreen(
                         label = { androidx.compose.material3.Text("Год") },
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                            textColor = MaterialTheme.colorScheme.inverseSurface
+                            /*textColor = MaterialTheme.colorScheme.inverseSurface*/
                         ),
                     )
                     ExposedDropdownMenu(
@@ -128,7 +128,7 @@ fun DiciplinesScreen(
                         label = { androidx.compose.material3.Text("Факультет") },
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                            textColor = MaterialTheme.colorScheme.inverseSurface
+                       //     textColor = MaterialTheme.colorScheme.inverseSurface
                         ),
                     )
                     ExposedDropdownMenu(
@@ -174,7 +174,7 @@ fun DiciplinesScreen(
                     label = { androidx.compose.material3.Text("Специальность") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                        textColor = MaterialTheme.colorScheme.inverseSurface
+               //         textColor = MaterialTheme.colorScheme.inverseSurface
                     ),
                 )
                 ExposedDropdownMenu(

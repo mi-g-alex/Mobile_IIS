@@ -218,7 +218,7 @@ fun MenuBox(a: List<CertificatePlacesDto>, viewModel: AddCertificateViewModel) {
             label = { Text("Место") },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                textColor = MaterialTheme.colorScheme.inverseSurface
+           //     textColor = MaterialTheme.colorScheme.inverseSurface
             ),
         )
         ExposedDropdownMenu(
