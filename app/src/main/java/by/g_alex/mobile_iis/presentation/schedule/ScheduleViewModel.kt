@@ -143,31 +143,29 @@ class ScheduleViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
-    fun getExams(grNum: String){
-        if(grNum == "Добавить")
+
+    fun getExams(grNum: String) {
+        if (grNum == "Добавить")
             return
-//        viewModelScope.launch {
-//            val schedules: List<LessonModel> = db.getSchedule(grNum+"exam")
-//            if (schedules.isNotEmpty())
-//                _eState.value = ExamState(exams = schedules)
-//        }
+        viewModelScope.launch {
+            val consult: MutableList<LessonModel> =
+                db.getScheduleByAbbv("Консультация", grNum).toMutableList()
+            val daoExams: MutableList<LessonModel> =
+                db.getScheduleByAbbv("Экзамен", grNum).toMutableList()
+            consult.addAll(daoExams)
+            consult.sortBy { it.dateEnd }
+            if (consult.isNotEmpty())
+                _eState.value = ExamState(exams = consult)
+        }
         getExamsUseCase(grNum).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    val stop = mutableStateOf(false)
                     _eState.value = ExamState(exams = result.data)
-//                    for (n in _eState.value.exams ?: emptyList()) {
-//                        val bufList = db.getSchedule(grNum+"exam")
-//                        for (m in bufList) {
-//                            if (n == m) {
-//                                stop.value = true
-//                                break
-//                            }
-//                        }
-//                        if (stop.value)
-//                            break
-//                        db.insertSchedule(n)
-//                    }
+                    db.deleteSchedulebyAbbv("Консультация", grNum)
+                    db.deleteSchedulebyAbbv("Экзамен", grNum)
+                    for (n in _eState.value.exams ?: emptyList()) {
+                        db.insertSchedule(n)
+                    }
                 }
 
                 is Resource.Error -> {
@@ -181,8 +179,9 @@ class ScheduleViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
+
     fun getSchedule(grNum: String) {
-        if(grNum == "Добавить")
+        if (grNum == "Добавить")
             return
         viewModelScope.launch {
             val schedules: List<LessonModel> = db.getSchedule(grNum)
@@ -229,6 +228,7 @@ class ScheduleViewModel @Inject constructor(
             val schedules: List<LessonModel> = db.getSchedule(urlId)
             if (schedules.isNotEmpty())
                 _state.value = ScheduleState(Days = schedules)
+
         }
         getEmployeeScheduleUseCase(urlId).onEach { result ->
             when (result) {
@@ -252,7 +252,7 @@ class ScheduleViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                 }
+                }
 
                 is Resource.Loading -> {
                     _state.value = ScheduleState(isLoading = true)

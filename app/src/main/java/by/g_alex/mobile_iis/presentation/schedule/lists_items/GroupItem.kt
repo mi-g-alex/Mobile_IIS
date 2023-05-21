@@ -24,6 +24,7 @@ fun GroupItem(group: GroupModel, viewModel: ScheduleViewModel, navController: Na
             viewModel.addGroups(group.name)
             viewModel.headerText.value = group.name
             viewModel.getSchedule(group.name)
+            viewModel.getExams(group.name)
             navController.navigate(Screen.Home.route)
         }) {
         Row(modifier = Modifier.padding(bottom = 10.dp).fillMaxWidth()) {
