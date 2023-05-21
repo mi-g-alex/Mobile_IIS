@@ -40,6 +40,8 @@ interface UserDao {
     @Query("SELECT * FROM LessonModel WHERE id LIKE :group")
     suspend fun getSchedule(group: String): List<LessonModel>
 
+
+
     @Query("SELECT * FROM MarkBookEntity")
     suspend fun getMarkBook():List<MarkBookEntity>
 

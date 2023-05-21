@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import by.g_alex.mobile_iis.R
+import by.g_alex.mobile_iis.common.Constants
 import by.g_alex.mobile_iis.common.Constants.FAVOURITE_SCHEDULE
 import by.g_alex.mobile_iis.presentation.schedule.ScheduleViewModel
 import by.g_alex.mobile_iis.presentation.schedule.navigation.Screen
@@ -62,6 +63,7 @@ fun BottomSheet(
                             //.fillMaxWidth()
                             .clickable {
                                 viewModel.getSchedule(item)
+                                viewModel.getExams(item)
                                 viewModel.headerText.value = item
                                 Log.e("newHead", viewModel.headerText.value)
                                 scope.launch {
@@ -113,6 +115,7 @@ fun BottomSheet(
                                 if (groups.value.isNotEmpty()) {
                                     viewModel.headerText.value = groups.value.first()
                                     viewModel.getSchedule(groups.value.first())
+                                    viewModel.getExams(groups.value.first())
                                 } else {
                                     viewModel.headerText.value = "Добавить"
                                 }
@@ -142,7 +145,12 @@ fun BottomSheet(
                             .padding(vertical = 5.dp)
                             .weight(0.7f)
                             .clickable {
-                                viewModel.getEmployeeSchedule(item); viewModel.headerText.value =
+                                viewModel.getEmployeeSchedule(item);
+                                val prefs =
+                                    viewModel.context.getSharedPreferences(Constants.ADDED_SCHEDULE, Context.MODE_PRIVATE)
+                                val urlId = prefs.getString(item, item) ?: item
+                                viewModel.getExams(urlId)
+                                viewModel.headerText.value =
                                 item
                                 scope.launch {
                                     bottomSheetState.hide()
@@ -179,7 +187,13 @@ fun BottomSheet(
                                 employees.value = viewModel.getEmployees()
                                 if (employees.value.isNotEmpty()) {
                                     viewModel.headerText.value = employees.value.first()
-                                    viewModel.getSchedule(employees.value.first())
+
+                                    viewModel.getEmployeeSchedule(employees.value.first())
+                                    val prefs =
+                                        viewModel.context.getSharedPreferences(Constants.ADDED_SCHEDULE, Context.MODE_PRIVATE)
+                                    val urlId = prefs.getString(employees.value.first(), employees.value.first()) ?: employees.value.first()
+                                    viewModel.getExams(urlId)
+
                                 } else {
                                     viewModel.headerText.value = "Добавить"
                                 }

@@ -18,31 +18,31 @@ fun ScheduleStartUp(
     viewModel: ScheduleViewModel = hiltViewModel(),
 ) {
 
-   // viewModel.context = LocalContext.current
-    Log.e("USE","USAGE")
+    // viewModel.context = LocalContext.current
+    Log.e("USE", "USAGE")
     val preferences =
-            viewModel.context.getSharedPreferences(
-                ADDED_GROUPS,
-                Context.MODE_PRIVATE
-            )
+        viewModel.context.getSharedPreferences(
+            ADDED_GROUPS,
+            Context.MODE_PRIVATE
+        )
 
-   // viewModel.getCurrentWeek()
 
     val set = preferences.getStringSet(ADDED_GROUPS, emptySet())
 
     val favouritePrefs =
-            viewModel.context.getSharedPreferences(
-                FAVOURITE_SCHEDULE,
-                Context.MODE_PRIVATE
-            )
+        viewModel.context.getSharedPreferences(
+            FAVOURITE_SCHEDULE,
+            Context.MODE_PRIVATE
+        )
 
 
-    val specialSched = favouritePrefs.getString(FAVOURITE_SCHEDULE,"")
-    if((specialSched == null || specialSched == "" || specialSched == "Добавить")&&viewModel.headerText.value=="Добавить") {
+    val specialSched = favouritePrefs.getString(FAVOURITE_SCHEDULE, "")
+    if ((specialSched == null || specialSched == "" || specialSched == "Добавить") && viewModel.headerText.value == "Добавить") {
         if (set?.isNotEmpty() == true) {
             viewModel.getSchedule(set.minOf { it })
+            viewModel.getExams(set.minOf { it })
             viewModel.headerText.value = set.minOf { it }
-            Log.e("HEADER",viewModel.headerText.value)
+            Log.e("HEADER", viewModel.headerText.value)
         } else {
             val prefer =
                 viewModel.context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
@@ -51,18 +51,28 @@ fun ScheduleStartUp(
                 viewModel.getEmployeeSchedule(
                     prepSet.first()
                 )
+                val prefs =
+                    viewModel.context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
+                val urlId = prefs.getString(prepSet.first(), prepSet.first()) ?: prepSet.first()
+                viewModel.getExams(urlId)
                 viewModel.headerText.value = prepSet.first()
             }
         }
-    }
-    else if(viewModel.headerText.value=="Добавить" && specialSched!="" &&specialSched != "Добавить"){
-        if(specialSched!!.contains("."))
+    } else if (viewModel.headerText.value == "Добавить" && specialSched != "" && specialSched != "Добавить") {
+        if (specialSched!!.contains(".")) {
             viewModel.getEmployeeSchedule(specialSched)
-        else viewModel.getSchedule(specialSched)
+            val prefs =
+                viewModel.context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
+            val urlId = prefs.getString(specialSched, specialSched) ?: specialSched
+            viewModel.getExams(urlId)
+        } else {
+            viewModel.getSchedule(specialSched)
+            viewModel.getExams(specialSched)
+        }
         viewModel.headerText.value = specialSched
         viewModel.favourite.value = specialSched
     }
     val navController: NavHostController = rememberNavController()
-    SetUpNavGraph(navController = navController)
+    SetUpNavGraph(navController = navController, viewModel = viewModel)
 }
 
