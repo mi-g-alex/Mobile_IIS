@@ -11,6 +11,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,6 +59,9 @@ fun BottomSheetScaffold(
     navController: NavController
 ) {
     val state = viewModel.state
+    val exams = remember {
+        viewModel.exState
+    }
     val currentGroup = viewModel.headerText
     val scope = rememberCoroutineScope()
     val bottomSheetState =
@@ -87,38 +91,37 @@ fun BottomSheetScaffold(
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
-                        //if (viewModel.exams.isNotEmpty()) {
+                        if (exams.value.exams?.isNotEmpty() == true) {
 
-                        Text(
-                            "ЭК",
-                            color = MaterialTheme.colorScheme.inverseSurface,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .clickable {
+                            Text(
+                                "ЭК",
+                                color = MaterialTheme.colorScheme.inverseSurface,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .clickable {
 
-                                    if (!viewModel.headerText.value.contains(".")) {
-                                        viewModel.getExams(viewModel.headerText.value)
-                                    }
-                                    else {
-                                        val prefer =
-                                            viewModel.context.getSharedPreferences(
-                                                Constants.ADDED_SCHEDULE,
-                                                Context.MODE_PRIVATE
+                                        if (!viewModel.headerText.value.contains(".")) {
+                                            viewModel.getExams(viewModel.headerText.value)
+                                        } else {
+                                            val prefer =
+                                                viewModel.context.getSharedPreferences(
+                                                    Constants.ADDED_SCHEDULE,
+                                                    Context.MODE_PRIVATE
+                                                )
+                                            val prepSet =
+                                                prefer.getString(viewModel.headerText.value, "")
+                                            Log.e("sdsdssd", prepSet ?: "s");
+                                            viewModel.getExams(
+                                                prepSet ?: ""
                                             )
-                                        val prepSet =
-                                            prefer.getString(viewModel.headerText.value, "")
-                                        Log.e("sdsdssd",prepSet?:"s");
-                                        viewModel.getExams(
-                                            prepSet ?: ""
-                                        )
 
+                                        }
+
+                                        navController.navigate("Exams")
                                     }
-
-                                    navController.navigate("Exams")
-                                }
-                                .padding(end = 10.dp)
-                        )
-                        //}
+                                    .padding(end = 10.dp)
+                            )
+                        }
                     }
                 },
                     navigationIcon = {
