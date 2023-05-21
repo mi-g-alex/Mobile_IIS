@@ -38,7 +38,7 @@ fun SelectCertificateOrMarkSheetDialog(
                     Modifier
                         .fillMaxWidth()
                         .clickable {
-                            navController.navigate("")
+                            navController.navigate("addMarkSheet")
                             setShowDialog(false)
                         }.padding(vertical = 5.dp),
                     Arrangement.SpaceBetween) {

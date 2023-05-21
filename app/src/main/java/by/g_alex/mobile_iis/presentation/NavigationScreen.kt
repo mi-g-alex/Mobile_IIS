@@ -57,6 +57,7 @@ import by.g_alex.mobile_iis.presentation.settings.advance_screens.change_skills.
 import by.g_alex.mobile_iis.presentation.students_screen.StudentsScreen
 import by.g_alex.mobile_iis.presentation.study_screen.StudyScreen
 import by.g_alex.mobile_iis.presentation.study_screen.add_certificates.AddCertificateScreen
+import by.g_alex.mobile_iis.presentation.study_screen.add_mark_sheet.AddMarkSheetScreen
 import by.g_alex.mobile_iis.presentation.user_group.UserGroupScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -209,6 +210,10 @@ fun NavigationScreen() {
                         }
                         composable(route = "addCertificate") {
                             AddCertificateScreen(navController)
+                            selectedItem.value = 4
+                        }
+                        composable(route = "addMarkSheet") {
+                            AddMarkSheetScreen()
                             selectedItem.value = 4
                         }
                     }
