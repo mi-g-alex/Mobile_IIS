@@ -1,6 +1,5 @@
 package by.g_alex.mobile_iis.presentation.study_screen.add_mark_sheet
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,7 +35,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,15 +51,11 @@ fun AddMarkSheetScreen(
     viewModel: AddMarkSheetViewModel = hiltViewModel()
 ) {
 
-    val disName = remember {
-        mutableStateOf("")
-    }
-    val cnt = LocalContext.current
+
     LaunchedEffect(
         viewModel.selectedTypeOfSubj.value
     ) {
         if (viewModel.selectedTypeOfSubj.value != null) {
-            Toast.makeText(cnt, "123456", Toast.LENGTH_SHORT).show()
             viewModel.getListById()
         } else {
             viewModel.employeeListById.value = emptyList()
@@ -129,7 +123,7 @@ fun AddMarkSheetScreen(
 
                 item {
                     val dateTime = LocalDateTime.now()
-                    val b = remember {
+                    val bq = remember {
                         mutableStateOf(false)
                     }
 
@@ -149,18 +143,18 @@ fun AddMarkSheetScreen(
                         onValueChange = {},
                         modifier = Modifier
                             .clickable {
-                                b.value = true
+                                bq.value = true
                             }
                             .fillMaxWidth(),
                         trailingIcon = {
                             Icon(Icons.Filled.DateRange, null, Modifier.clickable {
-                                b.value = true
+                                bq.value = true
                             })
                         })
 
-                    if (b.value) DatePickerDialog(onDismissRequest = { b.value = false },
+                    if (bq.value) DatePickerDialog(onDismissRequest = { bq.value = false },
                         confirmButton = {
-                            TextButton(onClick = { b.value = false }) {
+                            TextButton(onClick = { bq.value = false }) {
                                 Text("Выбрать")
                             }
                         }) {

@@ -125,7 +125,7 @@ fun NavigationScreen() {
             }
         ) {
             Box(modifier = Modifier.padding(it)) {
-                NavHost(navController = navController, startDestination = "studyHome") {
+                NavHost(navController = navController, startDestination = "schedule") {
                     navigation(startDestination = "scheduleHome", route = "schedule") {
                         composable(
                             route = "scheduleHome",
@@ -203,7 +203,7 @@ fun NavigationScreen() {
                         OmissionsScreen()
                         selectedItem.value = 4
                     }
-                    navigation(route = "studyHome", startDestination = "addMarkSheet") {
+                    navigation(route = "studyHome", startDestination = "study") {
                         composable(route = "study") {
                             StudyScreen(navController = navController)
                             selectedItem.value = 4
