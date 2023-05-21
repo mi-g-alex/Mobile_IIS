@@ -40,6 +40,9 @@ import by.g_alex.mobile_iis.data.remote.dto.study.CertificatePlacesDto
 import by.g_alex.mobile_iis.data.remote.dto.study.SendCertificateDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
+import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetFocusThIdDto
+import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetSubjectsDto
+import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetTypesDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.model.profile.Reference
@@ -267,7 +270,7 @@ class IisApiRepositoryImpl @Inject constructor(
         api.postSkills(token, skills)
     }
 
-    override suspend fun getDiciplines(id: Int, year: Int): List<DiciplinesDto> {
+    override suspend fun getDisciplines(id: Int, year: Int): List<DiciplinesDto> {
         return api.getDisciplines(year = year, sdef = id)
     }
 
@@ -316,5 +319,30 @@ class IisApiRepositoryImpl @Inject constructor(
 
     override suspend fun closeCertificate(id: Int, token: String): Any {
         return api.closeCertificate(id, token)
+    }
+
+    override suspend fun getMarkSheetTypes(): List<MarkSheetTypesDto> {
+        return api.getMarkSheetTypes()
+    }
+
+    override suspend fun getMarkSheetSubjects(token: String): List<MarkSheetSubjectsDto> {
+        return api.getMarkSheetSubjects(token)
+    }
+
+    override suspend fun getMarkSheetById(
+        focusId: Int?,
+        thId: Int?,
+        token: String
+    ): List<MarkSheetFocusThIdDto> {
+        if(focusId != null) {
+            return api.getMarkSheetFocusId(focusId, token)
+        } else if(thId != null) {
+            return api.getMarkSheetThId(thId, token)
+        }
+        return emptyList()
+    }
+
+    override suspend fun findEmployeesByFio(fio: String): List<MarkSheetFocusThIdDto> {
+        return api.findEmployeesByFio(fio)
     }
 }

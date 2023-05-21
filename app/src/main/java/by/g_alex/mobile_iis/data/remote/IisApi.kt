@@ -36,6 +36,9 @@ import by.g_alex.mobile_iis.data.remote.dto.study.SendCertificateDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyApplicationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyMarkSheetDto
+import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetFocusThIdDto
+import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetSubjectsDto
+import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetTypesDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.model.profile.Reference
@@ -223,6 +226,7 @@ interface IisApi {
     @GET("api/v1/employees/details-url")
     suspend fun getEmployeeDetailsInfo(@Query("urlId") id: String): EmployeeDetailInfoDto
 
+    // Справки и Ведомостички заказ
     @GET("api/v1/certificate/places")
     suspend fun getCertificatePlaces(): List<CertificatePlacesDto>
 
@@ -233,5 +237,26 @@ interface IisApi {
     ): Call<List<StudyCertificationsDto>>
 
     @GET("api/v1/certificate/close")
-    suspend fun closeCertificate(@Query("id") id: Int, @Header("Cookie") cookieValue: String) : Any
+    suspend fun closeCertificate(@Query("id") id: Int, @Header("Cookie") cookieValue: String): Any
+
+    @GET("api/v1/mark-sheet/types")
+    suspend fun getMarkSheetTypes(): List<MarkSheetTypesDto>
+
+    @GET("api/v1/mark-sheet/subjects")
+    suspend fun getMarkSheetSubjects(@Header("Cookie") cookieValue: String): List<MarkSheetSubjectsDto>
+
+    @GET("api/v1/employees/mark-sheet")
+    suspend fun getMarkSheetFocusId(
+        @Query("focsId") id: Int,
+        @Header("Cookie") cookieValue: String
+    ): List<MarkSheetFocusThIdDto>
+
+    @GET("api/v1/employees/mark-sheet")
+    suspend fun getMarkSheetThId(
+        @Query("thId") id: Int,
+        @Header("Cookie") cookieValue: String
+    ): List<MarkSheetFocusThIdDto>
+
+    @GET("api/v1/employees/fio/requests")
+    suspend fun findEmployeesByFio(@Query("employee-fio") fio: String) : List<MarkSheetFocusThIdDto>
 }

@@ -20,7 +20,7 @@ class GetDisciplinesUseCaseTest {
                 10, "Информатика"
             )
         )
-        Mockito.`when`(api_rep.getDiciplines(10, 2022)).thenReturn(test)
+        Mockito.`when`(api_rep.getDisciplines(10, 2022)).thenReturn(test)
 
         val useCase = GetDisciplinesUseCase(api_rep)
         val results = mutableListOf<Resource<List<DiciplinesDto>>>()

@@ -30,6 +30,9 @@ import by.g_alex.mobile_iis.data.remote.dto.study.CertificatePlacesDto
 import by.g_alex.mobile_iis.data.remote.dto.study.SendCertificateDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyCertificationsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
+import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetFocusThIdDto
+import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetSubjectsDto
+import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetTypesDto
 import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.model.profile.Reference
@@ -41,6 +44,8 @@ import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.Header
+import retrofit2.http.Query
 
 interface IisApiRepository {
 
@@ -136,9 +141,10 @@ interface IisApiRepository {
 
     suspend fun getPersonalRating(number: String): PersonalRatingDto
 
-    suspend fun getDiciplines(id: Int, year: Int): List<DiciplinesDto>
+    suspend fun getDisciplines(id: Int, year: Int): List<DiciplinesDto>
 
     suspend fun getPhone(value: RequestDto): PhoneSearchDto?
+
     suspend fun getDepartments(): List<DepartmentDto>
 
     suspend fun getDepartmentAnons(id: Int): List<AnnouncemntDto>
@@ -160,5 +166,13 @@ interface IisApiRepository {
         token: String
     ): Call<List<StudyCertificationsDto>>
 
-    suspend fun closeCertificate(id: Int, token : String) : Any
+    suspend fun closeCertificate(id: Int, token: String): Any
+
+    suspend fun getMarkSheetTypes(): List<MarkSheetTypesDto>
+
+    suspend fun getMarkSheetSubjects(token: String): List<MarkSheetSubjectsDto>
+
+    suspend fun getMarkSheetById(focusId: Int?, thId: Int?, token: String): List<MarkSheetFocusThIdDto>
+
+    suspend fun findEmployeesByFio(fio: String) : List<MarkSheetFocusThIdDto>
 }

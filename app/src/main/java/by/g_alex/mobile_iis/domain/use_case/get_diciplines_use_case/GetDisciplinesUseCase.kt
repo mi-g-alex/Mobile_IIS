@@ -15,7 +15,7 @@ class GetDisciplinesUseCase @Inject constructor(
     operator fun invoke(id: Int, year: Int): Flow<Resource<List<DiciplinesDto>>> = flow {
         try {
             emit(Resource.Loading())
-            val data = repository.getDiciplines(id = id, year = year)
+            val data = repository.getDisciplines(id = id, year = year)
             emit(Resource.Success(data))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "ERROR"))
