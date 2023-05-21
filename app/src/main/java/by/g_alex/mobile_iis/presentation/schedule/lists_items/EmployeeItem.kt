@@ -31,6 +31,7 @@ fun EmployeeItem(
             viewModel.addEmployees(employee)
             viewModel.headerText.value = employee.fio
             viewModel.getEmployeeSchedule(employee.urlId)
+            viewModel.getExams(employee.urlId)
             navController.navigateUp()
         }) {
         Row(modifier = Modifier.padding(bottom = 10.dp).fillMaxWidth()) {
