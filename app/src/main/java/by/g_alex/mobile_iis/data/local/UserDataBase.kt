@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.data.local
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -12,7 +13,7 @@ import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
 
 
 @Database(
-    version = 1,
+    version = 10,
     entities = [
         ProfilePersonalCVEntity::class,
         CookieEntity::class,
@@ -23,7 +24,7 @@ import by.g_alex.mobile_iis.data.local.entity.ProfilePersonalCVEntity
     ],
     exportSchema = true,
       autoMigrations = [
-          //AutoMigration(from = 1, to = 2)
+          AutoMigration(from = 9, to = 10)
       ],
 
 )
