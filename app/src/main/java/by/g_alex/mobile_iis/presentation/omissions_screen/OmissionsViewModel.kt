@@ -5,15 +5,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
+import by.g_alex.mobile_iis.data.local.entity.OmissionsByStudentDto
+import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import by.g_alex.mobile_iis.domain.use_case.get_profile.omissions.GetOmissionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class OmissionsViewModel @Inject constructor(
-    private val getOmissionsUseCase: GetOmissionsUseCase
+    private val getOmissionsUseCase: GetOmissionsUseCase,
+    private val db: UserDataBaseRepository
 ) : ViewModel() {
 
     private val _state = mutableStateOf<OmissionsState>(OmissionsState())
@@ -24,10 +28,19 @@ class OmissionsViewModel @Inject constructor(
     }
 
     private fun getOmissions() {
+        viewModelScope.launch {
+            val omissions: List<OmissionsByStudentDto> = db.getOmissions()
+            if (omissions.isNotEmpty())
+                _state.value = OmissionsState(omissionsState = omissions)
+        }
         getOmissionsUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = OmissionsState(omissionsState = result.data)
+                    db.deleteOmissions()
+                    for (n in _state.value.omissionsState ?: emptyList()) {
+                        db.insertOmission(n)
+                    }
                 }
 
                 is Resource.Loading -> {

@@ -51,6 +51,43 @@ interface UserDao {
 
     @Query("DELETE FROM MarkBookEntity")
     suspend fun deleteMarkbooks()
+
+    @Query("SELECT * FROM OmissionsByStudentDto")
+    suspend fun getOmissions():List<OmissionsByStudentDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOmissions(omission: OmissionsByStudentDto)
+
+    @Query("DELETE FROM OmissionsByStudentDto")
+    suspend fun deleteOmissions()
+
+    @Query("SELECT * FROM DormitoryDto")
+    suspend fun getDormitory():List<DormitoryDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDormitory(dorm: DormitoryDto)
+
+    @Query("DELETE FROM DormitoryDto")
+    suspend fun deleteDormitory()
+
+    @Query("SELECT * FROM PrivilegesDto")
+    suspend fun getPriivileges():List<PrivilegesDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPrivilege(privilege: PrivilegesDto)
+
+    @Query("DELETE FROM PenaltyModel")
+    suspend fun deletePenalty()
+
+    @Query("SELECT * FROM PenaltyModel")
+    suspend fun getPenalty():List<PenaltyModel>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPenalty(penalty : PenaltyModel)
+
+    @Query("DELETE FROM PrivilegesDto")
+    suspend fun deletePrivileges()
+
     @Query("SELECT * FROM GradeBookEntity")
     suspend fun getGradeBook():List<GradeBookEntity>
 

@@ -83,6 +83,53 @@ class UserDataBaseRepositoryImpl(
         return dao.getSchedule(group);
     }
 
+    override suspend fun getOmissions(): List<OmissionsByStudentDto> {
+        return dao.getOmissions()
+    }
+
+    override suspend fun deleteOmissions() {
+        dao.deleteOmissions()
+    }
+
+    override suspend fun insertOmission(omisson: OmissionsByStudentDto) {
+        dao.insertOmissions(omisson)
+    }
+
+    override suspend fun deleteDormitory() {
+        dao.deleteDormitory()
+    }
+
+    override suspend fun getDorm(): List<DormitoryDto> {
+        return dao.getDormitory()
+    }
+
+    override suspend fun insertDorm(dorm: DormitoryDto) {
+        dao.insertDormitory(dorm)
+    }
+
+    override suspend fun deletePrivileges() {
+        dao.deletePrivileges()
+    }
+
+    override suspend fun getPrivileges(): List<PrivilegesDto> {
+        return dao.getPriivileges()
+    }
+
+    override suspend fun insertPrivilege(privilege: PrivilegesDto) {
+        dao.insertPrivilege(privilege)
+    }
+
+    override suspend fun deletePenalty() {
+        dao.deletePenalty()
+    }
+
+    override suspend fun getPenalty(): List<PenaltyModel> {
+        return dao.getPenalty()
+    }
+
+    override suspend fun insertPenalty(penalty: PenaltyModel) {
+        dao.insertPenalty(penalty)
+    }
     override suspend fun deleteSchedulebyAbbv(name: String,group: String) {
         dao.deleteSchedulebyAbbv(name,group)
     }

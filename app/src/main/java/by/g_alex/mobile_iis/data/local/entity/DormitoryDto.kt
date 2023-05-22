@@ -1,6 +1,12 @@
-package by.g_alex.mobile_iis.data.remote.dto.dormitory
+package by.g_alex.mobile_iis.data.local.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class DormitoryDto(
+    @PrimaryKey(autoGenerate = true)
+    val key: Int = 0,
     val acceptedDate: Long?,
     val applicationDate: Long?,
     val docContent: String?,

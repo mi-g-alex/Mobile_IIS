@@ -1,21 +1,27 @@
 package by.g_alex.mobile_iis.presentation.dormitory_screen
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
+import by.g_alex.mobile_iis.data.local.entity.DormitoryDto
+import by.g_alex.mobile_iis.data.local.entity.PrivilegesDto
+import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import by.g_alex.mobile_iis.domain.use_case.get_profile.dormitory.GetDormitoryUseCase
 import by.g_alex.mobile_iis.domain.use_case.get_profile.dormitory.GetPrivilegesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DormitoryViewModel @Inject constructor(
     private val getDormitoryUseCase: GetDormitoryUseCase,
-    private val getPrivilegesUseCase: GetPrivilegesUseCase
+    private val getPrivilegesUseCase: GetPrivilegesUseCase,
+    private val db: UserDataBaseRepository
 ) : ViewModel() {
 
     private val _state = mutableStateOf<DormitoryState>(DormitoryState())
@@ -30,10 +36,21 @@ class DormitoryViewModel @Inject constructor(
     }
 
     fun getDormitory() {
+        viewModelScope.launch {
+            val dorms: List<DormitoryDto> = db.getDorm()
+            Log.e("Dorms",dorms.toString())
+            if (dorms.isNotEmpty())
+                _state.value = DormitoryState(dormState = dorms)
+            Log.e("DORM","")
+        }
         getDormitoryUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = DormitoryState(dormState = result.data ?: emptyList())
+                    db.deleteDormitory()
+                    for (n in _state.value.dormState ?: emptyList()) {
+                        db.insertDorm(n)
+                    }
                 }
 
                 is Resource.Loading -> {
@@ -50,10 +67,19 @@ class DormitoryViewModel @Inject constructor(
     }
 
     fun getPrivileges() {
+        viewModelScope.launch {
+            val priviles: List<PrivilegesDto> = db.getPrivileges()
+            if (priviles.isNotEmpty())
+                pr_state.value = PrivilegesState(privilegeState = priviles)
+        }
         getPrivilegesUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     pr_state.value = PrivilegesState(privilegeState = result.data ?: emptyList())
+                    db.deletePrivileges()
+                    for (n in pr_state.value.privilegeState ?: emptyList()) {
+                        db.insertPrivilege(n)
+                    }
                 }
 
                 is Resource.Loading -> {

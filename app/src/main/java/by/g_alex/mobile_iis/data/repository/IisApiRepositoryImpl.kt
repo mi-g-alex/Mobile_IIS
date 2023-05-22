@@ -10,8 +10,8 @@ import by.g_alex.mobile_iis.data.remote.dto.departments.EmployeeDetailInfoDto
 import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
-import by.g_alex.mobile_iis.data.remote.dto.dormitory.DormitoryDto
-import by.g_alex.mobile_iis.data.remote.dto.dormitory.PrivilegesDto
+import by.g_alex.mobile_iis.data.local.entity.DormitoryDto
+import by.g_alex.mobile_iis.data.local.entity.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.toEmployeeModel
 import by.g_alex.mobile_iis.data.remote.dto.faculties.FacultiesDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.toGradeBookLessonModel
@@ -22,7 +22,7 @@ import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordApplyDto
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordCheckSendDto
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.toListMarkBookMarkModel
-import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
+import by.g_alex.mobile_iis.data.local.entity.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.toPenltyModel
 import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.phone_book.PhoneSearchDto
@@ -49,7 +49,7 @@ import by.g_alex.mobile_iis.domain.model.profile.Reference
 import by.g_alex.mobile_iis.domain.model.profile.Skill
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
-import by.g_alex.mobile_iis.domain.model.profile.penalty_model.PenaltyModel
+import by.g_alex.mobile_iis.data.local.entity.PenaltyModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository

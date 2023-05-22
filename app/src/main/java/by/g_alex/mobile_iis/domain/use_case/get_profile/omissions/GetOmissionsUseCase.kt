@@ -2,7 +2,7 @@ package by.g_alex.mobile_iis.domain.use_case.get_profile.omissions
 
 import android.util.Log
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
+import by.g_alex.mobile_iis.data.local.entity.OmissionsByStudentDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import kotlinx.coroutines.flow.Flow

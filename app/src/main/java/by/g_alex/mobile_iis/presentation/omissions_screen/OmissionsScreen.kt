@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import by.g_alex.mobile_iis.data.remote.dto.omissions.OmissionsByStudentDto
+import by.g_alex.mobile_iis.data.local.entity.OmissionsByStudentDto
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -33,12 +33,11 @@ fun FinesScreen(
                 .padding(it)
                 .fillMaxSize()
         ) {
-            if (viewModel.state.value.PenaltyState != null) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    if (viewModel.state.value.PenaltyState?.isEmpty() == true)
+                    if (viewModel.state.value.PenaltyState.isEmpty())
                         Text(
                             "Нет взысканий",
                             fontSize = 20.sp,
@@ -47,7 +46,7 @@ fun FinesScreen(
                                 .padding(10.dp),
                             textAlign = TextAlign.Center
                         )
-                    viewModel.state.value.PenaltyState?.onEach { penal ->
+                    viewModel.state.value.PenaltyState.onEach { penal ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -73,7 +72,6 @@ fun FinesScreen(
                         }
                     }
                 }
-            }
             if (viewModel.state.value.error.isNotBlank()) {
                 if(viewModel.state.value.error == "LessCookie") {
                     Box(modifier = Modifier.align(Alignment.Center)) {

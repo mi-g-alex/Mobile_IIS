@@ -1,7 +1,6 @@
 package by.g_alex.mobile_iis.domain.use_case.schedule_use_cases
 
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import kotlinx.coroutines.runBlocking

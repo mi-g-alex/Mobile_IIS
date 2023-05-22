@@ -1,7 +1,7 @@
 package by.g_alex.mobile_iis.domain.use_case.get_profile.penalty
 
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.domain.model.profile.penalty_model.PenaltyModel
+import by.g_alex.mobile_iis.data.local.entity.PenaltyModel
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import by.g_alex.mobile_iis.domain.repository.UserDataBaseRepository
 import kotlinx.coroutines.flow.Flow

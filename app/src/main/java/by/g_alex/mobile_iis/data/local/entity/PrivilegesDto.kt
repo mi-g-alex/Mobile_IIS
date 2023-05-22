@@ -1,6 +1,12 @@
-package by.g_alex.mobile_iis.data.remote.dto.dormitory
+package by.g_alex.mobile_iis.data.local.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class PrivilegesDto(
+    @PrimaryKey(autoGenerate = true)
+    val key: Int = 0,
     val dormitoryPrivilegeCategoryId: Int,
     val dormitoryPrivilegeCategoryName: String,
     val dormitoryPrivilegeId: Int,

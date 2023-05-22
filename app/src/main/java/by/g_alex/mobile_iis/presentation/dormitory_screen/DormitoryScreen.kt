@@ -32,7 +32,6 @@ fun DormitoryScreen(viewModel: DormitoryViewModel = hiltViewModel()) {
                 .padding(it)
                 .fillMaxSize()
         ) {
-            if (viewModel.prState.value.privilegeState != null && viewModel.state.value.dormState != null) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -68,7 +67,6 @@ fun DormitoryScreen(viewModel: DormitoryViewModel = hiltViewModel()) {
                         }
                     }
                 }
-            }
             if (viewModel.state.value.error.isNotBlank()) {
                 if (viewModel.state.value.error == "LessCookie") {
                     Box(modifier = Modifier.align(Alignment.Center)) {
