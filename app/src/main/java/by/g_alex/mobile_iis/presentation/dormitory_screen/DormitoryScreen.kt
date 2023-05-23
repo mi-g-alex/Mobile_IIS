@@ -32,6 +32,7 @@ fun DormitoryScreen(viewModel: DormitoryViewModel = hiltViewModel()) {
                 .padding(it)
                 .fillMaxSize()
         ) {
+            if (viewModel.state.value.dormState.isNotEmpty())
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()

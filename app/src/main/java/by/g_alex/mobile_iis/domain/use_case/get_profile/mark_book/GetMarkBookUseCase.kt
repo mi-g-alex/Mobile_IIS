@@ -48,7 +48,9 @@ class GetMarkBookUseCase @Inject constructor(
                     emit(Resource.Success<List<MarkBookMarkModel>>(data))
                 } catch (e: HttpException) {
                     emit(
-                        Resource.Error<List<MarkBookMarkModel>>(e.localizedMessage ?: "ConnectionError")
+                        Resource.Error<List<MarkBookMarkModel>>(
+                            e.localizedMessage ?: "ConnectionError"
+                        )
                     )
                 } catch (e: IOException) {
                     emit(
@@ -58,9 +60,14 @@ class GetMarkBookUseCase @Inject constructor(
                     )
                 }
             }
-        } catch (_: IOException) {
+        } catch (e: IOException) {
             val data = db_repository.getMarkBooks()
-            emit(Resource.Success<List<MarkBookMarkModel>>(data))
+            if (data.isNotEmpty())
+                emit(Resource.Success<List<MarkBookMarkModel>>(data))
+            else
+                emit(
+                    Resource.Error<List<MarkBookMarkModel>>("ConnectionError")
+                )
         }
     }
 }

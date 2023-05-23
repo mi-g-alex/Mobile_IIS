@@ -2,6 +2,7 @@ package by.g_alex.mobile_iis.presentation.study_screen
 
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -80,7 +81,7 @@ fun StudyScreen(
                 if (!(state.studyAll?.mark_sheet.isNullOrEmpty())) {
                     stickyHeader {
                         Text(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background),
                             textAlign = TextAlign.Center,
                             text = "Ведомостички",
                             fontSize = 28.sp
@@ -96,7 +97,7 @@ fun StudyScreen(
                 if (!state.studyAll?.certifications.isNullOrEmpty()) {
                     stickyHeader {
                         Text(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background),
                             textAlign = TextAlign.Center,
                             text = "Справки",
                             fontSize = 28.sp
@@ -112,7 +113,7 @@ fun StudyScreen(
                 if (!state.studyAll?.applications.isNullOrEmpty()) {
                     stickyHeader {
                         Text(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background),
                             textAlign = TextAlign.Center,
                             text = "ДОТ",
                             fontSize = 28.sp
@@ -128,7 +129,7 @@ fun StudyScreen(
                 if (!state.studyAll?.lib_debts.isNullOrEmpty()) {
                     stickyHeader {
                         Text(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background),
                             textAlign = TextAlign.Center,
                             text = "Задолженности в библиотеке",
                             fontSize = 28.sp
@@ -159,12 +160,22 @@ fun StudyScreen(
                 }
 
             }
+
             if (state.error.isNotBlank()) {
                 if (state.error == "LessCookie") {
                     Box(modifier = Modifier.align(Alignment.Center)) {
                         Column(modifier = Modifier) {
                             Text(
                                 text = "Сначала войдите в аккаунт...",
+                                fontSize = 25.sp
+                            )
+                        }
+                    }
+                } else {
+                    Box(modifier = Modifier.align(Alignment.Center)) {
+                        Column(modifier = Modifier) {
+                            Text(
+                                text = "Ошибка подключения к серверу...",
                                 fontSize = 25.sp
                             )
                         }

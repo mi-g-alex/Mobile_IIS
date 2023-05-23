@@ -24,6 +24,10 @@ class GetDormitoryUseCase @Inject constructor(
             }
             if (cookie != null) {
                 val data = api_repository.getDormitory(cookie)
+                db_repository.deleteDormitory()
+                for (n in data) {
+                    db_repository.insertDorm(n)
+                }
                 emit(Resource.Success<List<DormitoryDto>>(data))
             }
         } catch (e: HttpException) {
@@ -40,6 +44,10 @@ class GetDormitoryUseCase @Inject constructor(
                             .awaitResponse()
                     val cookie = responseFromLogin.headers()["Set-Cookie"].toString()
                     val data = api_repository.getDormitory(cookie)
+                    db_repository.deleteDormitory()
+                    for (n in data) {
+                        db_repository.insertDorm(n)
+                    }
                     emit(Resource.Success<List<DormitoryDto>>(data))
                 } catch (e: HttpException) {
                     emit(
@@ -54,6 +62,13 @@ class GetDormitoryUseCase @Inject constructor(
                 }
             }
         } catch (_: IOException) {
+            val data = db_repository.getDorm()
+            if (data.isNotEmpty())
+                emit(Resource.Success<List<DormitoryDto>>(data))
+            else
+                emit(
+                    Resource.Error<List<DormitoryDto>>("ConnectionError")
+                )
         }
     }
 }

@@ -50,6 +50,7 @@ fun OmissionsScreen(
                     )
                 }
             }
+
             if (state.error.isNotBlank()) {
                 if (state.error == "LessCookie") {
                     Box(modifier = Modifier.align(Alignment.Center)) {
@@ -60,8 +61,18 @@ fun OmissionsScreen(
                             )
                         }
                     }
+                } else {
+                    Box(modifier = Modifier.align(Alignment.Center)) {
+                        Column(modifier = Modifier) {
+                            Text(
+                                text = "Ошибка подключения к серверу...",
+                                fontSize = 25.sp
+                            )
+                        }
+                    }
                 }
             }
+
             if (state.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }

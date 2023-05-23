@@ -26,6 +26,10 @@ class GetOmissionsUseCase @Inject constructor(
             if (cookie != null) {
                 val data = api_repository.getOmissionsByStudent(cookie)
                 Log.e("~~~", data.toString())
+                db_repository.deleteOmissions()
+                for (n in data) {
+                    db_repository.insertOmission(n)
+                }
                 emit(Resource.Success<List<OmissionsByStudentDto>>(data))
             }
         } catch (e: HttpException) {
@@ -43,6 +47,10 @@ class GetOmissionsUseCase @Inject constructor(
                     val cookie = responseFromLogin.headers()["Set-Cookie"].toString()
                     db_repository.setCookie(cookie)
                     val data = api_repository.getOmissionsByStudent(cookie)
+                    db_repository.deleteOmissions()
+                    for (n in data) {
+                        db_repository.insertOmission(n)
+                    }
                     emit(Resource.Success<List<OmissionsByStudentDto>>(data))
                 } catch (e: HttpException) {
                     emit(
@@ -57,7 +65,13 @@ class GetOmissionsUseCase @Inject constructor(
                 }
             }
         } catch (_: IOException) {
-
+            val data = db_repository.getOmissions()
+            if (data.isNotEmpty())
+                emit(Resource.Success<List<OmissionsByStudentDto>>(data))
+            else
+                emit(
+                    Resource.Error<List<OmissionsByStudentDto>>("ConnectionError")
+                )
         }
     }
 }
