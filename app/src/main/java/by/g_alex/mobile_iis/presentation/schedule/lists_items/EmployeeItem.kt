@@ -30,7 +30,7 @@ fun EmployeeItem(
         .clickable {
             viewModel.addEmployees(employee)
             viewModel.headerText.value = employee.fio
-            viewModel.getEmployeeSchedule(employee.urlId)
+            viewModel.getEmployeeSchedule(employee.fio)
             viewModel.getExams(employee.urlId)
             navController.navigateUp()
         }) {

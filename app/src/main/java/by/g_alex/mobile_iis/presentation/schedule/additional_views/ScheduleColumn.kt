@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.presentation.schedule.additional_views
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -50,8 +51,8 @@ fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()) {
                 else dayOfweek += date.value.dayOfWeek.toString()[n]
 
 
-            var firstStep = false
-            var end = false
+//            var firstStep = false
+//            var end = false
             txt =
                 month + " " + date.value.dayOfMonth.toString() + ", " + dayOfweek + ", week " + cnt.toString()
 
@@ -63,24 +64,35 @@ fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()) {
                     if(n.lessonTypeAbbrev == "Экзамен" || n.lessonTypeAbbrev == "Консультация"){
                         continue
                     }
-                    if (!firstStep) {
-                        items(mutableListOf(txt)) { itm ->
-                            Text(
-                                text = itm,
-                                modifier = Modifier.padding(
-                                    start = 20.dp,
-                                    top = 10.dp,
-                                    bottom = 0.dp
-                                )
-                            )
-                        }
-                    }
+//                    if (!firstStep) {
+//                        items(mutableListOf(txt)) { itm ->
+//                            Text(
+//                                text = itm,
+//                                modifier = Modifier.padding(
+//                                    start = 20.dp,
+//                                    top = 10.dp,
+//                                    bottom = 0.dp
+//                                )
+//                            )
+//                        }
+//                    }
                     mutlist.value.add(n)
-                    firstStep = true
-                    end = true
-                } else if (n.weekDay != downDate.value.dayOfWeek.toString()) firstStep = false
-                if (end && !firstStep)
-                    break
+//                    firstStep = true
+//                    end = true
+                } //else if (n.weekDay != downDate.value.dayOfWeek.toString()) firstStep = false
+                //if (end && !firstStep)
+                  //  break
+            }
+            if(mutlist.value.isNotEmpty()){
+                items(mutableListOf(txt)) {
+                    Text(text = it,
+                        modifier = Modifier.padding(
+                            start = 20.dp,
+                            top = 10.dp,
+                            bottom = 0.dp
+                        )
+                    )
+                }
             }
             items(mutlist.value) { iter ->
                 LessonItem(schedule = iter, week = cnt)

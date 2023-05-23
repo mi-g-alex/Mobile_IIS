@@ -65,7 +65,6 @@ fun BottomSheet(
                                 viewModel.getSchedule(item)
                                 viewModel.getExams(item)
                                 viewModel.headerText.value = item
-                                Log.e("newHead", viewModel.headerText.value)
                                 scope.launch {
                                     bottomSheetState.hide()
                                 }
@@ -145,13 +144,13 @@ fun BottomSheet(
                             .padding(vertical = 5.dp)
                             .weight(0.7f)
                             .clickable {
+                                viewModel.headerText.value = item
                                 viewModel.getEmployeeSchedule(item);
                                 val prefs =
                                     viewModel.context.getSharedPreferences(Constants.ADDED_SCHEDULE, Context.MODE_PRIVATE)
                                 val urlId = prefs.getString(item, item) ?: item
                                 viewModel.getExams(urlId)
-                                viewModel.headerText.value =
-                                item
+
                                 scope.launch {
                                     bottomSheetState.hide()
                                 }
@@ -183,6 +182,17 @@ fun BottomSheet(
                             .padding(top = 5.dp, bottom = 5.dp, end = 5.dp)
                             .align(Alignment.CenterVertically)
                             .clickable {
+                                if (viewModel.favourite.value == item) {
+                                    val preferences = viewModel.context.getSharedPreferences(
+                                        FAVOURITE_SCHEDULE, Context.MODE_PRIVATE
+                                    )
+                                    preferences
+                                        .edit()
+                                        .putString(FAVOURITE_SCHEDULE, "")
+                                        .apply()
+                                    viewModel.favourite.value = "Добавить"
+                                }
+                                viewModel.state.value.Days = null
                                 viewModel.deleteEmployeeScheduleFromDb(item)
                                 employees.value = viewModel.getEmployees()
                                 if (employees.value.isNotEmpty()) {

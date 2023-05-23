@@ -181,10 +181,12 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun getSchedule(grNum: String) {
+
         if (grNum == "Добавить")
             return
         viewModelScope.launch {
             val schedules: List<LessonModel> = db.getSchedule(grNum)
+            Log.e("schedules",schedules.toString())
             if (schedules.isNotEmpty())
                 _state.value = ScheduleState(Days = schedules)
         }
@@ -193,16 +195,8 @@ class ScheduleViewModel @Inject constructor(
                 is Resource.Success -> {
                     val stop = mutableStateOf(false)
                     _state.value = ScheduleState(Days = result.data)
+                    db.deleteSchedulebyName(grNum)
                     for (n in _state.value.Days ?: emptyList()) {
-                        val bufList = db.getSchedule(grNum)
-                        for (m in bufList) {
-                            if (n == m) {
-                                stop.value = true
-                                break
-                            }
-                        }
-                        if (stop.value)
-                            break
                         db.insertSchedule(n)
                     }
                 }
@@ -224,8 +218,9 @@ class ScheduleViewModel @Inject constructor(
         val prefs =
             context.getSharedPreferences(ADDED_SCHEDULE, Context.MODE_PRIVATE)
         val urlId = prefs.getString(fio, fio) ?: fio
+        Log.e("FIO",fio)
         viewModelScope.launch {
-            val schedules: List<LessonModel> = db.getSchedule(urlId)
+            val schedules: List<LessonModel> = db.getEmployeeSchedule(urlId)
             if (schedules.isNotEmpty())
                 _state.value = ScheduleState(Days = schedules)
 
@@ -233,22 +228,12 @@ class ScheduleViewModel @Inject constructor(
         getEmployeeScheduleUseCase(urlId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    val stop = mutableStateOf(false)
                     _state.value = ScheduleState(Days = result.data)
-                    if (db.getSchedule(urlId).isEmpty()) {
+                    db.deleteEmployeeSchedule(urlId)
                         for (n in _state.value.Days ?: emptyList()) {
-                            val bufList = db.getSchedule(urlId)
-                            for (m in bufList) {
-                                if (n == m) {
-                                    stop.value = true
-                                    break
-                                }
-                            }
-                            if (stop.value)
-                                break
+                            n.fio = urlId;
                             db.insertSchedule(n)
                         }
-                    }
                 }
 
                 is Resource.Error -> {

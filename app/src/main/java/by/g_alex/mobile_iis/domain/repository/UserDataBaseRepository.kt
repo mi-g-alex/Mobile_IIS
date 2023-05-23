@@ -74,6 +74,10 @@ interface UserDataBaseRepository {
     // Schedule
     suspend fun getSchedule(group: String): List<LessonModel>
 
+    suspend fun getEmployeeSchedule(fio:String):List<LessonModel>
+
+    suspend fun deleteEmployeeSchedule(fio:String)
+
     suspend fun getScheduleByAbbv(abbv: String,group: String): List<LessonModel>
 
     suspend fun deleteSchedulebyAbbv(name:String,group: String)

@@ -40,6 +40,8 @@ interface UserDao {
     @Query("SELECT * FROM LessonModel WHERE id LIKE :group")
     suspend fun getSchedule(group: String): List<LessonModel>
 
+    @Query("SELECT * FROM LessonModel WHERE fio LIKE :fio")
+    suspend fun getEmployeeSchedule(fio:String):List<LessonModel>
     @Query("SELECT * FROM LessonModel WHERE lessonTypeAbbrev = :abbv AND id = :group")
     suspend fun getScheduleByAbbv(abbv: String,group: String): List<LessonModel>
 
@@ -99,6 +101,10 @@ interface UserDao {
 
     @Query("DELETE FROM LessonModel WHERE id LIKE :name")
     suspend fun deleteSchedulebyName(name:String)
+
+    @Query("DELETE FROM LessonModel WHERE fio LIKE :name")
+    suspend fun deleteSchedulebyFio(name:String)
+
 
     @Query("DELETE FROM LessonModel WHERE lessonTypeAbbrev = :name AND id = :group")
     suspend fun deleteSchedulebyAbbv(name:String,group: String)

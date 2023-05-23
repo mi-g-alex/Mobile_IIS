@@ -138,6 +138,12 @@ class UserDataBaseRepositoryImpl(
         return dao.getScheduleByAbbv(abbv,group)
     }
 
+    override suspend fun deleteEmployeeSchedule(fio: String) {
+        dao.deleteSchedulebyFio(fio)
+    }
+    override suspend fun getEmployeeSchedule(fio: String): List<LessonModel> {
+        return dao.getEmployeeSchedule(fio)
+    }
     override suspend fun insertSchedule(users: LessonModel) {
         dao.insertSchedule(users)
     }
