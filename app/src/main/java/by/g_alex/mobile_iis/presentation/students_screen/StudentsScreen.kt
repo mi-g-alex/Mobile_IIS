@@ -87,7 +87,7 @@ fun StudentsScreen(
             )
         },
         floatingActionButton = {
-                FloatingActionButton(
+            FloatingActionButton(
                 onClick = { openDialog.value = true },
             ) {
                 Icon(

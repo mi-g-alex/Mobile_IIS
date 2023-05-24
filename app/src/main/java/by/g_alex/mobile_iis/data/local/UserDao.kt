@@ -45,6 +45,10 @@ interface UserDao {
     @Query("SELECT * FROM LessonModel WHERE lessonTypeAbbrev = :abbv AND id = :group")
     suspend fun getScheduleByAbbv(abbv: String,group: String): List<LessonModel>
 
+    @Query("SELECT * FROM LessonModel WHERE lessonTypeAbbrev = :abbv AND note = :fio")
+    suspend fun getEmplExScheduleByAbbv(abbv: String,fio: String): List<LessonModel>
+
+
     @Query("SELECT * FROM MarkBookEntity")
     suspend fun getMarkBook():List<MarkBookEntity>
 
