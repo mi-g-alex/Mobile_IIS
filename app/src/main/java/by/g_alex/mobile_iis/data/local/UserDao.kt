@@ -37,11 +37,11 @@ interface UserDao {
     @Query("DELETE FROM ProfilePersonalCVEntity")
     suspend fun deleteProfilePersonalCV()
 
-    @Query("SELECT * FROM LessonModel WHERE id LIKE :group")
-    suspend fun getSchedule(group: String): List<LessonModel>
+    @Query("SELECT * FROM LessonModel WHERE id LIKE :group AND type LIKE :typ")
+    suspend fun getSchedule(group: String,typ: Boolean = true): List<LessonModel>
 
-    @Query("SELECT * FROM LessonModel WHERE fio LIKE :fio")
-    suspend fun getEmployeeSchedule(fio:String):List<LessonModel>
+    @Query("SELECT * FROM LessonModel WHERE fio LIKE :fio AND type LIKE :typ")
+    suspend fun getEmployeeSchedule(fio:String,typ: Boolean = false):List<LessonModel>
     @Query("SELECT * FROM LessonModel WHERE lessonTypeAbbrev = :abbv AND id = :group")
     suspend fun getScheduleByAbbv(abbv: String,group: String): List<LessonModel>
 
@@ -99,11 +99,11 @@ interface UserDao {
     @Query("DELETE FROM GradeBookEntity")
     suspend fun deleteGradebooks()
 
-    @Query("DELETE FROM LessonModel WHERE id LIKE :name")
-    suspend fun deleteSchedulebyName(name:String)
+    @Query("DELETE FROM LessonModel WHERE id LIKE :name AND type = :typ")
+    suspend fun deleteSchedulebyName(name:String,typ: Boolean = true)
 
-    @Query("DELETE FROM LessonModel WHERE fio LIKE :name")
-    suspend fun deleteSchedulebyFio(name:String)
+    @Query("DELETE FROM LessonModel WHERE fio LIKE :name AND type = :typ")
+    suspend fun deleteSchedulebyFio(name:String,typ: Boolean = false)
 
 
     @Query("DELETE FROM LessonModel WHERE lessonTypeAbbrev = :name AND id = :group")

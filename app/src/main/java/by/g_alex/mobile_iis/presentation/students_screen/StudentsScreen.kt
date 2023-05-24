@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,8 +13,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.AlertDialog
@@ -25,10 +22,13 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -84,7 +84,10 @@ fun StudentsScreen(
             CenterAlignedTopAppBar(
                 title = { Text(text = "Студенты", fontSize = 20.sp) }
             )
-        }
+        },
+        floatingActionButton = {FloatingActionButton(onClick = { openDialog.value = true }, shape = RoundedCornerShape(100.dp)) {
+            Icon(painter = painterResource(id = R.drawable.filter_icon), contentDescription = "Добавить")
+        }}
     ) {
         val lazyListState = rememberLazyListState()
         LaunchedEffect(lazyListState) {
@@ -135,22 +138,6 @@ fun StudentsScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp, vertical = 10.dp)
                 )
-                Button(
-                    onClick = { openDialog.value = true },
-                    modifier = Modifier.padding(start = 10.dp),
-                    shape = RoundedCornerShape(10.dp)
-                ) {
-                    Row {
-                        Icon(
-                            painter = painterResource(id = R.drawable.filter_icon),
-                            modifier = Modifier
-                                .size(18.dp)
-                                .padding(end = 5.dp),
-                            contentDescription = "sdcscds",
-                        )
-                        Text(text = "Фильтр")
-                    }
-                }
             }
             if (res.value.isNotEmpty()) {
                 res.value.onEach { it1 ->
