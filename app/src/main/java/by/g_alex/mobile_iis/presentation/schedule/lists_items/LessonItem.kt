@@ -107,8 +107,8 @@ fun LessonItem(
                     fontSize = 10.sp,
                 )
                 if (schedule.subject != null)
-                    if (schedule.note != null) Text(
-                        text = schedule.note,
+                    if (schedule.note != null && schedule.lessonTypeAbbrev != "Экзамен" && schedule.lessonTypeAbbrev != "Консультация") Text(
+                        text = schedule.note?:"",
                         fontSize = 10.sp,
                     )
             }

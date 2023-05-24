@@ -17,7 +17,7 @@ data class LessonModel(
     val subjectFullName: String?,
     val weekNumber: List<Int>?,
     var fio: String?,
-    val note: String?,
+    var note: String?,
     val weekDay: String?,
     val type: Boolean,
     val groupNum: String,

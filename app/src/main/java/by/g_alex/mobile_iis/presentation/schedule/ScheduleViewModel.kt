@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Constants.ADDED_GROUPS
@@ -149,9 +150,11 @@ class ScheduleViewModel @Inject constructor(
             return
         viewModelScope.launch {
             val consult: MutableList<LessonModel> =
-                db.getScheduleByAbbv("Консультация", grNum).toMutableList()
+                if(grNum.isDigitsOnly()) db.getScheduleByAbbv("Консультация", grNum).toMutableList()
+                else db.getExEmplScheduleByAbbv("Консультация", grNum).toMutableList()
             val daoExams: MutableList<LessonModel> =
-                db.getScheduleByAbbv("Экзамен", grNum).toMutableList()
+                if(grNum.isDigitsOnly()) db.getScheduleByAbbv("Экзамен", grNum).toMutableList()
+                else db.getExEmplScheduleByAbbv("Экзамен", grNum).toMutableList()
             consult.addAll(daoExams)
             consult.sortBy { it.dateEnd }
             if (consult.isNotEmpty())
@@ -164,6 +167,8 @@ class ScheduleViewModel @Inject constructor(
                     db.deleteSchedulebyAbbv("Консультация", grNum)
                     db.deleteSchedulebyAbbv("Экзамен", grNum)
                     for (n in _eState.value.exams ?: emptyList()) {
+                        if(!grNum.isDigitsOnly())
+                            n.note = grNum
                         db.insertSchedule(n)
                     }
                 }
