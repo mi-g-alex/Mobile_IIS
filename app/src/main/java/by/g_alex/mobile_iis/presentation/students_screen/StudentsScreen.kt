@@ -1,5 +1,7 @@
 package by.g_alex.mobile_iis.presentation.students_screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +12,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -50,7 +51,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 
-@OptIn(FlowPreview::class)
+@OptIn(FlowPreview::class, ExperimentalFoundationApi::class)
 @Composable
 fun StudentsScreen(
     viewModel: StudentsViewModel = hiltViewModel()
@@ -85,9 +86,16 @@ fun StudentsScreen(
                 title = { Text(text = "Студенты", fontSize = 20.sp) }
             )
         },
-        floatingActionButton = {FloatingActionButton(onClick = { openDialog.value = true }, shape = RoundedCornerShape(100.dp)) {
-            Icon(painter = painterResource(id = R.drawable.filter_icon), contentDescription = "Добавить")
-        }}
+        floatingActionButton = {
+                FloatingActionButton(
+                onClick = { openDialog.value = true },
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.filter_icon),
+                    contentDescription = "Добавить"
+                )
+            }
+        }
     ) {
         val lazyListState = rememberLazyListState()
         LaunchedEffect(lazyListState) {
@@ -113,7 +121,7 @@ fun StudentsScreen(
                 .padding(it)
                 .fillMaxSize()
         ) {
-            item {
+            stickyHeader {
                 OutlinedTextField(
                     value = lastName.value,
                     shape = MaterialTheme.shapes.large,
@@ -136,6 +144,7 @@ fun StudentsScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background)
                         .padding(horizontal = 10.dp, vertical = 10.dp)
                 )
             }
@@ -196,7 +205,7 @@ fun StudentsScreen(
                                 label = { Text("Факультет") },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                        //            textColor = MaterialTheme.colorScheme.inverseSurface
+                                    //            textColor = MaterialTheme.colorScheme.inverseSurface
                                 ),
                             )
                             ExposedDropdownMenu(
@@ -249,7 +258,7 @@ fun StudentsScreen(
                                 label = { Text("Курс") },
                                 colors = TextFieldDefaults.outlinedTextFieldColors(
                                     unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                           //         textColor = MaterialTheme.colorScheme.inverseSurface
+                                    //         textColor = MaterialTheme.colorScheme.inverseSurface
                                 ),
                             )
                             ExposedDropdownMenu(
@@ -292,7 +301,7 @@ fun StudentsScreen(
                             Switch(
                                 modifier = Modifier.padding(start = 10.dp),
                                 checked = checkedState.value,
-                                onCheckedChange = {it1 ->
+                                onCheckedChange = { it1 ->
                                     checkedState.value = it1
                                     bufRequest.searchJob = it1
                                 }

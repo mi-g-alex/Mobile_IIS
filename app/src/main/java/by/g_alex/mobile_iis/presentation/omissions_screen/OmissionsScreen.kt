@@ -82,7 +82,10 @@ fun OmissionsScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun Item(it: List<OmissionsByStudentDto>) {
+private fun Item(it1: List<OmissionsByStudentDto>) {
+    val it = it1.sortedWith(
+        compareBy({ it.dateFrom * -1 }, { it.dateTo * -1 })
+    )
     LazyColumn {
         for (i in it.indices) {
             if (i == 0) {
@@ -117,7 +120,8 @@ private fun Item(it: List<OmissionsByStudentDto>) {
                         .padding(horizontal = 10.dp, vertical = 5.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.inverseOnSurface
-                    )                ) {
+                    )
+                ) {
                     Column(modifier = Modifier.padding(8.dp)) {
                         Text(
                             text = it[i].name,
