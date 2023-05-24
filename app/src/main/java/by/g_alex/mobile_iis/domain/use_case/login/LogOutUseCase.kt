@@ -15,6 +15,9 @@ class LogOutUseCase @Inject constructor(
             db_repository.deleteProfilePersonalCV()
             db_repository.deleteGradeBooks()
             db_repository.deleteMarkBooks()
+            db_repository.deleteDormitory()
+            db_repository.deletePrivileges()
+            db_repository.deleteOmissions()
             val cookie = db_repository.getCookie()
             if (cookie != null) {
                 api_repository.logout(cookie)

@@ -11,7 +11,7 @@ import retrofit2.awaitResponse
 import java.io.IOException
 import javax.inject.Inject
 
-class GetGradeBookUseCase@Inject constructor(
+class GetGradeBookUseCase @Inject constructor(
     private val api_repository: IisApiRepository,
     private val db_repository: UserDataBaseRepository
 ) {
@@ -52,7 +52,9 @@ class GetGradeBookUseCase@Inject constructor(
                     emit(Resource.Success<List<GradeBookLessonModel>>(data))
                 } catch (e: HttpException) {
                     emit(
-                        Resource.Error<List<GradeBookLessonModel>>(e.localizedMessage ?: "ConnectionError")
+                        Resource.Error<List<GradeBookLessonModel>>(
+                            e.localizedMessage ?: "ConnectionError"
+                        )
                     )
                 } catch (e: IOException) {
                     emit(
@@ -64,7 +66,13 @@ class GetGradeBookUseCase@Inject constructor(
             }
         } catch (_: IOException) {
             val data = db_repository.getGradeBook()
-            emit(Resource.Success<List<GradeBookLessonModel>>(data))
+            if (data.isNotEmpty())
+                emit(Resource.Success<List<GradeBookLessonModel>>(data))
+            else  emit(
+                Resource.Error<List<GradeBookLessonModel>>(
+                    "ConnectionError"
+                )
+            )
         }
     }
 }

@@ -24,6 +24,10 @@ class GetPrivilegesUseCase @Inject constructor(
             }
             if (cookie != null) {
                 val data = api_repository.getPrivileges(cookie)
+                db_repository.deletePrivileges()
+                for (n in data) {
+                    db_repository.insertPrivilege(n)
+                }
                 emit(Resource.Success<List<PrivilegesDto>>(data))
             }
         } catch (e: HttpException) {
@@ -40,6 +44,10 @@ class GetPrivilegesUseCase @Inject constructor(
                             .awaitResponse()
                     val cookie = responseFromLogin.headers()["Set-Cookie"].toString()
                     val data = api_repository.getPrivileges(cookie)
+                    db_repository.deletePrivileges()
+                    for (n in data) {
+                        db_repository.insertPrivilege(n)
+                    }
                     emit(Resource.Success<List<PrivilegesDto>>(data))
                 } catch (e: HttpException) {
                     emit(
@@ -54,7 +62,13 @@ class GetPrivilegesUseCase @Inject constructor(
                 }
             }
         } catch (_: IOException) {
-
+            val data = db_repository.getPrivileges()
+            if (data.isNotEmpty())
+                emit(Resource.Success<List<PrivilegesDto>>(data))
+            else
+                emit(
+                    Resource.Error<List<PrivilegesDto>>("ConnectionError")
+                )
         }
     }
 }

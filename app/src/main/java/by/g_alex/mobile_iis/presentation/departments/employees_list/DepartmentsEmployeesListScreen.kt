@@ -143,12 +143,22 @@ fun DepartmentsEmployeesListScreen(
             if (state.employeesState!!.isEmpty() && !state.isLoading && state.error.isBlank()) {
                 Text(text = "Тут никого нет(", fontSize = 25.sp, modifier = Modifier.align(Alignment.Center))
             }
+
             if (state.error.isNotBlank()) {
                 if (state.error == "LessCookie") {
                     Box(modifier = Modifier.align(Alignment.Center)) {
                         Column(modifier = Modifier) {
                             Text(
                                 text = "Сначала войдите в аккаунт...",
+                                fontSize = 25.sp
+                            )
+                        }
+                    }
+                } else {
+                    Box(modifier = Modifier.align(Alignment.Center)) {
+                        Column(modifier = Modifier) {
+                            Text(
+                                text = "Ошибка подключения к серверу...",
                                 fontSize = 25.sp
                             )
                         }

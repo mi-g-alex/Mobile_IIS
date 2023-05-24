@@ -64,12 +64,22 @@ fun UserGroupScreen(
                     }
                 }
             }
+
             if (state.error.isNotBlank()) {
                 if (state.error == "LessCookie") {
                     Box(modifier = Modifier.align(Alignment.Center)) {
                         Column(modifier = Modifier) {
                             Text(
                                 text = "Сначала войдите в аккаунт...",
+                                fontSize = 25.sp
+                            )
+                        }
+                    }
+                } else {
+                    Box(modifier = Modifier.align(Alignment.Center)) {
+                        Column(modifier = Modifier) {
+                            Text(
+                                text = "Ошибка подключения к серверу...",
                                 fontSize = 25.sp
                             )
                         }

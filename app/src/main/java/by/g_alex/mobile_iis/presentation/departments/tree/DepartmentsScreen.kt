@@ -141,6 +141,15 @@ fun DepartmentsScreen(
                             )
                         }
                     }
+                } else {
+                    Box(modifier = Modifier.align(Alignment.Center)) {
+                        Column(modifier = Modifier) {
+                            Text(
+                                text = "Ошибка подключения к серверу...",
+                                fontSize = 25.sp
+                            )
+                        }
+                    }
                 }
             }
 
