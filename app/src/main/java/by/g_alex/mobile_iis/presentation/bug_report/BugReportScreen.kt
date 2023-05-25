@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.presentation.bug_report
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
@@ -25,6 +27,7 @@ fun BugReportScreen() {
     val studentIdText = remember { mutableStateOf("") }
     val groupText = remember { mutableStateOf("") }
     val problemText = remember { mutableStateOf("") }
+    val cnt = LocalContext.current
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -114,7 +117,7 @@ fun BugReportScreen() {
                     .fillMaxWidth()
                     .padding(10.dp),
                 onClick = {
-                    problemText.value = ""
+                    Toast.makeText(cnt, "Will Come soom", Toast.LENGTH_SHORT).show()
                 },
                 enabled = fioText.value.isNotBlank() &&
                         emailText.value.isNotBlank() &&

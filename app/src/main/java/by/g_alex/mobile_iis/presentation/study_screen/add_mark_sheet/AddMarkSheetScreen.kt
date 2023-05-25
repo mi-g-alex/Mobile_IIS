@@ -1,5 +1,6 @@
 package by.g_alex.mobile_iis.presentation.study_screen.add_mark_sheet
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,6 +36,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,7 +52,7 @@ import java.util.Locale
 fun AddMarkSheetScreen(
     viewModel: AddMarkSheetViewModel = hiltViewModel()
 ) {
-
+    val cnt = LocalContext.current
 
     LaunchedEffect(
         viewModel.selectedTypeOfSubj.value
@@ -163,25 +165,25 @@ fun AddMarkSheetScreen(
                 }
                 item {
 
-                        OutlinedTextField(
-                            value = viewModel.studentIdText.value,
-                            shape = MaterialTheme.shapes.large,
-                            onValueChange = { newText ->
-                                if (newText.isNotEmpty()) {
-                                    if (newText[newText.length - 1] in '0'..'9') viewModel.studentIdText.value =
-                                        newText
-                                } else {
-                                    viewModel.studentIdText.value = newText
-                                }
-                            },
-                            label = { Text(text = "Часов пропусков") },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 10.dp),
-                            enabled = viewModel.selectedTypeOfSubj.value?.isLab == true
-                        )
+                    OutlinedTextField(
+                        value = viewModel.studentIdText.value,
+                        shape = MaterialTheme.shapes.large,
+                        onValueChange = { newText ->
+                            if (newText.isNotEmpty()) {
+                                if (newText[newText.length - 1] in '0'..'9') viewModel.studentIdText.value =
+                                    newText
+                            } else {
+                                viewModel.studentIdText.value = newText
+                            }
+                        },
+                        label = { Text(text = "Часов пропусков") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 10.dp),
+                        enabled = viewModel.selectedTypeOfSubj.value?.isLab == true
+                    )
                 }
                 item {
                     OutlinedButton(
@@ -189,7 +191,7 @@ fun AddMarkSheetScreen(
                             .fillMaxWidth()
                             .padding(top = 10.dp),
                         onClick = {
-
+                            Toast.makeText(cnt, "Will Come soom", Toast.LENGTH_SHORT).show()
                         },
                     ) {
 
