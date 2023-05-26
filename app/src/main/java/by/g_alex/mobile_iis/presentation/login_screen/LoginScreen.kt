@@ -2,12 +2,20 @@ package by.g_alex.mobile_iis.presentation.login_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +33,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -41,24 +50,34 @@ fun LoginScreen(
     val passText = remember { mutableStateOf(TextFieldValue()) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    val showPasswordState = remember {
+        mutableStateOf(false)
+    }
+
     LaunchedEffect(state.cookie) {
         if (state.cookie != "" && state.cookie != null) {
             navController.navigate("profileHome")
         }
     }
 
+    val reg = ("^\\w{6,7}[\\d]\$")
+    val regex = Regex(reg)
+    val matches = regex.matches(loginText.value.text)
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
-        LazyColumn(modifier = Modifier
-            .fillMaxWidth()
-            .align(Center)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Center)
+        ) {
             item {
                 Column(horizontalAlignment = CenterHorizontally) {
                     Image(
                         painter = painterResource(id = R.drawable.logo_icon),
-                        contentDescription = "",
+                        contentDescription = "BSUIR ICON",
                         modifier = Modifier
                             .clip(CircleShape)
                             .size(200.dp),
@@ -96,7 +115,27 @@ fun LoginScreen(
                                 viewModel.loginToAccount(loginText.value.text, passText.value.text)
                             }
                         ),
-                        visualTransformation = PasswordVisualTransformation()
+                        trailingIcon = {
+                            if (!showPasswordState.value) {
+                                Icon(
+                                    painterResource(id = R.drawable.hide_password_icon),
+                                    "Посмотреть пароль",
+                                    Modifier.clickable {
+                                        showPasswordState.value = true
+                                    }
+                                )
+                            }
+                            if (showPasswordState.value) {
+                                Icon(
+                                    painterResource(id = R.drawable.show_password_icon),
+                                    "Спрятать пароль",
+                                    Modifier.clickable {
+                                        showPasswordState.value = false
+                                    }
+                                )
+                            }
+                        },
+                        visualTransformation = if (!showPasswordState.value) PasswordVisualTransformation() else VisualTransformation.None
                     )
 
                     Button(
@@ -106,12 +145,18 @@ fun LoginScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(60.dp, 5.dp, 60.dp, 5.dp)
+                            .padding(60.dp, 5.dp, 60.dp, 5.dp),
+                        enabled = matches && passText.value.text.length > 7
                     ) {
-                        if (state.isLoading)
-                            Text(text = "Загрузка...")
+                        if (!matches && loginText.value.text.isNotBlank())
+                            Text(text = "Некорректный логин...")
+                        else if (passText.value.text.length in 1..7)
+                            Text(text = "Короткий пароль...")
                         else
-                            Text(text = "Войти")
+                            if (state.isLoading)
+                                Text(text = "Загрузка...")
+                            else
+                                Text(text = "Войти")
                     }
                     if (state.error.isNotBlank()) {
                         Text(
