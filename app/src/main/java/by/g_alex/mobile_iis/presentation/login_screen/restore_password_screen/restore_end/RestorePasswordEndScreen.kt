@@ -6,39 +6,36 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import by.g_alex.mobile_iis.R
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
-import by.g_alex.mobile_iis.presentation.login_screen.restore_password_screen.select_how_restore.components.RestorePasswordSelectDialog
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
@@ -49,6 +46,9 @@ fun RestorePasswordEndScreen(
     login: String,
     viewModel: RestorePasswordEndViewModel = hiltViewModel()
 ) {
+    val showPasswordState = remember {
+        mutableStateOf(false)
+    }
 
     val inputText = remember { mutableStateOf(TextFieldValue("")) }
     val inputText1 = remember { mutableStateOf(TextFieldValue("")) }
@@ -66,6 +66,10 @@ fun RestorePasswordEndScreen(
             ticks.value--
         }
     }
+
+    val reg = ("^[0-9A-Za-z@#\$%^&+=_]{8,}\$")
+    val regex = Regex(reg)
+    val matches = regex.matches(inputText.value.text) && inputText.value.text.isNotBlank()
 
 
     LaunchedEffect(state.value.information) {
@@ -94,7 +98,27 @@ fun RestorePasswordEndScreen(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
                 ),
-                visualTransformation = PasswordVisualTransformation()
+                trailingIcon = {
+                    if (!showPasswordState.value) {
+                        Icon(
+                            painterResource(id = R.drawable.hide_password_icon),
+                            "Посмотреть пароль",
+                            Modifier.clickable {
+                                showPasswordState.value = true
+                            }
+                        )
+                    }
+                    if (showPasswordState.value) {
+                        Icon(
+                            painterResource(id = R.drawable.show_password_icon),
+                            "Спрятать пароль",
+                            Modifier.clickable {
+                                showPasswordState.value = false
+                            }
+                        )
+                    }
+                },
+                visualTransformation = if (!showPasswordState.value) PasswordVisualTransformation() else VisualTransformation.None
             )
             OutlinedTextField(
                 value = inputText1.value,
@@ -108,7 +132,27 @@ fun RestorePasswordEndScreen(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
                 ),
-                visualTransformation = PasswordVisualTransformation()
+                trailingIcon = {
+                    if (!showPasswordState.value) {
+                        Icon(
+                            painterResource(id = R.drawable.hide_password_icon),
+                            "Посмотреть пароль",
+                            Modifier.clickable {
+                                showPasswordState.value = true
+                            }
+                        )
+                    }
+                    if (showPasswordState.value) {
+                        Icon(
+                            painterResource(id = R.drawable.show_password_icon),
+                            "Спрятать пароль",
+                            Modifier.clickable {
+                                showPasswordState.value = false
+                            }
+                        )
+                    }
+                },
+                visualTransformation = if (!showPasswordState.value) PasswordVisualTransformation() else VisualTransformation.None
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -171,16 +215,17 @@ fun RestorePasswordEndScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 10.dp, horizontal = 60.dp),
-                enabled = inputText.value.text != "" && inputText1.value.text != "" && inputText.value.text == inputText1.value.text && inputText2.value.text.length == 6
+                enabled = inputText.value.text != "" && inputText1.value.text != "" && inputText.value.text == inputText1.value.text && inputText2.value.text.length == 6 && matches
             ) {
-                if (inputText.value.text != "" && inputText1.value.text != "" && inputText.value.text != inputText1.value.text) {
+                if (!matches) {
+                    Text("Неправильный формат пароля")
+                } else if (inputText.value.text != "" && inputText1.value.text != "" && inputText.value.text != inputText1.value.text) {
                     Text(text = "Пароли не совпадают")
-                } else
-                    if (inputText.value.text == "" || inputText1.value.text == "" || inputText2.value.text.length != 6) {
-                        Text(text = "Заполните все поля")
-                    } else {
-                        Text(text = "Восстановить пароль")
-                    }
+                } else if (inputText.value.text == "" || inputText1.value.text == "" || inputText2.value.text.length != 6) {
+                    Text(text = "Заполните все поля")
+                } else {
+                    Text(text = "Восстановить пароль")
+                }
             }
         }
     }
