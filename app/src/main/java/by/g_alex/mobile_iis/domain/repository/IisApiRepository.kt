@@ -1,6 +1,10 @@
 package by.g_alex.mobile_iis.domain.repository
 
+import by.g_alex.mobile_iis.data.local.entity.DormitoryDto
 import by.g_alex.mobile_iis.data.local.entity.LessonModel
+import by.g_alex.mobile_iis.data.local.entity.OmissionsByStudentDto
+import by.g_alex.mobile_iis.data.local.entity.PenaltyModel
+import by.g_alex.mobile_iis.data.local.entity.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
 import by.g_alex.mobile_iis.data.remote.dto.department.DepartmentDto
 import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentEmployeesDto
@@ -9,12 +13,9 @@ import by.g_alex.mobile_iis.data.remote.dto.departments.EmployeeDetailInfoDto
 import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
-import by.g_alex.mobile_iis.data.local.entity.DormitoryDto
-import by.g_alex.mobile_iis.data.local.entity.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.faculties.FacultiesDto
 import by.g_alex.mobile_iis.data.remote.dto.login.LoginResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.login.RestorePasswordEnterLoginResponseDto
-import by.g_alex.mobile_iis.data.local.entity.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.phone_book.PhoneSearchDto
 import by.g_alex.mobile_iis.data.remote.dto.phone_book.RequestDto
@@ -39,7 +40,6 @@ import by.g_alex.mobile_iis.domain.model.profile.Reference
 import by.g_alex.mobile_iis.domain.model.profile.Skill
 import by.g_alex.mobile_iis.domain.model.profile.gradebook_model.GradeBookLessonModel
 import by.g_alex.mobile_iis.domain.model.profile.markbook_model.MarkBookMarkModel
-import by.g_alex.mobile_iis.data.local.entity.PenaltyModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.EmployeeModel
 import by.g_alex.mobile_iis.domain.model.profile.schedule.GroupModel
 import okhttp3.ResponseBody
@@ -170,7 +170,15 @@ interface IisApiRepository {
 
     suspend fun getMarkSheetSubjects(token: String): List<MarkSheetSubjectsDto>
 
-    suspend fun getMarkSheetById(focusId: Int?, thId: Int?, token: String): List<MarkSheetFocusThIdDto>
+    suspend fun getMarkSheetById(
+        focusId: Int?,
+        thId: Int?,
+        token: String
+    ): List<MarkSheetFocusThIdDto>
 
-    suspend fun findEmployeesByFio(fio: String) : List<MarkSheetFocusThIdDto>
+    suspend fun findEmployeesByFio(fio: String): List<MarkSheetFocusThIdDto>
+
+
+    // For feedback
+    suspend fun sendFeedback(problem: String, link: String?) : ResponseBody?
 }

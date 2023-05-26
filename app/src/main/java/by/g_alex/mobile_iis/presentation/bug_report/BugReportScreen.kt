@@ -13,26 +13,44 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun BugReportScreen() {
-    val fioText = remember { mutableStateOf("") }
-    val emailText = remember { mutableStateOf("") }
-    val studentIdText = remember { mutableStateOf("") }
-    val groupText = remember { mutableStateOf("") }
-    val problemText = remember { mutableStateOf("") }
+fun BugReportScreen(viewModel: BugRepostViewModel = hiltViewModel()) {
+    val problemText = viewModel.text
+    val tgText = viewModel.link
+
     val cnt = LocalContext.current
+
+    LaunchedEffect(viewModel.needShowThanks.value) {
+        if (viewModel.needShowThanks.value) {
+            Toast.makeText(cnt, "Отзыв отпарвлен успешно", Toast.LENGTH_SHORT).show()
+            viewModel.needShowThanks.value = false
+            viewModel.isLoading.value = false
+            viewModel.needShowErr.value = false
+            problemText.value = ""
+        }
+    }
+
+    LaunchedEffect(viewModel.needShowErr.value) {
+        if (viewModel.needShowErr.value) {
+            Toast.makeText(cnt, "Ошибка отправки", Toast.LENGTH_SHORT).show()
+            viewModel.needShowThanks.value = false
+            viewModel.isLoading.value = false
+            viewModel.needShowErr.value = false
+        }
+    }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text("Баг Репорт")
+                    Text("Feedback")
                 },
             )
         }
@@ -43,69 +61,32 @@ fun BugReportScreen() {
                 .fillMaxSize()
         ) {
             OutlinedTextField(
-                value = fioText.value,
-                shape = MaterialTheme.shapes.large,
-                onValueChange = { newText ->
-                    fioText.value = newText
-                },
-                label = {Text(text = "ФИО")},
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
-
-            )
-        OutlinedTextField(
-                value = emailText.value,
-                shape = MaterialTheme.shapes.large,
-                onValueChange = { newText ->
-                    emailText.value = newText
-                },
-            label = {Text(text = "Почта")},
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
-
-            )
-            OutlinedTextField(
-                value = studentIdText.value,
-                shape = MaterialTheme.shapes.large,
-                onValueChange = { newText ->
-                    studentIdText.value = newText
-                },
-                label = {Text(text = "Студак")},
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
-
-            )
-            OutlinedTextField(
-                value = groupText.value,
-                shape = MaterialTheme.shapes.large,
-                onValueChange = { newText ->
-                    groupText.value = newText
-                },
-                label = {Text(text = "Группа")},
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
-
-            )
-            OutlinedTextField(
                 value = problemText.value,
                 shape = MaterialTheme.shapes.large,
                 onValueChange = { newText ->
                     problemText.value = newText
                 },
-                label = {Text(text = "Проблема")},
+                label = { Text(text = "Проблема / Предложение") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp, vertical = 10.dp)
+
+            )
+
+            val reg = ("^@[a-zA-Z]\\w{1,29}[0-9a-zA-Z_][a-zA-Z0-9]$")
+            val regex = Regex(reg)
+            val matches = regex.matches(tgText.value) || tgText.value.isEmpty()
+
+            OutlinedTextField(
+                value = tgText.value,
+                shape = MaterialTheme.shapes.large,
+                onValueChange = { newText ->
+                    tgText.value = newText
+                },
+                label = { Text(text = "ТГ (@name), не обязательно") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 10.dp)
@@ -117,15 +98,14 @@ fun BugReportScreen() {
                     .fillMaxWidth()
                     .padding(10.dp),
                 onClick = {
-                    Toast.makeText(cnt, "Will Come soom", Toast.LENGTH_SHORT).show()
+                    var a = tgText.value
+                    if (tgText.value.isNotBlank()) a = "t.me/" + tgText.value.removePrefix("@")
+                    viewModel.sendFeedback(problemText.value, a)
                 },
-                enabled = fioText.value.isNotBlank() &&
-                        emailText.value.isNotBlank() &&
-                        groupText.value.isNotBlank() &&
-                        studentIdText.value.isNotBlank() &&
-                        problemText.value.isNotBlank()
+                enabled = problemText.value.isNotBlank() && !viewModel.isLoading.value && matches
             ) {
-                Text(text = "Отправить")
+                if (viewModel.isLoading.value) Text(text = "Загрузка...")
+                else Text(text = "Отправить")
             }
         }
     }

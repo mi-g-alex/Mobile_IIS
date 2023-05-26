@@ -1,22 +1,22 @@
 package by.g_alex.mobile_iis.data.remote
 
-import by.g_alex.mobile_iis.data.remote.dto.department.DepartmentDto
+import by.g_alex.mobile_iis.data.local.entity.DormitoryDto
+import by.g_alex.mobile_iis.data.local.entity.OmissionsByStudentDto
+import by.g_alex.mobile_iis.data.local.entity.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.announcemnt.AnnouncemntDto
+import by.g_alex.mobile_iis.data.remote.dto.department.DepartmentDto
 import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentEmployeesDto
 import by.g_alex.mobile_iis.data.remote.dto.departments.DepartmentsTreeDto
 import by.g_alex.mobile_iis.data.remote.dto.departments.EmployeeDetailInfoDto
 import by.g_alex.mobile_iis.data.remote.dto.diciplines.DiciplinesDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.DiplomaDto
 import by.g_alex.mobile_iis.data.remote.dto.diploma.PracticeDto
-import by.g_alex.mobile_iis.data.local.entity.DormitoryDto
-import by.g_alex.mobile_iis.data.local.entity.PrivilegesDto
 import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
 import by.g_alex.mobile_iis.data.remote.dto.faculties.FacultiesDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
 import by.g_alex.mobile_iis.data.remote.dto.login.*
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
-import by.g_alex.mobile_iis.data.local.entity.OmissionsByStudentDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
 import by.g_alex.mobile_iis.data.remote.dto.personal_rating.PersonalRatingDto
 import by.g_alex.mobile_iis.data.remote.dto.phone_book.PhoneSearchDto
@@ -258,5 +258,18 @@ interface IisApi {
     ): List<MarkSheetFocusThIdDto>
 
     @GET("api/v1/employees/fio/requests")
-    suspend fun findEmployeesByFio(@Query("employee-fio") fio: String) : List<MarkSheetFocusThIdDto>
+    suspend fun findEmployeesByFio(@Query("employee-fio") fio: String): List<MarkSheetFocusThIdDto>
+
+
+    // API для моих фидбеков
+    @FormUrlEncoded
+    @POST("https://docs.google.com/forms/d/e/1FAIpQLSekXyhCcihe83BvW2rEtzhGKOIWEDXtwMFs_3jPXGZF7a9Wxg/formResponse")
+    suspend fun sendFeedback(
+        @Field("entry.2075992135") problem: String,
+        @Field("entry.1524800120") link: String?,
+        @Field("fvv") fvv: Int = 1,
+        @Field("partialResponse") partialResponse: String = "[null,null,\"1203676292478540819\"]",
+        @Field("pageHistory") pageHistory: Int = 0,
+        @Field("fbzx") fbzx: String = "1203676292478540819",
+    ) : ResponseBody?
 }
