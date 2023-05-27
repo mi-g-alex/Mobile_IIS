@@ -107,7 +107,8 @@ fun DepartmentScheduleScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp)
+                    .padding(10.dp),
+                enabled = selectedId.value != 0
             ) {
                 val intent = Intent(
                     Intent.ACTION_VIEW,
@@ -117,7 +118,7 @@ fun DepartmentScheduleScreen(
                     LocalContext.current.startActivity(intent)
                     clicked.value = false
                 }
-                Text(text = "Скачать расписание кафедры", color = MaterialTheme.colorScheme.surface)
+                Text(text = "Скачать расписание кафедры")
             }
             if (anonses.isNotEmpty()) {
                 LazyColumn() {

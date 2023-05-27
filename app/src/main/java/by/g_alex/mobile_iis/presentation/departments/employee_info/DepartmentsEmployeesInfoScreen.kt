@@ -226,20 +226,18 @@ fun DepartmentsEmployeesInfoScreen(
                                                 )
                                             },
                                             onClick = {
-                                                val u = Uri.parse(
-                                                    "url: " + state.employeesState.profileLinks[i]?.link.toString()
+                                                val intent = Intent(
+                                                    Intent.ACTION_VIEW,
+                                                    Uri.parse(state.employeesState.profileLinks[i]?.link.toString())
                                                 )
-                                                val d = Intent(Intent.ACTION_DIAL, u)
                                                 try {
-                                                    ctx.startActivity(d)
+                                                    ctx.startActivity(intent)
                                                 } catch (_: Exception) {
-                                                    Toast
-                                                        .makeText(
-                                                            ctx,
-                                                            "An error occurred",
-                                                            Toast.LENGTH_LONG
-                                                        )
-                                                        .show()
+                                                    Toast.makeText(
+                                                        ctx,
+                                                        "An error occurred",
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
                                                 }
                                             },
                                         )
