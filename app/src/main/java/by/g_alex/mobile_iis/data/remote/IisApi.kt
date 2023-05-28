@@ -29,7 +29,7 @@ import by.g_alex.mobile_iis.data.remote.dto.settings.ConfirmEmailDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.ContactsDto
 import by.g_alex.mobile_iis.data.remote.dto.settings.EmailChangeDto
 import by.g_alex.mobile_iis.data.remote.dto.specialities.SpecialityDto
-import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponceDto
+import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.students.StudentsRequestDto
 import by.g_alex.mobile_iis.data.remote.dto.study.CertificatePlacesDto
 import by.g_alex.mobile_iis.data.remote.dto.study.SendCertificateDto
@@ -58,16 +58,16 @@ interface IisApi {
     @GET("api/v1/auth/logout") // Выход
     suspend fun logout(@Header("Cookie") cookieValue: String)
 
-    @GET("api/v1/settings/masked-contacts?")
+    @GET("api/v1/settings/masked-contacts?") // Получение списка контактов при восстановлении пароля
     fun restorePasswordEnterLogin(@Query("login") username: String): Call<RestorePasswordEnterLoginResponseDto>
 
-    @POST("api/v1/settings/contact/exist")
+    @POST("api/v1/settings/contact/exist") // Проверка на правильностть контакта
     fun restorePasswordCheckExist(@Body request: RestorePasswordCheckSendDto): Call<RestorePasswordEnterLoginResponseDto>
 
-    @POST("api/v1/settings/password/reset")
+    @POST("api/v1/settings/password/reset") // Отпарвка кода восстановление
     fun restorePasswordGetCode(@Body request: RestorePasswordCheckSendDto): Call<Any>
 
-    @POST("api/v1/settings/password/new")
+    @POST("api/v1/settings/password/new") // Отпрвка нового пароля
     suspend fun restorePasswordApply(@Body request: RestorePasswordApplyDto): ResponseBody?
 
     // User Info
@@ -117,60 +117,60 @@ interface IisApi {
     @GET("api/v1/diploma-topic-suggestion/topics") // Список дипломов
     suspend fun getDiplomas(@Header("Cookie") cookieValue: String): List<DiplomaDto>
 
-    @GET("api/v1/practice")
+    @GET("api/v1/practice") // Список практики
     suspend fun getPractice(@Header("Cookie") cookieValue: String): List<PracticeDto>
 
     //Настройки
-    @GET("api/v1/settings/contacts")
+    @GET("api/v1/settings/contacts") // Список контактов
     suspend fun getContacts(@Header("Cookie") cookieValue: String): ContactsDto
 
-    @POST("api/v1/settings/contact/update")
+    @POST("api/v1/settings/contact/update") // Обновление почты
     suspend fun updateEmail(
         @Header("Cookie") cookieValue: String,
         @Body email: EmailChangeDto
     ): ResponseBody?
 
-    @POST("api/v1/settings/contact/send-confirm-message")
+    @POST("api/v1/settings/contact/send-confirm-message") // Отправка кода подтверждения
     suspend fun getCodeForEmail(@Header("Cookie") cookieValue: String, @Body id: Int): ResponseBody?
 
-    @POST("api/v1/settings/contact/confirm")
+    @POST("api/v1/settings/contact/confirm") // Подтверждение кода
     suspend fun confirmCodeForEmail(
         @Header("Cookie") cookieValue: String,
         @Body email: ConfirmEmailDto
     ): ResponseBody?
 
-    @POST("api/v1/settings/password/change")
+    @POST("api/v1/settings/password/change") // Смена пароля из акка
     suspend fun changePass(
         @Header("Cookie") cookieValue: String,
         @Body password: ChangePassDto
     ): ResponseBody?
 
-    @PUT("api/v1/profiles/personal-cv-searching-job")
+    @PUT("api/v1/profiles/personal-cv-searching-job") // Обновление галочки поиск работы
     suspend fun putJob(@Header("Cookie") cookieValue: String, @Body cvDto: PersonalCV)
 
-    @PUT("api/v1/profiles/personal-cv-rating")
+    @PUT("api/v1/profiles/personal-cv-rating") // Обновление галочки просмотр рейтинга
     suspend fun putRating(@Header("Cookie") cookieValue: String, @Body cvDto: PersonalCV)
 
-    @PUT("api/v1/profiles/personal-cv-published")
+    @PUT("api/v1/profiles/personal-cv-published") // Обновление галочки просмотр профиля
     suspend fun putPublished(@Header("Cookie") cookieValue: String, @Body cvDto: PersonalCV)
 
-    @PUT("api/v1/profiles/summary")
+    @PUT("api/v1/profiles/summary") // Обнлвление био
     suspend fun putSummary(@Header("Cookie") cookieValue: String, @Body cvDto: PersonalCV)
 
-    @PUT("api/v1/profiles/my-references")
+    @PUT("api/v1/profiles/my-references") // Обновление ссылок
     suspend fun putLinks(@Header("Cookie") cookieValue: String, @Body refs: List<Reference>)
 
-    @POST("api/v1/profiles/my-skills")
+    @POST("api/v1/profiles/my-skills") // Обновление навыков
     suspend fun postSkills(@Header("Cookie") cookieValue: String, @Body refs: List<Skill>)
-
-    @POST("api/v1/profiles")
-    suspend fun getProfiles(@Body searchValue: StudentsRequestDto): StudentResponceDto
-
-    @POST("api/v1/phone-book")
-    suspend fun getPhoneNumber(@Body searchValue: RequestDto): PhoneSearchDto
 
 
     // For all
+    @POST("api/v1/profiles") // Список студентов
+    suspend fun getProfiles(@Body searchValue: StudentsRequestDto): StudentResponseDto
+
+    @POST("api/v1/phone-book") // Поиск (телефонный справочник)
+    suspend fun getPhoneNumber(@Body searchValue: RequestDto): PhoneSearchDto
+
     @GET("api/v1/schedule?") // Расписание группы
     suspend fun getSchedule(@Query("studentGroup") groupNumber: String): MainDto
 
@@ -186,78 +186,79 @@ interface IisApi {
     @GET("api/v1/employees/all") // Список преподавателей
     suspend fun getEmployeesList(): List<EmployeeListItemDto>
 
-    @GET("api/v1/schedule/faculties")
+    @GET("api/v1/schedule/faculties") // Список факультетов
     suspend fun getFaculties(): List<FacultiesDto>
 
-    @GET("api/v1/rating/specialities")
+    @GET("api/v1/rating/specialities") // Список специальностей на факультете
     suspend fun getSpecialities(
         @Query("facultyId") id: Int,
         @Query("entryYear") year: Int
     ): List<SpecialityDto>
 
-    @GET("api/v1/rating")
+    @GET("api/v1/rating") // Получение общего рейта по году и специальности
     suspend fun getRating(@Query("year") year: Int, @Query("sdef") sdef: Int): List<RatingDto>
 
 
-    @GET("api/v1/rating/studentRating")
+    @GET("api/v1/rating/studentRating") // Рейт по студаку
     suspend fun getPersonalRating(@Query("studentCardNumber") numb: String): PersonalRatingDto
 
-    @GET("api/v1/list-disciplines")
+    @GET("api/v1/list-disciplines") // Список дисцплин по специальности и году
     suspend fun getDisciplines(
         @Query("id") sdef: Int,
         @Query("year") year: Int
     ): List<DiciplinesDto>
 
-    @GET("api/v1/departments")
+    @GET("api/v1/departments") // Все кафедры
     suspend fun getDepartment(): List<DepartmentDto>
 
-    @GET("api/v1/announcements/departments")
+    @GET("api/v1/announcements/departments") // Анонсы кафедры
     suspend fun getDepartmentAnons(@Query("id") id: Int): List<AnnouncemntDto>
 
-    @GET("api/v1/departments/tree")
+    @GET("api/v1/departments/tree") // Все подраздения
     suspend fun getDepartmentsTree(): List<DepartmentsTreeDto>
 
-    @GET("api/v1/departments/name")
+    @GET("api/v1/departments/name") // Имя подразделения по id
     suspend fun getDepartmentName(@Query("id") id: Int): String
 
-    @GET("api/v1/employees")
+    @GET("api/v1/employees") // Список сотрудников в подзраделении
     suspend fun getDepartmentEmployees(@Query("departmentId") id: Int): List<DepartmentEmployeesDto>
 
-    @GET("api/v1/employees/details-url")
+    @GET("api/v1/employees/details-url") // Подробная информация о сотруднике
     suspend fun getEmployeeDetailsInfo(@Query("urlId") id: String): EmployeeDetailInfoDto
 
+
     // Справки и Ведомостички заказ
-    @GET("api/v1/certificate/places")
+    @GET("api/v1/certificate/places") // Места заказа справок
     suspend fun getCertificatePlaces(): List<CertificatePlacesDto>
 
-    @POST("api/v1/certificate/register")
+    @POST("api/v1/certificate/register") // Заказать справку
     fun sendCertificate(
         @Body request: SendCertificateDto,
         @Header("Cookie") cookieValue: String
     ): Call<List<StudyCertificationsDto>>
 
-    @GET("api/v1/certificate/close")
+    @GET("api/v1/certificate/close") // Отклонить справку
     suspend fun closeCertificate(@Query("id") id: Int, @Header("Cookie") cookieValue: String): Any
 
-    @GET("api/v1/mark-sheet/types")
+    @GET("api/v1/mark-sheet/types") // Типы ведомостичек
     suspend fun getMarkSheetTypes(): List<MarkSheetTypesDto>
 
-    @GET("api/v1/mark-sheet/subjects")
+    @GET("api/v1/mark-sheet/subjects") // Предметы ведомостичек
     suspend fun getMarkSheetSubjects(@Header("Cookie") cookieValue: String): List<MarkSheetSubjectsDto>
 
-    @GET("api/v1/employees/mark-sheet")
+    @GET("api/v1/employees/mark-sheet") // поиск сотрудников для экзов
     suspend fun getMarkSheetFocusId(
         @Query("focsId") id: Int,
         @Header("Cookie") cookieValue: String
     ): List<MarkSheetFocusThIdDto>
 
-    @GET("api/v1/employees/mark-sheet")
+    @GET("api/v1/employees/mark-sheet") // поиск сотрудников для лаб
     suspend fun getMarkSheetThId(
         @Query("thId") id: Int,
         @Header("Cookie") cookieValue: String
     ): List<MarkSheetFocusThIdDto>
 
-    @GET("api/v1/employees/fio/requests")
+    @GET("api/v1/employees/fio/requests") // поиск сотрудников по фио
     suspend fun findEmployeesByFio(@Query("employee-fio") fio: String): List<MarkSheetFocusThIdDto>
 
 

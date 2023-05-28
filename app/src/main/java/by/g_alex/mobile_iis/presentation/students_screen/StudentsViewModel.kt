@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponceDto
+import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.students.StudentsRequestDto
 import by.g_alex.mobile_iis.domain.use_case.rating_use_cases.GetFacultiesUseCase
 import by.g_alex.mobile_iis.domain.use_case.students_use_case.GetStudentProfileUseCase
@@ -25,7 +25,7 @@ class StudentsViewModel@Inject constructor(
     private val _Sstate = mutableStateOf<StudentsState>(StudentsState())
     val Sstate: State<StudentsState> = _Sstate
 
-    val pageList = mutableListOf<StudentResponceDto>()
+    val pageList = mutableListOf<StudentResponseDto>()
 
     val expandedFaculties = mutableStateOf(false)
     val selectedFacultiesText = mutableStateOf("")

@@ -1,7 +1,7 @@
 package by.g_alex.mobile_iis.domain.use_case.students_use_case
 
 import by.g_alex.mobile_iis.common.Resource
-import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponceDto
+import by.g_alex.mobile_iis.data.remote.dto.students.StudentResponseDto
 import by.g_alex.mobile_iis.data.remote.dto.students.StudentsRequestDto
 import by.g_alex.mobile_iis.domain.repository.IisApiRepository
 import kotlinx.coroutines.runBlocking
@@ -16,7 +16,7 @@ class GetStudentProfileUseCaseTest {
     @Test
     fun test1() = runBlocking {
         val testAnnouncementsByDepartment =
-            StudentResponceDto(
+            StudentResponseDto(
                 course = listOf(1),
                 currentPage = 1,
                 cvs = emptyList(),
@@ -32,7 +32,7 @@ class GetStudentProfileUseCaseTest {
         Mockito.`when`(api_rep.getStudentProfiles(StudentsRequestDto(emptyList(),1, emptyList(),"",false,emptyList()))).thenReturn(testAnnouncementsByDepartment)
 
         val useCase = GetStudentProfileUseCase(api_rep)
-        val results = mutableListOf<Resource<StudentResponceDto>>()
+        val results = mutableListOf<Resource<StudentResponseDto>>()
         useCase.invoke(StudentsRequestDto(emptyList(),1, emptyList(),"",false,emptyList())).collect { value -> results.add(value) }
 
 
