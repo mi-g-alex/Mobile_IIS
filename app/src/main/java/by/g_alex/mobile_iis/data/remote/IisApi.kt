@@ -15,6 +15,12 @@ import by.g_alex.mobile_iis.data.remote.dto.employee.EmployeeListItemDto
 import by.g_alex.mobile_iis.data.remote.dto.faculties.FacultiesDto
 import by.g_alex.mobile_iis.data.remote.dto.grade_book.GradeBookDto
 import by.g_alex.mobile_iis.data.remote.dto.group.GroupDtoItem
+import by.g_alex.mobile_iis.data.remote.dto.group_head.AllGroupsSubjectItemDto
+import by.g_alex.mobile_iis.data.remote.dto.group_head.GetOmissionsByDateDto
+import by.g_alex.mobile_iis.data.remote.dto.group_head.GetOmissionsBySubjectDto
+import by.g_alex.mobile_iis.data.remote.dto.group_head.GroupStudentsAndIdsDto
+import by.g_alex.mobile_iis.data.remote.dto.group_head.StudentsBySubgroupListDto
+import by.g_alex.mobile_iis.data.remote.dto.group_head.SubjectNameAndIdsDto
 import by.g_alex.mobile_iis.data.remote.dto.login.*
 import by.g_alex.mobile_iis.data.remote.dto.mark_book.MarkBookDto
 import by.g_alex.mobile_iis.data.remote.dto.penalty.PenaltyDto
@@ -261,6 +267,28 @@ interface IisApi {
     @GET("api/v1/employees/fio/requests") // поиск сотрудников по фио
     suspend fun findEmployeesByFio(@Query("employee-fio") fio: String): List<MarkSheetFocusThIdDto>
 
+
+    // Старосты туц
+    @GET("api/v1/grade-book/by-date")
+    suspend fun getAllOmissionsByDate(@Query("date") date: String, @Header("Cookie") cookieValue: String) : GetOmissionsByDateDto
+
+    @GET("api/v1/grade-book/group-students")
+    suspend fun getStudentsAndIds(@Header("Cookie") cookieValue: String) : List<GroupStudentsAndIdsDto>
+
+    @GET("api/v1/grade-book/subjects")
+    suspend fun getAllGroupSubjects(@Header("Cookie") cookieValue: String) : Map<String, AllGroupsSubjectItemDto>
+
+    @GET("api/v1/grade-book/subgroup-subjects")
+    suspend fun getSubgroupSubjects(@Header("Cookie") cookieValue: String) : List<SubjectNameAndIdsDto>
+
+    @GET("api/v1/grade-book/who-can-note")
+    suspend fun getWhoCanNote(@Header("Cookie") cookieValue: String) : List<Int>
+
+    @GET("api/v1/grade-book/{subject_id}/{group_id}")
+    suspend fun getAllBySubId(@Path("subject_id") subId : Int, @Path("group_id") gId : Int, @Header("Cookie") cookieValue: String) : List<GetOmissionsBySubjectDto>
+
+    @GET("api/v1/grade-book/subgroups")
+    suspend fun getStudentBySubgroups(@Query("termHoursId") id: String, @Header("Cookie") cookieValue: String) : StudentsBySubgroupListDto
 
     // API для моих фидбеков
     @FormUrlEncoded
