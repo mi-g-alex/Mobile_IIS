@@ -44,7 +44,7 @@ import by.g_alex.mobile_iis.data.remote.dto.study.StudyDto
 import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetFocusThIdDto
 import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetSubjectsDto
 import by.g_alex.mobile_iis.data.remote.dto.study.mark_sheet.MarkSheetTypesDto
-import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
+import by.g_alex.mobile_iis.data.remote.dto.user_group.UserGroupDto
 import by.g_alex.mobile_iis.domain.model.profile.PersonalCV
 import by.g_alex.mobile_iis.domain.model.profile.Reference
 import by.g_alex.mobile_iis.domain.model.profile.Skill

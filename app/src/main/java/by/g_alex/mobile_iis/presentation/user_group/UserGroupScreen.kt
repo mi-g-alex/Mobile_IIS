@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import by.g_alex.mobile_iis.R
-import by.g_alex.mobile_iis.data.remote.dto.use_group.UserGroupDto
+import by.g_alex.mobile_iis.data.remote.dto.user_group.UserGroupDto
 import com.google.accompanist.flowlayout.FlowRow
 
 
@@ -59,6 +59,13 @@ fun UserGroupScreen(
         ) {
             if (state.userGroupState != null) {
                 LazyColumn {
+                    item {
+                        state.userGroupState.studentGroupCuratorDto?.let {
+                            StudentGroupCuratorItem(
+                                it
+                            )
+                        }
+                    }
                     items(state.userGroupState.groupInfoStudentDto.size) {
                         Item(state.userGroupState.groupInfoStudentDto[it])
                     }
@@ -96,6 +103,34 @@ fun UserGroupScreen(
 
 @Composable
 private fun Item(it: UserGroupDto.GroupInfoStudentDto) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(horizontal = 10.dp, vertical = 5.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.inverseOnSurface
+        )
+    ) {
+        Column(Modifier.padding(10.dp)) {
+
+            if (it.position.isNotBlank())
+                Text(
+                    text = it.position,
+                    fontStyle = Italic,
+                    fontSize = 15.sp,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+            Text(text = it.fio, fontWeight = Bold, fontSize = 18.sp)
+
+        }
+    }
+}
+
+@Composable
+fun StudentGroupCuratorItem(it: UserGroupDto.StudentGroupCuratorDto) {
     val ctx = LocalContext.current
     Card(
         modifier = Modifier
@@ -119,54 +154,55 @@ private fun Item(it: UserGroupDto.GroupInfoStudentDto) {
 
             Text(text = it.fio, fontWeight = Bold, fontSize = 18.sp)
 
-
             FlowRow(
                 mainAxisSpacing = 8.dp,
                 crossAxisSpacing = (-5).dp,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                AssistChip(
-                    label = { Text(text = it.phone) },
-                    onClick = {
-                        val u = Uri.parse("tel:" + it.phone)
-                        val i = Intent(Intent.ACTION_DIAL, u)
-                        try {
-                            ctx.startActivity(i)
-                        } catch (_: Exception) {
-                            Toast
-                                .makeText(ctx, "An error occurred", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                    },
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.phone_icon),
-                            contentDescription = "Localized description",
-                            Modifier.size(AssistChipDefaults.IconSize)
-                        )
-                    },
-                )
-                AssistChip(
-                    label = { Text(text = it.email) },
-                    onClick = {
-                        try {
-                            val emailIntent =
-                                Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + it.email))
-                            ctx.startActivity(emailIntent)
-                        } catch (_: Exception) {
-                            Toast
-                                .makeText(ctx, "An error occurred", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                    },
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.mail_icon),
-                            contentDescription = "Localized description",
-                            Modifier.size(AssistChipDefaults.IconSize)
-                        )
-                    },
-                )
+                if (it.phone?.isNotBlank() == true)
+                    AssistChip(
+                        label = { Text(text = it.phone) },
+                        onClick = {
+                            val u = Uri.parse("tel:" + it.phone)
+                            val i = Intent(Intent.ACTION_DIAL, u)
+                            try {
+                                ctx.startActivity(i)
+                            } catch (_: Exception) {
+                                Toast
+                                    .makeText(ctx, "An error occurred", Toast.LENGTH_LONG)
+                                    .show()
+                            }
+                        },
+                        leadingIcon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.phone_icon),
+                                contentDescription = "Localized description",
+                                Modifier.size(AssistChipDefaults.IconSize)
+                            )
+                        },
+                    )
+                if (it.email?.isNotBlank() == true)
+                    AssistChip(
+                        label = { Text(text = it.email) },
+                        onClick = {
+                            try {
+                                val emailIntent =
+                                    Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + it.email))
+                                ctx.startActivity(emailIntent)
+                            } catch (_: Exception) {
+                                Toast
+                                    .makeText(ctx, "An error occurred", Toast.LENGTH_LONG)
+                                    .show()
+                            }
+                        },
+                        leadingIcon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.mail_icon),
+                                contentDescription = "Localized description",
+                                Modifier.size(AssistChipDefaults.IconSize)
+                            )
+                        },
+                    )
             }
         }
     }
