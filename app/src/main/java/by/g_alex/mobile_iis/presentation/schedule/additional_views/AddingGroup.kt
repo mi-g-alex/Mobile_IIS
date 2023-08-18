@@ -51,7 +51,7 @@ fun AddingNewGroup(viewModel: ScheduleViewModel, navController:NavController){
             if (state.Groups.isNotEmpty()) {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(state.Groups) { itm ->
-                        if (itm.name.contains(searchText.value)) GroupItem(
+                        if (itm.name?.contains(searchText.value) == true) GroupItem(
                             group = itm,
                             viewModel,
                             navController

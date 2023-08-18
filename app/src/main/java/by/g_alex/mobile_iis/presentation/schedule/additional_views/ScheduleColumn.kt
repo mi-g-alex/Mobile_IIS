@@ -35,11 +35,22 @@ fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()) {
         var upcnt = weekState.value.week ?: 1
         var txt: String
         val mutlist = mutableStateOf(mutableListOf<LessonModel>())
-        while ((date.value.month.value < 6 || (date.value.month.value in 9..12)) && currentGroup.value != "None") {
+        while ((date.value.month.value < 6 || (date.value.month.value in 8..12)) && currentGroup.value != "None") {
             mutlist.value = mutableListOf<LessonModel>()
             val downDate = mutableStateOf(date.value)
-            val cnt = upcnt
+            var cnt = upcnt
             var month = ""
+
+            if(date.value.month.value == 8){
+                while(date.value.month.value!=9){
+
+                    date.value = date.value.plusDays(1)
+
+                }
+                cnt = 1
+                upcnt = 1
+            }
+
 
             for (n in date.value.month.toString().indices)
                 if (n > 0) month += date.value.month.toString()[n].lowercase()
@@ -50,9 +61,6 @@ fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()) {
                 if (n > 0) dayOfweek += date.value.dayOfWeek.toString()[n].lowercase()
                 else dayOfweek += date.value.dayOfWeek.toString()[n]
 
-
-//            var firstStep = false
-//            var end = false
             txt =
                 month + " " + date.value.dayOfMonth.toString() + ", " + dayOfweek + ", week " + cnt.toString()
 
@@ -64,24 +72,10 @@ fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()) {
                     if(n.lessonTypeAbbrev == "Экзамен" || n.lessonTypeAbbrev == "Консультация"){
                         continue
                     }
-//                    if (!firstStep) {
-//                        items(mutableListOf(txt)) { itm ->
-//                            Text(
-//                                text = itm,
-//                                modifier = Modifier.padding(
-//                                    start = 20.dp,
-//                                    top = 10.dp,
-//                                    bottom = 0.dp
-//                                )
-//                            )
-//                        }
-//                    }
                     mutlist.value.add(n)
-//                    firstStep = true
-//                    end = true
+
                 } //else if (n.weekDay != downDate.value.dayOfWeek.toString()) firstStep = false
-                //if (end && !firstStep)
-                  //  break
+
             }
             if(mutlist.value.isNotEmpty()){
                 items(mutableListOf(txt)) {

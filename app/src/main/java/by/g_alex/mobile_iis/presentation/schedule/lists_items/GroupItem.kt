@@ -21,10 +21,10 @@ fun GroupItem(group: GroupModel, viewModel: ScheduleViewModel, navController: Na
     Column(modifier = Modifier
         .padding(vertical = 5.dp, horizontal = 20.dp)
         .clickable {
-            viewModel.addGroups(group.name)
-            viewModel.headerText.value = group.name
-            viewModel.getSchedule(group.name)
-            viewModel.getExams(group.name)
+            viewModel.addGroups(group.name?:"")
+            viewModel.headerText.value = group.name?:""
+            viewModel.getSchedule(group.name?:"")
+            viewModel.getExams(group.name?:"")
             navController.navigate(Screen.Home.route)
         }) {
         Row(modifier = Modifier.padding(bottom = 10.dp).fillMaxWidth()) {
@@ -35,17 +35,17 @@ fun GroupItem(group: GroupModel, viewModel: ScheduleViewModel, navController: Na
             )
             Column {
                 Text(
-                    text = group.name,
+                    text = group.name?:"",
                     fontSize = 20.sp,
                     modifier = Modifier.padding(horizontal = 20.dp)
                 )
                 Text(
-                    text = group.specialityAbbrev,
+                    text = group.specialityAbbrev?:"",
                     fontSize = 10.sp,
                     modifier = Modifier.padding(horizontal = 20.dp)
                 )
                 Text(
-                    text = group.facultyAbbrev,
+                    text = group.facultyAbbrev?:"",
                     fontSize = 10.sp,
                     modifier = Modifier.padding(horizontal = 20.dp)
                 )
