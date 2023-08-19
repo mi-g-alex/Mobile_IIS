@@ -36,20 +36,20 @@ fun ScheduleColumn(viewModel: ScheduleViewModel = hiltViewModel()) {
         var txt: String
         val mutlist = mutableStateOf(mutableListOf<LessonModel>())
         while ((date.value.month.value < 6 || (date.value.month.value in 8..12)) && currentGroup.value != "None") {
-            mutlist.value = mutableListOf<LessonModel>()
-            val downDate = mutableStateOf(date.value)
             var cnt = upcnt
-            var month = ""
-
             if(date.value.month.value == 8){
                 while(date.value.month.value!=9){
-
                     date.value = date.value.plusDays(1)
-
                 }
                 cnt = 1
                 upcnt = 1
             }
+
+            mutlist.value = mutableListOf<LessonModel>()
+            val downDate = mutableStateOf(date.value)
+
+            var month = ""
+
 
 
             for (n in date.value.month.toString().indices)
